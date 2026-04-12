@@ -78,21 +78,11 @@ function parseFrontmatter<C extends ContentCollection>(
 async function compileEntry<C extends ContentCollection>(
   entry: ContentEntry<C>,
 ): Promise<RenderedContentEntry<C>> {
-  const { compileMDX } = await import("next-mdx-remote/rsc");
-  const { content } = await compileMDX({
-    source: entry.body,
-    components: mdxComponents,
-    options: {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-      },
-      parseFrontmatter: false,
-    },
-  });
-
+  // Direct MDX import will be used instead of dynamic compilation.
+  // This function can be removed or refactored as needed.
   return {
     ...entry,
-    content,
+    content: null, // Placeholder, update usage to direct MDX import
   };
 }
 
