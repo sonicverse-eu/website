@@ -1,5 +1,15 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
+type R2ObjectLike = {
+  body: ReadableStream | null;
+  httpEtag: string;
+  writeHttpMetadata(headers: Headers): void;
+};
+
+type ImageAssetsBucket = {
+  get(key: string): Promise<R2ObjectLike | null>;
+};
+
 export async function GET(request: Request) {
   const { env } = getCloudflareContext();
   const url = new URL(request.url);
@@ -10,7 +20,13 @@ export async function GET(request: Request) {
   }
 
   const key = source.replace(/^\/+/, "");
-  const object = await env.IMAGE_ASSETS.get(key);
+  const imageAssets = (env as { IMAGE_ASSETS?: ImageAssetsBucket }).IMAGE_ASSETS;
+
+  if (!imageAssets) {
+    return new Response("Image bucket binding is not configured", { status: 500 });
+  }
+
+  const object = await imageAssets.get(key);
 
   if (!object) {
     return new Response("Object not found", { status: 404 });
