@@ -1,10 +1,7 @@
-"use client";
-
 import Image, { ImageProps } from 'next/image';
-import { workerImageLoader } from '@/lib/worker-image-loader';
 import { useState } from 'react';
 
-export default function WorkerImage(props: ImageProps) {
+export default function FallbackImage(props: ImageProps) {
   const [error, setError] = useState(false);
   
   if (error) {
@@ -19,9 +16,8 @@ export default function WorkerImage(props: ImageProps) {
   return (
     <Image
       {...props}
-      loader={workerImageLoader}
       onError={() => {
-        console.error(`Failed to load worker image: ${props.src}`);
+        console.error(`Failed to load image: ${props.src}`);
         setError(true);
       }}
     />

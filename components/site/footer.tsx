@@ -40,7 +40,7 @@ export function Footer() {
           <div className="space-y-4">
             <p className="text-sm font-semibold tracking-[0.04em] text-foreground/76">Contact</p>
             <div className="space-y-2 text-sm leading-7 text-foreground/62">
-              <p>hello@sonicverse.dev</p>
+              <p>hello@sonicverse.eu</p>
               <p>Open collaboration, careful delivery, and long-term technical thinking.</p>
             </div>
           </div>
