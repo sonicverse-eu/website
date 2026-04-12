@@ -214,7 +214,30 @@ export async function HomePage() {
 }
 
 function HeroIntentVisual() {
-  const railIcons: LucideIcon[] = [Layers3, Workflow, Code2];
+  const railIcons: { id: string; icon: LucideIcon }[] = [
+    { id: "layers", icon: Layers3 },
+    { id: "workflow", icon: Workflow },
+    { id: "code", icon: Code2 },
+  ];
+  const topIcons: { id: string; icon: LucideIcon }[] = [
+    { id: "spark", icon: Sparkles },
+    { id: "structure", icon: Layers3 },
+    { id: "launch", icon: ArrowUpRight },
+  ];
+  const rows: { id: string; icon: LucideIcon }[] = [
+    { id: "surface", icon: Layers3 },
+    { id: "runtime", icon: Code2 },
+    { id: "delivery", icon: Workflow },
+  ];
+  const sideTiles: { id: string; icon: LucideIcon }[] = [
+    { id: "globe", icon: Globe },
+    { id: "flow", icon: Workflow },
+  ];
+  const bottomSignals: { id: string; icon: LucideIcon }[] = [
+    { id: "reach", icon: Globe },
+    { id: "finish", icon: Sparkles },
+    { id: "momentum", icon: ArrowUpRight },
+  ];
 
   return (
     <div className="relative isolate flex h-full min-h-[320px] items-stretch">
@@ -227,9 +250,9 @@ function HeroIntentVisual() {
 
       <div className="relative z-10 grid h-full w-full gap-4 lg:grid-cols-[76px_minmax(0,1fr)]">
         <div className="hidden h-full flex-col justify-between py-3 lg:flex">
-          {railIcons.map((Icon) => (
+          {railIcons.map(({ id, icon: Icon }) => (
             <div
-              key={Icon.displayName}
+              key={id}
               className="flex h-14 w-14 items-center justify-center rounded-[1.35rem] border border-border/60 bg-background/54 text-foreground/72 shadow-[0_14px_40px_rgba(16,18,33,0.08)]"
             >
               <Icon className="size-5" strokeWidth={1.7} />
@@ -241,9 +264,9 @@ function HeroIntentVisual() {
           <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_148px]">
             <div className="rounded-[1.75rem] border border-border/60 bg-background/62 p-4 shadow-[0_20px_50px_rgba(16,18,33,0.1)] sm:p-5">
               <div className="flex flex-wrap gap-2">
-                {[Sparkles, Layers3, ArrowUpRight].map((Icon) => (
+                {topIcons.map(({ id, icon: Icon }) => (
                   <div
-                    key={Icon.displayName}
+                    key={id}
                     className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/68 text-primary"
                   >
                     <Icon className="size-4" strokeWidth={1.8} />
@@ -252,9 +275,9 @@ function HeroIntentVisual() {
               </div>
 
               <div className="mt-5 grid gap-3">
-                {[Layers3, Code2, Workflow].map((Icon, index) => (
+                {rows.map(({ id, icon: Icon }, index) => (
                   <div
-                    key={Icon.displayName}
+                    key={id}
                     className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4"
                   >
                     <div className="flex items-center gap-3">
@@ -293,9 +316,9 @@ function HeroIntentVisual() {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2 sm:gap-2 lg:grid-cols-1">
-                {[Globe, Workflow].map((Icon) => (
+                {sideTiles.map(({ id, icon: Icon }) => (
                   <div
-                    key={Icon.displayName}
+                    key={id}
                     className="rounded-[1.35rem] border border-border/60 bg-background/52 p-3"
                   >
                     <div className="flex items-center gap-3">
@@ -314,8 +337,8 @@ function HeroIntentVisual() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
-            {[Globe, Sparkles, ArrowUpRight].map((Icon) => (
-              <HeroSignal key={Icon.displayName} icon={Icon} />
+            {bottomSignals.map(({ id, icon: Icon }) => (
+              <HeroSignal key={id} icon={Icon} />
             ))}
           </div>
         </div>
