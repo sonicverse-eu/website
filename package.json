@@ -9,15 +9,11 @@
     "dev": "next dev",
     "build": "next build",
     "build:worker": "opennextjs-cloudflare build",
-    "build:worker:prod": "NODE_ENV=production opennextjs-cloudflare build",
-    "preview": "npm run build:worker && wrangler dev --local --env-interface CloudflareEnv",
-    "preview:prod": "npm run build:worker:prod && wrangler dev --local --env-interface CloudflareEnv",
-    "deploy": "npm run build:worker:prod && wrangler deploy --keep-vars",
-    "deploy:preview": "npm run build:worker && wrangler deploy --keep-vars --env preview",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "start": "next start",
     "lint": "eslint",
-    "optimize": "npm run build && npm run cf-typegen",
     "clean": "rm -rf .next .open-next/node_modules .open-next/.next"
   },
   "dependencies": {
