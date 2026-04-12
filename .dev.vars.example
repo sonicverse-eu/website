@@ -1,2 +1,19 @@
-CONTACT_WEBHOOK_URL="https://example.com/webhook"
-NEXT_PUBLIC_SITE_URL="https://sonicverse.dev"
+# Cloudflare Workers local development variables example
+# Copy this file to .dev.vars and configure for local development
+
+# Email configuration
+EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
+EMAIL_RECIPIENT = "hello@sonicverse.eu"
+
+# Environment
+NODE_ENV = "development"
+
+# Next.js specific
+NEXT_PUBLIC_VERCEL_ENV = "development"
+NEXT_PUBLIC_VERCEL_URL = "http://localhost:3000"
+
+# Webhook URL (optional)
+CONTACT_WEBHOOK_URL = "https://example.com/webhook"
+
+# Site URL
+NEXT_PUBLIC_SITE_URL = "https://sonicverse.dev"
