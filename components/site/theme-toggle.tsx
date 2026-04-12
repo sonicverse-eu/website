@@ -35,7 +35,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       title={`Switch to ${nextTheme} mode`}
       onClick={() => setTheme(nextTheme)}
       className={cn(
-        "relative inline-flex h-10 w-[4.5rem] shrink-0 items-center rounded-full border border-border/70 bg-background/55 p-1 text-foreground/78 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md transition-[border-color,background-color,box-shadow,color] duration-300 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40 dark:shadow-[0_12px_32px_rgba(0,0,0,0.24)]",
+        "relative inline-flex h-10 w-[4.5rem] shrink-0 items-center rounded-full border border-border/70 bg-background/62 p-1 text-foreground/78 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md backdrop-saturate-[1.5] transition-[border-color,background-color,box-shadow,color] duration-300 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40 dark:shadow-[0_12px_32px_rgba(0,0,0,0.24)]",
         className,
       )}
       whileTap={reduceMotion ? undefined : { scale: 0.98 }}

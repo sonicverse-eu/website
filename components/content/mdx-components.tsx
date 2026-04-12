@@ -19,8 +19,8 @@ export function Callout({ title, tone = "default", children }: CalloutProps) {
       className={cn(
         "rounded-[1.6rem] border px-5 py-5 shadow-[var(--shadow-soft)] sm:px-6",
         tone === "info"
-          ? "border-primary/18 bg-primary/[0.08]"
-          : "border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))]",
+          ? "border-primary/18 bg-primary/[0.08] backdrop-blur-sm backdrop-saturate-[1.4]"
+          : "border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] backdrop-blur-xl backdrop-saturate-[1.5]",
       )}
     >
       {title ? (
@@ -82,7 +82,7 @@ function InlineCode({ className, ...props }: ComponentPropsWithoutRef<"code">) {
   return (
     <code
       className={cn(
-        "rounded-full border border-border/70 bg-background/66 px-2 py-1 font-mono text-[0.85em] text-foreground",
+        "rounded-full border border-border/70 bg-background/70 px-2 py-1 font-mono text-[0.85em] text-foreground backdrop-blur-sm",
         className,
       )}
       {...props}
@@ -104,7 +104,7 @@ function PreformattedBlock({ className, ...props }: ComponentPropsWithoutRef<"pr
 
 function DataTable({ className, ...props }: ComponentPropsWithoutRef<"table">) {
   return (
-    <div className="overflow-x-auto rounded-[1.5rem] border border-border/70 bg-background/44">
+    <div className="overflow-x-auto rounded-[1.5rem] border border-border/70 bg-background/58 backdrop-blur-sm backdrop-saturate-[1.3]">
       <table className={cn("min-w-full border-collapse text-left text-sm", className)} {...props} />
     </div>
   );
