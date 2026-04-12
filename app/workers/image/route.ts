@@ -10,6 +10,66 @@ type ImageAssetsBucket = {
   get(key: string): Promise<R2ObjectLike | null>;
 };
 
+const ORIGIN_BASE_URL = new URL("https://example.com");
+
+function getValidatedOriginUrl(source: string): URL | null {
+  const trimmed = source.trim();
+  if (!trimmed) return null;
+
+  // Only allow relative paths for origin fallback.
+  // Reject absolute and protocol-relative URLs.
+  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(trimmed) || trimmed.startsWith("//")) {
+    return null;
+  }
+
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(trimmed);
+  } catch {
+    return null;
+  }
+
+  const normalized = decoded.replace(/^\/+/, "");
+  if (!normalized) return null;
+
+  // Disallow control chars, backslashes, query/fragment injection.
+  if (/[\u0000-\u001F\u007F\\?#]/.test(normalized)) {
+    return null;
+  }
+
+  const segments = normalized.split("/");
+  // Prevent traversal and require safe path segments only.
+  if (
+    segments.some(
+      (segment) =>
+        !segment ||
+        segment === "." ||
+        segment === ".." ||
+        !/^[A-Za-z0-9._-]+$/.test(segment),
+    )
+  ) {
+    return null;
+  }
+
+  // Restrict to known image directories.
+  if (
+    !(
+      normalized.startsWith("images/") ||
+      normalized.startsWith("stock/") ||
+      normalized.startsWith("images/stock/")
+    )
+  ) {
+    return null;
+  }
+
+  // Restrict to expected image file extensions.
+  if (!/\.(?:png|jpe?g|webp|gif|svg|avif)$/i.test(normalized)) {
+    return null;
+  }
+
+  return new URL(`/${normalized}`, ORIGIN_BASE_URL);
+}
+
 async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Promise<Response | null> {
   try {
     console.log(`Trying R2 key: ${key}`);
@@ -25,7 +85,7 @@ async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Prom
       console.log(`Image not found in R2: ${key}`);
     }
   } catch (e) {
-    console.error(`R2 fetch error for key ${key}:`, e);
+    console.error("R2 fetch error for key %s:", key, e);
   }
   return null;
 }
@@ -50,7 +110,7 @@ async function tryFetchFromAssets(env: any, source: string): Promise<Response | 
         return new Response(assetsResponse.body, { headers });
       }
     } catch (e) {
-      console.error(`Failed to fetch ${assetPath} from ASSETS:`, e);
+      console.error("Failed to fetch %s from ASSETS:", assetPath, e);
     }
   }
   return null;
@@ -92,12 +152,17 @@ export async function GET(request: Request) {
   const assetsResponse = await tryFetchFromAssets(env, source);
   if (assetsResponse) return assetsResponse;
 
-  // Final fallback - try to fetch from origin
+  // Final fallback - try to fetch from allowed origin only
+  const validatedOriginUrl = getValidatedOriginUrl(source);
+  if (!validatedOriginUrl) {
+    return new Response("Invalid src URL", { status: 400 });
+  }
+
   try {
-    console.log(`Trying origin fetch for: ${source}`);
-    const originResponse = await fetch(source);
+    console.log(`Trying origin fetch for: ${validatedOriginUrl.toString()}`);
+    const originResponse = await fetch(validatedOriginUrl);
     if (originResponse.ok) {
-      console.log(`Found image at origin: ${source}`);
+      console.log(`Found image at origin: ${validatedOriginUrl.toString()}`);
       const headers = new Headers(originResponse.headers);
       headers.set("cache-control", "public, max-age=31536000, immutable");
       return new Response(originResponse.body, { headers });
