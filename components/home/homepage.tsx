@@ -3,11 +3,10 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
   Cloud,
-  Code2,
   Globe,
-  Layers3,
+  Package2,
+  Server,
   Sparkles,
-  Workflow,
 } from "lucide-react";
 
 import { SignalsSection } from "@/components/content/content-ui";
@@ -29,6 +28,7 @@ import {
   capabilities,
   principles,
   projectArchetypes,
+  repositorySignals,
   serviceAreas,
 } from "@/lib/site-data";
 import {
@@ -37,6 +37,20 @@ import {
   getLatestChangelogEntries,
   getRecentRoadmapEntries,
 } from "@/lib/content";
+
+const capabilityIcons: LucideIcon[] = [Sparkles, Server, Package2];
+
+const capabilityRows: { id: string; icon: LucideIcon; label: string; sub: string }[] = [
+  { id: "product",  icon: Sparkles, label: "Product engineering",  sub: "Modern surfaces & delivery systems" },
+  { id: "platform", icon: Server,   label: "Platform foundations", sub: "Cloudflare-ready web platforms"     },
+  { id: "oss",      icon: Package2, label: "Open-source tooling",  sub: "Public primitives & packages"       },
+];
+
+const statusSignals: { id: string; icon: LucideIcon; label: string; value: string }[] = [
+  { id: "reach",    icon: Globe,        label: "Platform",  value: "Edge-ready"   },
+  { id: "finish",   icon: Sparkles,     label: "Quality",   value: "Intent-first" },
+  { id: "momentum", icon: ArrowUpRight, label: "Delivery",  value: "Open source"  },
+];
 
 export async function HomePage() {
   const [featuredBlog, recentChangelog, recentRoadmap] = await Promise.all([
@@ -92,17 +106,23 @@ export async function HomePage() {
             />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-3">
-            {capabilities.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.05}>
-                <Card className="h-full">
-                  <CardHeader>
-                    <Badge variant="muted">0{index + 1}</Badge>
-                    <CardTitle>{item.title}</CardTitle>
-                    <CardDescription>{item.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Reveal>
-            ))}
+            {capabilities.map((item, index) => {
+              const CapIcon = capabilityIcons[index];
+              return (
+                <Reveal key={item.title} delay={index * 0.05}>
+                  <Card className="h-full">
+                    <CardHeader>
+                      <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-[1.1rem] border border-border/60 bg-primary/10 text-primary">
+                        <CapIcon className="size-5" strokeWidth={1.8} />
+                      </div>
+                      <Badge variant="muted">0{index + 1}</Badge>
+                      <CardTitle>{item.title}</CardTitle>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                </Reveal>
+              );
+            })}
           </div>
         </Container>
       </section>
@@ -131,15 +151,17 @@ export async function HomePage() {
                     <CardTitle>{service.title}</CardTitle>
                     <CardDescription>{service.description}</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    {service.bullets.map((bullet) => (
-                      <div
-                        key={bullet}
-                        className="rounded-2xl border border-border/60 bg-background/34 px-4 py-3 text-sm text-foreground/66"
-                      >
-                        {bullet}
-                      </div>
-                    ))}
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {service.bullets.map((bullet) => (
+                        <span
+                          key={bullet}
+                          className="inline-flex items-center rounded-full border border-border/55 bg-background/40 px-3 py-1 text-xs text-foreground/60"
+                        >
+                          {bullet}
+                        </span>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               </Reveal>
@@ -154,29 +176,27 @@ export async function HomePage() {
       </section>
 
       <section className="section-space">
-        <Container className="space-y-10">
+        <Container>
           <Reveal>
-            <SectionHeader
-              eyebrow="Open source"
-              title="Open source is part of the operating model."
-              description="Public building blocks, clear contribution paths, and systems that stay legible outside the core team."
-            />
+            <div className="section-frame space-y-10 px-6 py-10 sm:px-10 sm:py-12">
+              <SectionHeader
+                eyebrow="Open source"
+                title="Open source is part of the operating model."
+                description="Public building blocks, clear contribution paths, and systems that stay legible outside the core team."
+              />
+              <div className="grid gap-4 md:grid-cols-3">
+                {repositorySignals.map((item, index) => (
+                  <Reveal key={item} delay={index * 0.05}>
+                    <Card className="h-full">
+                      <CardHeader>
+                        <CardTitle className="text-xl">{item}</CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
           </Reveal>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              "Public primitives shaped by delivery work",
-              "Architecture that stays readable outside the founding team",
-              "Tooling that helps maintainers as much as adopters",
-            ].map((item, index) => (
-              <Reveal key={item} delay={index * 0.05}>
-                <Card className="h-full">
-                  <CardHeader>
-                    <CardTitle className="text-xl">{item}</CardTitle>
-                  </CardHeader>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
         </Container>
       </section>
 
@@ -214,30 +234,7 @@ export async function HomePage() {
 }
 
 function HeroIntentVisual() {
-  const railIcons: { id: string; icon: LucideIcon }[] = [
-    { id: "layers", icon: Layers3 },
-    { id: "workflow", icon: Workflow },
-    { id: "code", icon: Code2 },
-  ];
-  const topIcons: { id: string; icon: LucideIcon }[] = [
-    { id: "spark", icon: Sparkles },
-    { id: "structure", icon: Layers3 },
-    { id: "launch", icon: ArrowUpRight },
-  ];
-  const rows: { id: string; icon: LucideIcon }[] = [
-    { id: "surface", icon: Layers3 },
-    { id: "runtime", icon: Code2 },
-    { id: "delivery", icon: Workflow },
-  ];
-  const sideTiles: { id: string; icon: LucideIcon }[] = [
-    { id: "globe", icon: Globe },
-    { id: "flow", icon: Workflow },
-  ];
-  const bottomSignals: { id: string; icon: LucideIcon }[] = [
-    { id: "reach", icon: Globe },
-    { id: "finish", icon: Sparkles },
-    { id: "momentum", icon: ArrowUpRight },
-  ];
+  const railIcons = capabilityRows.map(({ id, icon }) => ({ id, icon }));
 
   return (
     <div className="relative isolate flex h-full min-h-[320px] items-stretch">
@@ -261,84 +258,35 @@ function HeroIntentVisual() {
         </div>
 
         <div className="grid h-full gap-4">
-          <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_148px]">
-            <div className="rounded-[1.75rem] border border-border/60 bg-background/62 p-4 shadow-[0_20px_50px_rgba(16,18,33,0.1)] sm:p-5">
-              <div className="flex flex-wrap gap-2">
-                {topIcons.map(({ id, icon: Icon }) => (
-                  <div
-                    key={id}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/68 text-primary"
-                  >
-                    <Icon className="size-4" strokeWidth={1.8} />
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 grid gap-3">
-                {rows.map(({ id, icon: Icon }, index) => (
-                  <div
-                    key={id}
-                    className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-border/60 bg-primary/10 text-primary">
-                        <Icon className="size-5" strokeWidth={1.8} />
-                      </div>
-                      <div className="flex-1 space-y-2">
-                        <div
-                          className="h-2 rounded-full bg-foreground/14"
-                          style={{ width: `${70 - index * 8}%` }}
-                        />
-                        <div
-                          className="h-2 rounded-full bg-foreground/9"
-                          style={{ width: `${90 - index * 10}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          <div className="rounded-[1.75rem] border border-border/60 bg-background/62 p-4 shadow-[0_20px_50px_rgba(16,18,33,0.1)] sm:p-5">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-[0.65rem] font-medium tracking-[0.18em] uppercase text-foreground/40">
+                Capability areas
+              </span>
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Cloud className="size-3" strokeWidth={2} />
               </div>
             </div>
-
-            <div className="grid gap-4">
-              <div className="rounded-[1.7rem] border border-border/60 bg-background/58 p-4 shadow-[0_18px_44px_rgba(16,18,33,0.08)]">
-                <div className="relative mx-auto flex h-28 w-28 items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border border-border/55" />
-                  <div className="absolute inset-[16%] rounded-full border border-primary/35" />
-                  <div className="absolute inset-[32%] rounded-full border border-border/45" />
-                  <div className="absolute top-1 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-primary/80" />
-                  <div className="absolute right-2 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-foreground/36" />
-                  <div className="absolute bottom-2 left-5 h-2.5 w-2.5 rounded-full bg-foreground/30" />
-                  <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-primary/12 text-primary">
-                    <Cloud className="size-6" strokeWidth={1.8} />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 sm:gap-2 lg:grid-cols-1">
-                {sideTiles.map(({ id, icon: Icon }) => (
-                  <div
-                    key={id}
-                    className="rounded-[1.35rem] border border-border/60 bg-background/52 p-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-[0.95rem] bg-primary/10 text-primary">
-                        <Icon className="size-4" strokeWidth={1.8} />
-                      </div>
-                      <div className="flex-1 space-y-2">
-                        <div className="h-2 rounded-full bg-foreground/12" />
-                        <div className="h-2 w-2/3 rounded-full bg-foreground/8" />
-                      </div>
+            <div className="grid gap-3">
+              {capabilityRows.map(({ id, icon: Icon, label, sub }) => (
+                <div key={id} className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-border/60 bg-primary/10 text-primary">
+                      <Icon className="size-5" strokeWidth={1.8} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium tracking-[-0.01em] text-foreground/84">{label}</p>
+                      <p className="mt-0.5 truncate text-xs text-foreground/48">{sub}</p>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
-            {bottomSignals.map(({ id, icon: Icon }) => (
-              <HeroSignal key={id} icon={Icon} />
+            {statusSignals.map(({ id, icon, label, value }) => (
+              <HeroSignal key={id} icon={icon} label={label} value={value} />
             ))}
           </div>
         </div>
@@ -347,16 +295,16 @@ function HeroIntentVisual() {
   );
 }
 
-function HeroSignal({ icon: Icon }: { icon: LucideIcon }) {
+function HeroSignal({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="rounded-[1.35rem] border border-border/60 bg-background/54 p-3 shadow-[0_16px_40px_rgba(16,18,33,0.08)]">
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-[1rem] border border-border/60 bg-background/78 text-primary">
           <Icon className="size-4" strokeWidth={1.8} />
         </div>
-        <div className="flex-1 space-y-2">
-          <div className="h-2 rounded-full bg-foreground/12" />
-          <div className="h-2 w-3/4 rounded-full bg-foreground/8" />
+        <div className="min-w-0">
+          <p className="text-[0.68rem] font-medium tracking-[0.14em] uppercase text-foreground/40">{label}</p>
+          <p className="text-sm font-medium text-foreground/76">{value}</p>
         </div>
       </div>
     </div>
