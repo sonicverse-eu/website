@@ -1,7 +1,5 @@
 "use server";
 
-import { Resend } from "resend";
-
 import {
   initialContactFormState,
   type ContactFormState,
@@ -138,9 +136,8 @@ export async function submitContactForm(
     return { status: "error", message: "Please review the highlighted fields.", errors, values };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromAddress = process.env.RESEND_FROM ?? "Sonicverse <hello@sonicverse.eu>";
-  const toAddress = process.env.RESEND_TO ?? "hello@sonicverse.eu";
+  const senderAddress = process.env.EMAIL_SENDER ?? "Sonicverse <hello@sonicverse.eu>";
+  const recipientAddress = process.env.EMAIL_RECIPIENT ?? "hello@sonicverse.eu";
 
   const submittedAt = new Date().toLocaleString("en-GB", {
     dateStyle: "medium",
@@ -155,39 +152,17 @@ export async function submitContactForm(
 
     if (sendBinding && typeof sendBinding.send === "function") {
       await sendBinding.send({
-        from: fromAddress,
-        to: toAddress,
+        from: senderAddress,
+        to: recipientAddress,
         replyTo: values.email,
         subject,
         text: `${values.name} <${values.email}>\n\n${values.brief}`,
         html: buildEmailHtml({ ...values, submittedAt }),
       });
-    } else if (apiKey) {
-      const resend = new Resend(apiKey);
-      const { error } = await resend.emails.send({
-        from: fromAddress,
-        to: [toAddress],
-        replyTo: values.email,
-        subject,
-        html: buildEmailHtml({ ...values, submittedAt }),
-        tags: [
-          { name: "source", value: source.replace(/\//g, "_") || "contact" },
-          ...(values.projectType ? [{ name: "project_type", value: values.projectType.replace(/\s+/g, "_") }] : []),
-        ],
-      });
-
-      if (error) {
-        return {
-          status: "error",
-          message: "The message could not be delivered right now. Please try again or email us directly.",
-          errors: {},
-          values,
-        };
-      }
     } else {
       return {
         status: "error",
-        message: "Contact delivery is not configured. Set RESEND_API_KEY or configure the SEND_EMAIL binding in your Cloudflare deployment.",
+        message: "Contact delivery is not configured. Configure the SEND_EMAIL binding in your Cloudflare deployment and set EMAIL_SENDER / EMAIL_RECIPIENT.",
         errors: {},
         values,
       };
