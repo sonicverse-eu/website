@@ -225,7 +225,18 @@ export async function submitContactForm(
     const confirmationSubject = "We received your message";
 
     // Prefer Cloudflare Email Workers binding `SEND_EMAIL` when available on globalThis.
-    const sendBinding = (globalThis as any).SEND_EMAIL;
+
+    type SendEmailBinding = {
+      send: (options: {
+        from: string;
+        to: string;
+        replyTo?: string;
+        subject: string;
+        text: string;
+        html: string;
+      }) => Promise<void>;
+    };
+    const sendBinding = (globalThis as { SEND_EMAIL?: SendEmailBinding }).SEND_EMAIL;
 
     if (sendBinding && typeof sendBinding.send === "function") {
       await sendBinding.send({
