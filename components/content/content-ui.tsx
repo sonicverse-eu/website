@@ -116,7 +116,7 @@ export function ContentLinkCard({
             {badges}
           </div>
           <div className="space-y-3">
-            <CardTitle className="text-[1.7rem] leading-[1.02]">{title}</CardTitle>
+            <CardTitle className="text-[1.5rem] leading-[1.04] sm:text-[1.6rem]">{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
           {meta ? <div className="flex flex-wrap gap-3 text-sm text-foreground/58">{meta}</div> : null}
@@ -155,7 +155,7 @@ export function ContentPageHeader({
           <Badge>{eyebrow}</Badge>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
             <div className="space-y-5">
-              <h1 className="hero-title max-w-5xl text-[3rem] sm:text-[4.6rem] lg:text-[5.3rem]">
+              <h1 className="hero-title max-w-5xl text-[2.6rem] sm:text-[3.8rem] lg:text-[4.45rem]">
                 {title}
               </h1>
               <p className="copy-lg max-w-2xl">{description}</p>

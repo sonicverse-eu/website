@@ -1,14 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
-import {
-  ArrowUpRight,
-  Cloud,
-  Code2,
-  Globe,
-  Layers3,
-  Sparkles,
-  Workflow,
-} from "lucide-react";
 
 import { SignalsSection } from "@/components/content/content-ui";
 import { CTASection } from "@/components/site/cta-section";
@@ -62,7 +53,7 @@ export async function HomePage() {
         ]}
         primaryAction={{ href: "/contact", label: "Start a project" }}
         secondaryAction={{ href: "/open-source", label: "Explore open source" }}
-        visual={<HeroIntentVisual />}
+        visual={<HeroImageVisual />}
       />
 
       <section className="pb-8 sm:pb-10">
@@ -213,151 +204,25 @@ export async function HomePage() {
   );
 }
 
-function HeroIntentVisual() {
-  const railIcons: { id: string; icon: LucideIcon }[] = [
-    { id: "layers", icon: Layers3 },
-    { id: "workflow", icon: Workflow },
-    { id: "code", icon: Code2 },
-  ];
-  const topIcons: { id: string; icon: LucideIcon }[] = [
-    { id: "spark", icon: Sparkles },
-    { id: "structure", icon: Layers3 },
-    { id: "launch", icon: ArrowUpRight },
-  ];
-  const rows: { id: string; icon: LucideIcon }[] = [
-    { id: "surface", icon: Layers3 },
-    { id: "runtime", icon: Code2 },
-    { id: "delivery", icon: Workflow },
-  ];
-  const sideTiles: { id: string; icon: LucideIcon }[] = [
-    { id: "globe", icon: Globe },
-    { id: "flow", icon: Workflow },
-  ];
-  const bottomSignals: { id: string; icon: LucideIcon }[] = [
-    { id: "reach", icon: Globe },
-    { id: "finish", icon: Sparkles },
-    { id: "momentum", icon: ArrowUpRight },
-  ];
-
+function HeroImageVisual() {
   return (
-    <div className="relative isolate flex h-full min-h-[320px] items-stretch">
-      <div className="absolute inset-0 rounded-[1.8rem] bg-[radial-gradient(circle_at_top_right,rgba(117,95,255,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(117,95,255,0.1),transparent_30%)]" />
-      <div className="hero-section-mask absolute inset-0 opacity-45">
-        <div className="quiet-grid h-full w-full" />
-      </div>
-      <div className="absolute top-6 right-5 h-28 w-28 rounded-full border border-primary/12 bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-5 left-5 h-24 w-24 rounded-full border border-primary/10 bg-primary/8 blur-2xl" />
-
-      <div className="relative z-10 grid h-full w-full gap-4 lg:grid-cols-[76px_minmax(0,1fr)]">
-        <div className="hidden h-full flex-col justify-between py-3 lg:flex">
-          {railIcons.map(({ id, icon: Icon }) => (
-            <div
-              key={id}
-              className="flex h-14 w-14 items-center justify-center rounded-[1.35rem] border border-border/60 bg-background/54 text-foreground/72 shadow-[0_14px_40px_rgba(16,18,33,0.08)]"
-            >
-              <Icon className="size-5" strokeWidth={1.7} />
-            </div>
-          ))}
+    <div className="relative isolate h-full min-h-[320px] overflow-hidden rounded-[1.8rem]">
+      <Image
+        src="/images/home-hero-console.jpg"
+        alt="Close-up of an audio mixing console with faders and lit controls."
+        fill
+        sizes="(max-width: 1024px) 100vw, 30rem"
+        className="object-cover object-[center_55%]"
+        priority
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,10,18,0.04),rgba(7,10,18,0.26))]" />
+      <div className="absolute inset-0 rounded-[1.8rem] ring-1 ring-white/12 ring-inset" />
+      <div className="absolute inset-x-5 bottom-5 rounded-[1.2rem] border border-white/14 bg-black/28 px-4 py-3 backdrop-blur-sm">
+        <div className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.16em] uppercase text-white/72">
+          <span className="h-2 w-2 rounded-full bg-white/70" />
+          Sonicverse
         </div>
-
-        <div className="grid h-full gap-4">
-          <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_148px]">
-            <div className="rounded-[1.75rem] border border-border/60 bg-background/62 p-4 shadow-[0_20px_50px_rgba(16,18,33,0.1)] sm:p-5">
-              <div className="flex flex-wrap gap-2">
-                {topIcons.map(({ id, icon: Icon }) => (
-                  <div
-                    key={id}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/68 text-primary"
-                  >
-                    <Icon className="size-4" strokeWidth={1.8} />
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 grid gap-3">
-                {rows.map(({ id, icon: Icon }, index) => (
-                  <div
-                    key={id}
-                    className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-border/60 bg-primary/10 text-primary">
-                        <Icon className="size-5" strokeWidth={1.8} />
-                      </div>
-                      <div className="flex-1 space-y-2">
-                        <div
-                          className="h-2 rounded-full bg-foreground/14"
-                          style={{ width: `${70 - index * 8}%` }}
-                        />
-                        <div
-                          className="h-2 rounded-full bg-foreground/9"
-                          style={{ width: `${90 - index * 10}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-4">
-              <div className="rounded-[1.7rem] border border-border/60 bg-background/58 p-4 shadow-[0_18px_44px_rgba(16,18,33,0.08)]">
-                <div className="relative mx-auto flex h-28 w-28 items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border border-border/55" />
-                  <div className="absolute inset-[16%] rounded-full border border-primary/35" />
-                  <div className="absolute inset-[32%] rounded-full border border-border/45" />
-                  <div className="absolute top-1 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-primary/80" />
-                  <div className="absolute right-2 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-foreground/36" />
-                  <div className="absolute bottom-2 left-5 h-2.5 w-2.5 rounded-full bg-foreground/30" />
-                  <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-primary/12 text-primary">
-                    <Cloud className="size-6" strokeWidth={1.8} />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 sm:gap-2 lg:grid-cols-1">
-                {sideTiles.map(({ id, icon: Icon }) => (
-                  <div
-                    key={id}
-                    className="rounded-[1.35rem] border border-border/60 bg-background/52 p-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-[0.95rem] bg-primary/10 text-primary">
-                        <Icon className="size-4" strokeWidth={1.8} />
-                      </div>
-                      <div className="flex-1 space-y-2">
-                        <div className="h-2 rounded-full bg-foreground/12" />
-                        <div className="h-2 w-2/3 rounded-full bg-foreground/8" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            {bottomSignals.map(({ id, icon: Icon }) => (
-              <HeroSignal key={id} icon={Icon} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HeroSignal({ icon: Icon }: { icon: LucideIcon }) {
-  return (
-    <div className="rounded-[1.35rem] border border-border/60 bg-background/54 p-3 shadow-[0_16px_40px_rgba(16,18,33,0.08)]">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[1rem] border border-border/60 bg-background/78 text-primary">
-          <Icon className="size-4" strokeWidth={1.8} />
-        </div>
-        <div className="flex-1 space-y-2">
-          <div className="h-2 rounded-full bg-foreground/12" />
-          <div className="h-2 w-3/4 rounded-full bg-foreground/8" />
-        </div>
+        <div className="mt-2 h-px w-full bg-white/10" />
       </div>
     </div>
   );
