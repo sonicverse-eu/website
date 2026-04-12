@@ -103,6 +103,43 @@ function buildEmailHtml(values: {
 </html>`;
 }
 
+function buildConfirmationEmailHtml(values: {
+  name: string;
+  submittedAt: string;
+}): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We received your message</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f7fd;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:24px;border:1px solid rgba(15,23,42,0.08);overflow:hidden;">
+          <tr>
+            <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
+              <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
+              <h1 style="margin:8px 0 0;font-size:22px;font-weight:600;color:#ffffff;letter-spacing:-0.03em;">We received your message</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:36px 40px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Hi ${values.name},</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Thanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.</p>
+              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
 export async function submitContactForm(
   _previousState: ContactFormState,
   formData: FormData,
@@ -146,6 +183,7 @@ export async function submitContactForm(
 
   try {
     const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ""}`;
+    const confirmationSubject = "We received your message";
 
     // Prefer Cloudflare Email Workers binding `SEND_EMAIL` when available on globalThis.
     const sendBinding = (globalThis as any).SEND_EMAIL;
@@ -158,6 +196,14 @@ export async function submitContactForm(
         subject,
         text: `${values.name} <${values.email}>\n\n${values.brief}`,
         html: buildEmailHtml({ ...values, submittedAt }),
+      });
+
+      await sendBinding.send({
+        from: senderAddress,
+        to: values.email,
+        subject: confirmationSubject,
+        text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
+        html: buildConfirmationEmailHtml({ name: values.name, submittedAt }),
       });
     } else {
       return {
@@ -178,7 +224,7 @@ export async function submitContactForm(
 
   return {
     status: "success",
-    message: "Thanks. Your note is on its way — we'll reply with a thoughtful next step.",
+    message: "Thanks. We sent a confirmation email and will reply with a thoughtful next step.",
     errors: {},
     values: initialContactFormState.values,
   };
