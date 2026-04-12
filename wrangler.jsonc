@@ -26,10 +26,6 @@
 	},
 	"r2_buckets": [
 		{
-			"binding": "IMAGE_ASSETS",
-			"bucket_name": "sonicverse-website-media"
-		},
-		{
 			"bucket_name": "sonicverse-website-media",
 			"binding": "sonicverse_website_media"
 		}
