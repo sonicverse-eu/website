@@ -1,5 +1,7 @@
 "use server";
 
+import { Resend } from "resend";
+
 import {
   initialContactFormState,
   type ContactFormState,
@@ -8,6 +10,99 @@ import {
 function getString(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value.trim() : "";
+}
+
+function buildEmailHtml(values: {
+  name: string;
+  email: string;
+  company: string;
+  projectType: string;
+  brief: string;
+  submittedAt: string;
+}): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Contact Inquiry</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f7fd;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:24px;border:1px solid rgba(15,23,42,0.08);overflow:hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
+              <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
+              <h1 style="margin:8px 0 0;font-size:22px;font-weight:600;color:#ffffff;letter-spacing:-0.03em;">New Contact Inquiry</h1>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:36px 40px;">
+
+              <!-- Name & Email -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td width="50%" style="padding-right:12px;vertical-align:top;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Name</p>
+                    <p style="margin:0;font-size:15px;color:#0d1727;font-weight:500;">${values.name}</p>
+                  </td>
+                  <td width="50%" style="padding-left:12px;vertical-align:top;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Email</p>
+                    <p style="margin:0;font-size:15px;color:#432dd7;font-weight:500;">
+                      <a href="mailto:${values.email}" style="color:#432dd7;text-decoration:none;">${values.email}</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Company & Project Type -->
+              ${values.company || values.projectType ? `
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  ${values.company ? `
+                  <td width="50%" style="padding-right:12px;vertical-align:top;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Company</p>
+                    <p style="margin:0;font-size:15px;color:#0d1727;">${values.company}</p>
+                  </td>` : "<td></td>"}
+                  ${values.projectType ? `
+                  <td width="50%" style="padding-left:12px;vertical-align:top;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Project type</p>
+                    <p style="margin:0;font-size:15px;color:#0d1727;">${values.projectType}</p>
+                  </td>` : "<td></td>"}
+                </tr>
+              </table>` : ""}
+
+              <!-- Divider -->
+              <hr style="border:none;border-top:1px solid rgba(15,23,42,0.08);margin:0 0 24px;" />
+
+              <!-- Brief -->
+              <p style="margin:0 0 8px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Project brief</p>
+              <div style="background:#f4f7fd;border-radius:16px;padding:20px 24px;border:1px solid rgba(15,23,42,0.06);">
+                <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">${values.brief.replace(/\n/g, "<br/>")}</p>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
+              <p style="margin:0;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
 }
 
 export async function submitContactForm(
@@ -25,9 +120,7 @@ export async function submitContactForm(
   const source = getString(formData, "source") || "/contact";
   const errors: ContactFormState["errors"] = {};
 
-  if (!values.name) {
-    errors.name = "Please share your name.";
-  }
+  if (!values.name) errors.name = "Please share your name.";
 
   if (!values.email) {
     errors.email = "Please share an email address.";
@@ -42,64 +135,53 @@ export async function submitContactForm(
   }
 
   if (Object.keys(errors).length > 0) {
-    return {
-      status: "error",
-      message: "Please review the highlighted fields.",
-      errors,
-      values,
-    };
+    return { status: "error", message: "Please review the highlighted fields.", errors, values };
   }
 
-  const webhookUrl = process.env.CONTACT_WEBHOOK_URL;
+  const apiKey = process.env.RESEND_API_KEY;
+  const fromAddress = process.env.RESEND_FROM ?? "Sonicverse <hello@sonicverse.eu>";
+  const toAddress = process.env.RESEND_TO ?? "hello@sonicverse.eu";
 
-  if (!webhookUrl) {
+  if (!apiKey) {
     return {
       status: "error",
-      message:
-        "Contact delivery is not configured yet. Add CONTACT_WEBHOOK_URL in your runtime secrets before going live.",
+      message: "Contact delivery is not configured. Set RESEND_API_KEY in your Cloudflare secrets.",
       errors: {},
       values,
     };
   }
 
-  try {
-    const response = await fetch(webhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...values,
-        source,
-        submittedAt: new Date().toISOString(),
-      }),
-      cache: "no-store",
-    });
+  const resend = new Resend(apiKey);
+  const submittedAt = new Date().toLocaleString("en-GB", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 
-    if (!response.ok) {
-      return {
-        status: "error",
-        message:
-          "The message could not be delivered right now. Please try again or use the direct email listed below.",
-        errors: {},
-        values,
-      };
-    }
+  const { error } = await resend.emails.send({
+    from: fromAddress,
+    to: [toAddress],
+    replyTo: values.email,
+    subject: `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ""}`,
+    html: buildEmailHtml({ ...values, submittedAt }),
+    tags: [
+      { name: "source", value: source.replace(/\//g, "_") || "contact" },
+      ...(values.projectType ? [{ name: "project_type", value: values.projectType.replace(/\s+/g, "_") }] : []),
+    ],
+  });
 
-    return {
-      status: "success",
-      message:
-        "Thanks. Your note is on its way, and Sonicverse will reply with a thoughtful next step.",
-      errors: {},
-      values: initialContactFormState.values,
-    };
-  } catch {
+  if (error) {
     return {
       status: "error",
-      message:
-        "Something interrupted delivery. Please try again shortly or use the direct email route.",
+      message: "The message could not be delivered right now. Please try again or email us directly.",
       errors: {},
       values,
     };
   }
+
+  return {
+    status: "success",
+    message: "Thanks. Your note is on its way — we'll reply with a thoughtful next step.",
+    errors: {},
+    values: initialContactFormState.values,
+  };
 }
