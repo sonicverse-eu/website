@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Manrope, Unbounded } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { Footer } from "@/components/site/footer";
@@ -10,19 +10,23 @@ import { cn } from "@/lib/utils";
 
 import "./globals.css";
 
-const heading = Geist({
+const heading = Unbounded({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-heading",
+  weight: ["500", "600", "700"],
 });
 
-const body = IBM_Plex_Sans({
+const body = Manrope({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-body",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const mono = IBM_Plex_Mono({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-mono",
   weight: ["400", "500"],
 });
