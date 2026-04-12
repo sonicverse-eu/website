@@ -96,166 +96,150 @@ export function Header() {
   };
 
   return (
-    <motion.header
-      className="pointer-events-none fixed inset-x-0 top-0 z-50"
-      initial={false}
-      animate={
-        reduceMotion
-          ? { y: 0, scale: 1, filter: "blur(0px)" }
-          : hidden
-            ? {
-                y: "-118%",
-                scale: 0.985,
-                filter: "blur(3px)",
-              }
-            : {
-                y: [hidden ? -24 : -14, 0],
-                scale: [0.985, 1],
-                filter: ["blur(4px)", "blur(0px)"],
-              }
-      }
-      transition={
-        reduceMotion
-          ? { duration: 0.18, ease: [0.4, 0, 0.2, 1] }
-          : hidden
-            ? {
-                duration: 0.2,
-                ease: [0.4, 0, 1, 1],
-              }
-            : {
-                y: {
-                  type: "spring",
-                  stiffness: 420,
-                  damping: 34,
-                  mass: 0.82,
-                },
-                scale: {
-                  duration: 0.22,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-                filter: {
-                  duration: 0.22,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-              }
-      }
-      onFocusCapture={() => setHidden(false)}
-      style={{ transformOrigin: "top center" }}
-    >
-      <Container className="pt-5">
-        <div
-          className={cn(
-            "pointer-events-auto flex items-center justify-between rounded-full px-3 py-3 transition-[background-color,border-color,box-shadow,backdrop-filter,filter] duration-300 will-change-transform sm:px-4",
-            scrolled
-              ? "glass-nav border border-border/75 backdrop-blur-[28px] backdrop-saturate-[1.8]"
-              : "border border-transparent bg-transparent",
-          )}
-        >
-          <Link href="/" className="group flex items-center gap-3 rounded-full px-2 py-1">
-            <BrandMark className="h-9 w-auto text-primary transition-transform duration-300 group-hover:scale-[1.06]" />
-            <div className="flex flex-col leading-none">
-              <span className="font-heading text-sm font-semibold tracking-[0.12em] uppercase">
-                {siteName}
-              </span>
-            </div>
-          </Link>
+    <>
+      {/*
+        Blur layer lives here — outside motion.header — so it has no transformed
+        ancestor. backdrop-filter only works when the element itself (or a
+        non-transformed fixed ancestor) paints directly over the viewport.
+      */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none fixed inset-x-0 top-0 z-[49] h-[5.5rem] border-b border-border/60",
+          scrolled && !hidden ? "opacity-100" : "opacity-0",
+        )}
+        style={{
+          backdropFilter: "blur(20px) saturate(1.8)",
+          WebkitBackdropFilter: "blur(20px) saturate(1.8)",
+          background:
+            "linear-gradient(180deg, var(--header-bg-from), var(--header-bg-to))",
+        }}
+      />
 
-          <nav
-            className={cn(
-              "hidden items-center gap-1 rounded-full p-1 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 lg:flex",
-              scrolled
-                ? "border border-border/70 bg-background/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl"
-                : "border border-border/70 bg-background/40 backdrop-blur",
-            )}
-          >
-            {navItems.map((item) => {
-              const active = isActivePath(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "rounded-full px-4 py-2 text-sm transition",
-                    scrolled
-                      ? "text-foreground/78 hover:text-foreground"
-                      : "text-foreground/62 hover:text-foreground",
-                    active && "bg-primary/10 text-primary",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="hidden items-center gap-3 lg:flex">
-            <ThemeToggle className="hidden lg:flex" />
-            <Button asChild size="sm" className="h-10 px-4">
-              <Link href="/contact">Contact Us</Link>
-            </Button>
-          </div>
-
-          <div className="lg:hidden">
-            <Sheet
-              open={menuOpen}
-              onOpenChange={(open) => {
-                setMenuOpen(open);
-                if (open) {
-                  setHidden(false);
+      <motion.header
+        className="pointer-events-none fixed inset-x-0 top-0 z-50"
+        initial={{ y: -32, scale: 0.97, opacity: 0 }}
+        animate={
+          reduceMotion
+            ? { y: 0, scale: 1, opacity: 1 }
+            : hidden
+              ? { y: "-120%", scale: 0.96, opacity: 0 }
+              : { y: 0, scale: 1, opacity: 1 }
+        }
+        transition={
+          reduceMotion
+            ? { duration: 0.15 }
+            : hidden
+              ? { duration: 0.22, ease: [0.4, 0, 1, 1] }
+              : {
+                  y: { type: "spring", stiffness: 380, damping: 28, mass: 0.7 },
+                  scale: { type: "spring", stiffness: 380, damping: 28, mass: 0.7 },
+                  opacity: { duration: 0.18, ease: "easeOut" },
                 }
-              }}
-            >
-              <SheetTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className="size-10 rounded-full p-0"
-                  aria-label="Open menu"
-                >
-                  <Menu className="size-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right">
-                <SheetHeader>
-                  <SheetTitle>Sonicverse</SheetTitle>
-                  <SheetDescription>
-                    Open-source-native product engineering with a calm technical point of
-                    view.
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="flex flex-col gap-2">
-                  {navItems.map((item) => {
-                    const active = isActivePath(item.href);
-                    return (
-                      <SheetClose asChild key={item.href}>
-                        <Link
-                          href={item.href}
-                          className={cn(
-                            "rounded-2xl border px-4 py-3 text-sm transition",
-                            active
-                              ? "border-primary/18 bg-primary/8 text-primary"
-                              : "border-border/60 bg-background/50 text-foreground/72",
-                          )}
-                        >
-                          {item.label}
-                        </Link>
-                      </SheetClose>
-                    );
-                  })}
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <ThemeToggle />
-                  <Button asChild className="flex-1">
-                    <SheetClose asChild>
-                      <Link href="/contact">Start a project</Link>
-                    </SheetClose>
+        }
+        onFocusCapture={() => setHidden(false)}
+        style={{ transformOrigin: "top center" }}
+      >
+        <Container className="pt-6 pb-5">
+          <div className="pointer-events-auto flex items-center justify-between px-1 sm:px-2">
+            <Link href="/" className="group flex items-center gap-3 rounded-full px-2 py-1">
+              <BrandMark className="h-9 w-auto text-primary transition-transform duration-300 group-hover:scale-[1.06]" />
+              <div className="flex flex-col leading-none">
+                <span className="font-heading text-sm font-semibold tracking-[0.12em] uppercase">
+                  {siteName}
+                </span>
+              </div>
+            </Link>
+
+            <nav className="hidden items-center gap-1 rounded-full border border-border/50 bg-foreground/[0.04] p-1 lg:flex">
+              {navItems.map((item) => {
+                const active = isActivePath(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "rounded-full px-4 py-2 text-sm transition",
+                      active
+                        ? "bg-primary text-white shadow-[0_4px_14px_rgba(67,45,215,0.3)]"
+                        : "text-foreground/68 hover:bg-foreground/[0.06] hover:text-foreground",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="hidden items-center gap-3 lg:flex">
+              <ThemeToggle className="hidden lg:flex" />
+              <Button asChild size="sm" className="h-10 px-4">
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </div>
+
+            <div className="lg:hidden">
+              <Sheet
+                open={menuOpen}
+                onOpenChange={(open) => {
+                  setMenuOpen(open);
+                  if (open) {
+                    setHidden(false);
+                  }
+                }}
+              >
+                <SheetTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="size-10 rounded-full p-0"
+                    aria-label="Open menu"
+                  >
+                    <Menu className="size-5" />
                   </Button>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetTrigger>
+                <SheetContent side="right">
+                  <SheetHeader>
+                    <SheetTitle>Sonicverse</SheetTitle>
+                    <SheetDescription>
+                      Open-source-native product engineering with a calm technical point of
+                      view.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-2">
+                    {navItems.map((item) => {
+                      const active = isActivePath(item.href);
+                      return (
+                        <SheetClose asChild key={item.href}>
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              "rounded-2xl border px-4 py-3 text-sm transition",
+                              active
+                                ? "border-primary/18 bg-primary/10 text-primary"
+                                : "border-border/60 bg-background/68 text-foreground/72",
+                            )}
+                          >
+                            {item.label}
+                          </Link>
+                        </SheetClose>
+                      );
+                    })}
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <ThemeToggle />
+                    <Button asChild className="flex-1">
+                      <SheetClose asChild>
+                        <Link href="/contact">Start a project</Link>
+                      </SheetClose>
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
-        </div>
-      </Container>
-    </motion.header>
+        </Container>
+      </motion.header>
+    </>
   );
 }

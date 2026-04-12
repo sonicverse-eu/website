@@ -1,4 +1,5 @@
 import Image from "next/image";
+import WorkerImage from "@/components/ui/worker-image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -52,6 +53,22 @@ const statusSignals: { id: string; icon: LucideIcon; label: string; value: strin
   { id: "finish",   icon: Sparkles,     label: "Quality",   value: "Intent-first" },
   { id: "momentum", icon: ArrowUpRight, label: "Delivery",  value: "Open source"  },
 ];
+
+
+function HeroImageVisual() {
+  return (
+    <div className="relative h-full overflow-hidden rounded-[1.6rem]">
+      <WorkerImage
+        src="/images/home-hero-visual.jpg"
+        alt="Professional audio mixing console"
+        fill
+        className="object-cover object-center"
+        sizes="(max-width: 1024px) 100vw, 30rem"
+        priority
+      />
+    </div>
+  );
+}
 
 export async function HomePage() {
   const [featuredBlog, recentChangelog, recentRoadmap] = await Promise.all([

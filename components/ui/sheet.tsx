@@ -41,7 +41,7 @@ export const SheetContent = React.forwardRef<
     <Dialog.Content
       ref={ref}
       className={cn(
-        "fixed z-50 flex flex-col gap-6 border border-border/70 bg-popover p-6 text-popover-foreground shadow-2xl backdrop-blur-xl transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out sm:max-w-md",
+        "fixed z-50 flex flex-col gap-6 border border-border/70 bg-popover p-6 text-popover-foreground shadow-2xl backdrop-blur-2xl backdrop-saturate-[1.7] transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out sm:max-w-md",
         side === "right" &&
           "inset-y-4 right-4 h-auto w-[calc(100%-2rem)] rounded-[1.8rem] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:w-[420px]",
         className,
@@ -49,7 +49,7 @@ export const SheetContent = React.forwardRef<
       {...props}
     >
       {children}
-      <Dialog.Close className="absolute top-5 right-5 rounded-full border border-border/80 p-2 text-foreground/60 transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20">
+      <Dialog.Close className="absolute top-5 right-5 rounded-full border border-border/80 bg-background/52 p-2 text-foreground/60 backdrop-blur-sm transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20">
         <X className="size-4" />
         <span className="sr-only">Close menu</span>
       </Dialog.Close>

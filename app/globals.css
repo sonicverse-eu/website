@@ -53,9 +53,9 @@
   --input: rgba(255, 255, 255, 0.72);
   --ring: rgba(67, 45, 215, 0.24);
   --radius: 1.5rem;
-  --surface-1: rgba(255, 255, 255, 0.74);
-  --surface-2: rgba(255, 255, 255, 0.54);
-  --surface-3: rgba(240, 244, 255, 0.86);
+  --surface-1: rgba(255, 255, 255, 0.84);
+  --surface-2: rgba(255, 255, 255, 0.66);
+  --surface-3: rgba(240, 244, 255, 0.92);
   --accent-solid: #432dd7;
   --accent-soft: #6f5bf0;
   --accent-fog: rgba(67, 45, 215, 0.12);
@@ -64,6 +64,8 @@
   --page-glow: rgba(95, 114, 184, 0.12);
   --shadow-soft: 0 18px 70px rgba(73, 88, 124, 0.12);
   --shadow-strong: 0 24px 120px rgba(37, 41, 73, 0.16);
+  --header-bg-from: rgba(255, 255, 255, 0.72);
+  --header-bg-to: rgba(255, 255, 255, 0.54);
 }
 
 .dark {
@@ -85,9 +87,9 @@
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.06);
   --ring: rgba(112, 97, 255, 0.38);
-  --surface-1: rgba(255, 255, 255, 0.045);
-  --surface-2: rgba(255, 255, 255, 0.08);
-  --surface-3: rgba(15, 20, 40, 0.88);
+  --surface-1: rgba(255, 255, 255, 0.07);
+  --surface-2: rgba(255, 255, 255, 0.12);
+  --surface-3: rgba(15, 20, 40, 0.92);
   --accent-solid: #432dd7;
   --accent-soft: #9b8dff;
   --accent-fog: rgba(67, 45, 215, 0.16);
@@ -96,6 +98,8 @@
   --page-glow: rgba(120, 137, 255, 0.16);
   --shadow-soft: 0 20px 80px rgba(0, 0, 0, 0.28);
   --shadow-strong: 0 24px 120px rgba(0, 0, 0, 0.42);
+  --header-bg-from: rgba(10, 16, 30, 0.78);
+  --header-bg-to: rgba(7, 12, 22, 0.62);
 }
 
 @layer base {
@@ -182,6 +186,8 @@
     @apply rounded-[2rem] border border-border/60;
     background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
     box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
   }
 
   .hero-visual-shell {
@@ -207,6 +213,8 @@
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full border border-border/70 px-3 py-1 text-[0.7rem] font-medium tracking-[0.18em] uppercase;
     background: color-mix(in srgb, var(--surface-1) 74%, transparent);
+    backdrop-filter: blur(10px) saturate(1.4);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
   }
 
   .hero-title {
@@ -230,28 +238,30 @@
   }
 
   .glass-nav {
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, white 18%, var(--surface-1) 82%),
-        color-mix(in srgb, white 7%, var(--surface-1) 74%)
-      );
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.62),
+      rgba(255, 255, 255, 0.48)
+    );
+    backdrop-filter: blur(72px) saturate(2.4);
+    -webkit-backdrop-filter: blur(72px) saturate(2.4);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.62),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.16),
-      0 18px 70px rgba(20, 22, 39, 0.14);
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.24),
+      0 18px 70px rgba(20, 22, 39, 0.16);
   }
 
   .dark .glass-nav {
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, white 10%, var(--surface-1) 60%),
-        color-mix(in srgb, white 3%, var(--surface-1) 72%)
-      );
+    background: linear-gradient(
+      180deg,
+      rgba(12, 20, 38, 0.72),
+      rgba(8, 14, 28, 0.58)
+    );
+    backdrop-filter: blur(72px) saturate(2.4);
+    -webkit-backdrop-filter: blur(72px) saturate(2.4);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-      0 20px 84px rgba(0, 0, 0, 0.34);
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      0 20px 84px rgba(0, 0, 0, 0.42);
   }
 }
