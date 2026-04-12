@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ContentLinkCard, ContentPageHeader, MetaInline, TagList } from "@/components/content/content-ui";
 import { Reveal } from "@/components/site/reveal";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { getCollectionEntries, getFeaturedBlogPost, formatContentDate } from "@/lib/content";
@@ -59,7 +60,7 @@ export default async function BlogPage() {
             <Reveal>
               <Link
                 href={featured.href}
-                className="block rounded-[2.2rem] border border-primary/18 bg-[linear-gradient(135deg,rgba(67,45,215,0.12),rgba(67,45,215,0.03))] p-6 shadow-[var(--shadow-soft)] transition hover:border-primary/30 sm:p-8"
+                className="section-frame block p-6 backdrop-blur-xl backdrop-saturate-[1.5] transition hover:border-primary/28 sm:p-8"
               >
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
                   <div className="space-y-5">
@@ -74,12 +75,10 @@ export default async function BlogPage() {
                     </div>
                     <TagList tags={featured.frontmatter.tags} />
                   </div>
-                  <div className="space-y-4 rounded-[1.7rem] border border-border/70 bg-background/44 p-5">
+                  <div className="space-y-4 rounded-[1.7rem] border border-border/60 bg-background/52 p-5 backdrop-blur-sm backdrop-saturate-[1.4]">
                     <MetaInline>{formatContentDate(featured.frontmatter.publishedAt)}</MetaInline>
                     <MetaInline>{featured.readingTimeMinutes} min read</MetaInline>
-                    <span className="inline-flex h-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#4d35ef_0%,#432dd7_100%)] px-6 text-[0.95rem] font-medium text-white shadow-[0_14px_40px_rgba(67,45,215,0.28)]">
-                      Read featured note
-                    </span>
+                    <Button size="lg" className="w-full">Read featured note</Button>
                   </div>
                 </div>
               </Link>
