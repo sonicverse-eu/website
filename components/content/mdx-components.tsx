@@ -112,12 +112,12 @@ function DataTable({ className, ...props }: ComponentPropsWithoutRef<"table">) {
 
 export const mdxComponents = {
   h1: ({ className, ...props }) => (
-    <h1 className={cn("text-4xl font-semibold tracking-[-0.06em] text-foreground", className)} {...props} />
+    <h1 className={cn("text-[2.4rem] font-semibold tracking-[-0.06em] text-foreground sm:text-[2.9rem]", className)} {...props} />
   ),
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        "pt-6 text-[1.9rem] font-semibold tracking-[-0.06em] text-foreground sm:text-[2.2rem]",
+        "pt-6 text-[1.65rem] font-semibold tracking-[-0.06em] text-foreground sm:text-[1.95rem]",
         className,
       )}
       {...props}
@@ -126,7 +126,7 @@ export const mdxComponents = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        "pt-3 text-[1.35rem] font-medium tracking-[-0.05em] text-foreground sm:text-[1.5rem]",
+        "pt-3 text-[1.22rem] font-medium tracking-[-0.05em] text-foreground sm:text-[1.35rem]",
         className,
       )}
       {...props}

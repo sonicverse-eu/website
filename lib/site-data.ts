@@ -8,13 +8,8 @@ export const siteName = "Sonicverse";
 export const navItems: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/open-source", label: "Open Source" },
   { href: "/blog", label: "Blog" },
-  { href: "/changelog", label: "Changelog" },
-  { href: "/roadmap", label: "Roadmap" },
   { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export const principles = [
