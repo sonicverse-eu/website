@@ -3,10 +3,9 @@ import "server-only";
 import { cache } from "react";
 
 import matter from "gray-matter";
-import remarkGfm from "remark-gfm";
 
-import { mdxComponents } from "@/components/content/mdx-components";
 import { contentManifest } from "@/generated/content-manifest";
+import { importMdxFile } from "./mdx-imports";
 
 import {
   blogFrontmatterSchema,
@@ -78,21 +77,11 @@ function parseFrontmatter<C extends ContentCollection>(
 async function compileEntry<C extends ContentCollection>(
   entry: ContentEntry<C>,
 ): Promise<RenderedContentEntry<C>> {
-  const { compileMDX } = await import("next-mdx-remote/rsc");
-  const { content } = await compileMDX({
-    source: entry.body,
-    components: mdxComponents,
-    options: {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-      },
-      parseFrontmatter: false,
-    },
-  });
-
+  // Direct MDX import will be used instead of dynamic compilation.
+  // This function can be removed or refactored as needed.
   return {
     ...entry,
-    content,
+    content: null, // Placeholder, update usage to direct MDX import
   };
 }
 
@@ -128,6 +117,22 @@ const getRenderedEntryCached = cache(async <C extends ContentCollection>(
 
   return compileEntry(entry);
 });
+
+/**
+ * Get an MDX component for direct rendering
+ */
+export async function getMdxComponent<C extends ContentCollection>(
+  collection: C,
+  slug: string,
+) {
+  try {
+    const { default: MdxComponent } = await importMdxFile(collection, slug);
+    return MdxComponent;
+  } catch (error) {
+    console.error(`Failed to get MDX component for ${collection}/${slug}:`, error);
+    return null;
+  }
+}
 
 export async function getCollectionEntries<C extends ContentCollection>(collection: C) {
   return getCollectionEntriesCached(collection);
