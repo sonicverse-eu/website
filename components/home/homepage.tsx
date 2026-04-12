@@ -1,5 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  Cloud,
+  Globe,
+  Package2,
+  Server,
+  Sparkles,
+} from "lucide-react";
 
 import { SignalsSection } from "@/components/content/content-ui";
 import { CTASection } from "@/components/site/cta-section";
@@ -20,6 +29,7 @@ import {
   capabilities,
   principles,
   projectArchetypes,
+  repositorySignals,
   serviceAreas,
 } from "@/lib/site-data";
 import {
@@ -28,6 +38,20 @@ import {
   getLatestChangelogEntries,
   getRecentRoadmapEntries,
 } from "@/lib/content";
+
+const capabilityIcons: LucideIcon[] = [Sparkles, Server, Package2];
+
+const capabilityRows: { id: string; icon: LucideIcon; label: string; sub: string }[] = [
+  { id: "product",  icon: Sparkles, label: "Product engineering",  sub: "Modern surfaces & delivery systems" },
+  { id: "platform", icon: Server,   label: "Platform foundations", sub: "Cloudflare-ready web platforms"     },
+  { id: "oss",      icon: Package2, label: "Open-source tooling",  sub: "Public primitives & packages"       },
+];
+
+const statusSignals: { id: string; icon: LucideIcon; label: string; value: string }[] = [
+  { id: "reach",    icon: Globe,        label: "Platform",  value: "Edge-ready"   },
+  { id: "finish",   icon: Sparkles,     label: "Quality",   value: "Intent-first" },
+  { id: "momentum", icon: ArrowUpRight, label: "Delivery",  value: "Open source"  },
+];
 
 export async function HomePage() {
   const [featuredBlog, recentChangelog, recentRoadmap] = await Promise.all([
@@ -83,17 +107,23 @@ export async function HomePage() {
             />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-3">
-            {capabilities.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.05}>
-                <Card className="h-full">
-                  <CardHeader>
-                    <Badge variant="muted">0{index + 1}</Badge>
-                    <CardTitle>{item.title}</CardTitle>
-                    <CardDescription>{item.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Reveal>
-            ))}
+            {capabilities.map((item, index) => {
+              const CapIcon = capabilityIcons[index];
+              return (
+                <Reveal key={item.title} delay={index * 0.05}>
+                  <Card className="h-full">
+                    <CardHeader>
+                      <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-[1.1rem] border border-border/60 bg-primary/10 text-primary">
+                        <CapIcon className="size-5" strokeWidth={1.8} />
+                      </div>
+                      <Badge variant="muted">0{index + 1}</Badge>
+                      <CardTitle>{item.title}</CardTitle>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                </Reveal>
+              );
+            })}
           </div>
         </Container>
       </section>
@@ -122,15 +152,17 @@ export async function HomePage() {
                     <CardTitle>{service.title}</CardTitle>
                     <CardDescription>{service.description}</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    {service.bullets.map((bullet) => (
-                      <div
-                        key={bullet}
-                        className="rounded-2xl border border-border/60 bg-background/34 px-4 py-3 text-sm text-foreground/66"
-                      >
-                        {bullet}
-                      </div>
-                    ))}
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {service.bullets.map((bullet) => (
+                        <span
+                          key={bullet}
+                          className="inline-flex items-center rounded-full border border-border/55 bg-background/40 px-3 py-1 text-xs text-foreground/60"
+                        >
+                          {bullet}
+                        </span>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               </Reveal>
@@ -145,29 +177,27 @@ export async function HomePage() {
       </section>
 
       <section className="section-space">
-        <Container className="space-y-10">
+        <Container>
           <Reveal>
-            <SectionHeader
-              eyebrow="Open source"
-              title="Open source is part of the operating model."
-              description="Public building blocks, clear contribution paths, and systems that stay legible outside the core team."
-            />
+            <div className="section-frame space-y-10 px-6 py-10 sm:px-10 sm:py-12">
+              <SectionHeader
+                eyebrow="Open source"
+                title="Open source is part of the operating model."
+                description="Public building blocks, clear contribution paths, and systems that stay legible outside the core team."
+              />
+              <div className="grid gap-4 md:grid-cols-3">
+                {repositorySignals.map((item, index) => (
+                  <Reveal key={item} delay={index * 0.05}>
+                    <Card className="h-full">
+                      <CardHeader>
+                        <CardTitle className="text-xl">{item}</CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
           </Reveal>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              "Public primitives shaped by delivery work",
-              "Architecture that stays readable outside the founding team",
-              "Tooling that helps maintainers as much as adopters",
-            ].map((item, index) => (
-              <Reveal key={item} delay={index * 0.05}>
-                <Card className="h-full">
-                  <CardHeader>
-                    <CardTitle className="text-xl">{item}</CardTitle>
-                  </CardHeader>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
         </Container>
       </section>
 
@@ -204,23 +234,78 @@ export async function HomePage() {
   );
 }
 
-function HeroImageVisual() {
+function HeroIntentVisual() {
+  const railIcons = capabilityRows.map(({ id, icon }) => ({ id, icon }));
+
   return (
-    <div className="relative isolate h-full min-h-[320px] overflow-hidden rounded-[1.8rem]">
-      <Image
-        src="/images/home-hero-console.jpg"
-        alt="Close-up of an audio mixing console with faders and lit controls."
-        fill
-        sizes="(max-width: 1024px) 100vw, 30rem"
-        className="object-cover object-[center_55%]"
-        priority
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,10,18,0.04),rgba(7,10,18,0.26))]" />
-      <div className="absolute inset-0 rounded-[1.8rem] ring-1 ring-white/12 ring-inset" />
-      <div className="absolute inset-x-5 bottom-5 rounded-[1.2rem] border border-white/14 bg-black/28 px-4 py-3 backdrop-blur-sm">
-        <div className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.16em] uppercase text-white/72">
-          <span className="h-2 w-2 rounded-full bg-white/70" />
-          Sonicverse
+    <div className="relative isolate flex h-full min-h-[320px] items-stretch">
+      <div className="absolute inset-0 rounded-[1.8rem] bg-[radial-gradient(circle_at_top_right,rgba(117,95,255,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(117,95,255,0.1),transparent_30%)]" />
+      <div className="hero-section-mask absolute inset-0 opacity-45">
+        <div className="quiet-grid h-full w-full" />
+      </div>
+      <div className="absolute top-6 right-5 h-28 w-28 rounded-full border border-primary/12 bg-primary/10 blur-3xl" />
+      <div className="absolute bottom-5 left-5 h-24 w-24 rounded-full border border-primary/10 bg-primary/8 blur-2xl" />
+
+      <div className="relative z-10 grid h-full w-full gap-4 lg:grid-cols-[76px_minmax(0,1fr)]">
+        <div className="hidden h-full flex-col justify-between py-3 lg:flex">
+          {railIcons.map(({ id, icon: Icon }) => (
+            <div
+              key={id}
+              className="flex h-14 w-14 items-center justify-center rounded-[1.35rem] border border-border/60 bg-background/54 text-foreground/72 shadow-[0_14px_40px_rgba(16,18,33,0.08)]"
+            >
+              <Icon className="size-5" strokeWidth={1.7} />
+            </div>
+          ))}
+        </div>
+
+        <div className="grid h-full gap-4">
+          <div className="rounded-[1.75rem] border border-border/60 bg-background/62 p-4 shadow-[0_20px_50px_rgba(16,18,33,0.1)] sm:p-5">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-[0.65rem] font-medium tracking-[0.18em] uppercase text-foreground/40">
+                Capability areas
+              </span>
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Cloud className="size-3" strokeWidth={2} />
+              </div>
+            </div>
+            <div className="grid gap-3">
+              {capabilityRows.map(({ id, icon: Icon, label, sub }) => (
+                <div key={id} className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-border/60 bg-primary/10 text-primary">
+                      <Icon className="size-5" strokeWidth={1.8} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium tracking-[-0.01em] text-foreground/84">{label}</p>
+                      <p className="mt-0.5 truncate text-xs text-foreground/48">{sub}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            {statusSignals.map(({ id, icon, label, value }) => (
+              <HeroSignal key={id} icon={icon} label={label} value={value} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroSignal({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
+  return (
+    <div className="rounded-[1.35rem] border border-border/60 bg-background/54 p-3 shadow-[0_16px_40px_rgba(16,18,33,0.08)]">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-[1rem] border border-border/60 bg-background/78 text-primary">
+          <Icon className="size-4" strokeWidth={1.8} />
+        </div>
+        <div className="min-w-0">
+          <p className="text-[0.68rem] font-medium tracking-[0.14em] uppercase text-foreground/40">{label}</p>
+          <p className="text-sm font-medium text-foreground/76">{value}</p>
         </div>
         <div className="mt-2 h-px w-full bg-white/10" />
       </div>

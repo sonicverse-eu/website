@@ -4,6 +4,8 @@ import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
 import { navItems } from "@/lib/site-data";
 
+import { BrandMark } from "./brand-mark";
+
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border/60 py-14">
@@ -11,9 +13,12 @@ export function Footer() {
       <Container className="space-y-10">
         <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div className="space-y-4">
-            <p className="font-heading text-sm font-semibold tracking-[0.12em] uppercase text-foreground/62">
-              Sonicverse
-            </p>
+            <div className="flex items-center gap-3">
+              <BrandMark className="h-8 w-auto text-primary/70" />
+              <p className="font-heading text-sm font-semibold tracking-[0.12em] uppercase text-foreground/62">
+                Sonicverse
+              </p>
+            </div>
             <h2 className="max-w-md text-3xl leading-[1.08] font-medium tracking-[-0.03em] text-balance">
               Modern software systems, digital products, and open-source technology.
             </h2>
