@@ -25,7 +25,7 @@ async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Prom
       console.log(`Image not found in R2: ${key}`);
     }
   } catch (e) {
-    console.error(`R2 fetch error for key ${key}:`, e);
+    console.error("R2 fetch error for key %s:", key, e);
   }
   return null;
 }
