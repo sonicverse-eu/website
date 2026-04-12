@@ -58,8 +58,8 @@ export function PageHero({
   return (
     <section
       className={cn(
-        "relative overflow-hidden pt-34 pb-18 sm:pt-38 sm:pb-22 lg:pt-42 lg:pb-24",
-        compact && "pb-18 sm:pb-20",
+        "relative overflow-hidden pt-32 pb-[4.5rem] sm:pt-36 sm:pb-[5.5rem] lg:pt-40 lg:pb-24",
+        compact && "pb-16 sm:pb-20",
         className,
       )}
     >
