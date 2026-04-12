@@ -66,11 +66,11 @@ wrangler secret put EMAIL_RECIPIENT
 ## Optimizations Applied
 
 1. **Edge Runtime**: Configured for Cloudflare Workers edge execution
-2. **Caching**: Optimized caching headers and strategies
-3. **Minification**: Enabled code minification
-4. **Tree Shaking**: Configured for dead code elimination
+2. **Caching**: Configure caching at the Cloudflare dashboard level (Cache Rules)
+3. **Minification**: Enabled code minification via Next.js
+4. **Tree Shaking**: Automatic via Next.js build process
 5. **Image Optimization**: Configured for Cloudflare Images
-6. **Observability**: Enabled logging and tracing
+6. **Observability**: Enabled logging and tracing in wrangler.jsonc
 7. **Type Safety**: Added Cloudflare environment types
 
 ## Troubleshooting
