@@ -145,9 +145,9 @@ export function Header() {
       <Container className="pt-5">
         <div
           className={cn(
-            "pointer-events-auto flex items-center justify-between rounded-full px-3 py-3 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 will-change-transform sm:px-4",
+            "pointer-events-auto flex items-center justify-between rounded-full px-3 py-3 transition-[background-color,border-color,box-shadow,backdrop-filter,filter] duration-300 will-change-transform sm:px-4",
             scrolled
-              ? "glass-nav border border-border/70 backdrop-blur-xl"
+              ? "glass-nav border border-border/75 backdrop-blur-[28px] backdrop-saturate-[1.8]"
               : "border border-transparent bg-transparent",
           )}
         >
@@ -157,13 +157,17 @@ export function Header() {
               <span className="font-heading text-sm font-semibold tracking-[0.12em] uppercase">
                 {siteName}
               </span>
-              <span className="mt-1 text-[0.72rem] tracking-[0.04em] text-foreground/52">
-                Open-source software initiative
-              </span>
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-background/40 p-1 backdrop-blur lg:flex">
+          <nav
+            className={cn(
+              "hidden items-center gap-1 rounded-full p-1 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 lg:flex",
+              scrolled
+                ? "border border-border/70 bg-background/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl"
+                : "border border-border/70 bg-background/40 backdrop-blur",
+            )}
+          >
             {navItems.map((item) => {
               const active = isActivePath(item.href);
               return (
@@ -171,7 +175,10 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "rounded-full px-4 py-2 text-sm text-foreground/62 transition hover:text-foreground",
+                    "rounded-full px-4 py-2 text-sm transition",
+                    scrolled
+                      ? "text-foreground/78 hover:text-foreground"
+                      : "text-foreground/62 hover:text-foreground",
                     active && "bg-primary/10 text-primary",
                   )}
                 >
@@ -184,7 +191,7 @@ export function Header() {
           <div className="hidden items-center gap-3 lg:flex">
             <ThemeToggle className="hidden lg:flex" />
             <Button asChild size="sm" className="h-10 px-4">
-              <Link href="/contact">Start a project</Link>
+              <Link href="/contact">Contact Us</Link>
             </Button>
           </div>
 

@@ -76,7 +76,7 @@ export function PageHero({
         <div
           className={cn(
             isSplit
-              ? "grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-12"
+              ? "grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_30rem] lg:gap-12"
               : "max-w-5xl",
           )}
         >
@@ -128,7 +128,7 @@ export function PageHero({
           </Reveal>
           {isSplit ? (
             <Reveal delay={0.08} className="self-stretch">
-              <div className="hero-visual-shell relative h-full min-h-[360px] overflow-hidden rounded-[2.2rem] p-4 sm:p-5 lg:min-h-[430px]">
+              <div className="hero-visual-shell relative h-full min-h-[320px] overflow-hidden rounded-[2.2rem] p-4 sm:min-h-[360px] sm:p-5 lg:min-h-[400px]">
                 <BorderBeam />
                 <div className="relative h-full">{visual}</div>
               </div>
