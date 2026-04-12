@@ -43,39 +43,41 @@ export default async function RoadmapPage() {
       />
 
       <section className="pb-24 sm:pb-28">
-        <Container className="space-y-10">
+        <Container className="space-y-6">
           {groups.map((group, groupIndex) => (
-            <Reveal key={group.status} delay={groupIndex * 0.04} className="space-y-6">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div className="space-y-3">
-                  <StatusBadge status={group.status} />
-                  <h2 className="text-[2rem] leading-[0.96] font-semibold tracking-[-0.06em] text-foreground">
-                    {group.status}
-                  </h2>
+            <Reveal key={group.status} delay={groupIndex * 0.04}>
+              <div className="section-frame space-y-6 p-6 backdrop-blur-xl backdrop-saturate-[1.5] sm:p-8">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="space-y-2">
+                    <StatusBadge status={group.status} />
+                    <h2 className="section-title text-[1.6rem] sm:text-[1.9rem] lg:text-[2.1rem]">
+                      {group.status}
+                    </h2>
+                  </div>
+                  <p className="text-sm text-foreground/54">
+                    {group.items.length} initiative{group.items.length === 1 ? "" : "s"}
+                  </p>
                 </div>
-                <p className="max-w-xl text-sm leading-7 text-foreground/62">
-                  {group.items.length} initiative{group.items.length === 1 ? "" : "s"} in this lane.
-                </p>
-              </div>
-              <div className="grid gap-6 lg:grid-cols-2">
-                {group.items.map((entry) => (
-                  <ContentLinkCard
-                    key={entry.slug}
-                    href={entry.href}
-                    eyebrow="Initiative"
-                    title={entry.frontmatter.title}
-                    description={entry.frontmatter.description}
-                    badges={<StatusBadge status={entry.frontmatter.status} />}
-                    meta={
-                      <>
-                        <MetaInline>
-                          {formatContentDate(entry.frontmatter.updatedAt ?? entry.frontmatter.publishedAt)}
-                        </MetaInline>
-                        <TagList tags={entry.frontmatter.tags?.slice(0, 2)} />
-                      </>
-                    }
-                  />
-                ))}
+                <div className="grid gap-4 lg:grid-cols-2">
+                  {group.items.map((entry) => (
+                    <ContentLinkCard
+                      key={entry.slug}
+                      href={entry.href}
+                      eyebrow="Initiative"
+                      title={entry.frontmatter.title}
+                      description={entry.frontmatter.description}
+                      badges={<StatusBadge status={entry.frontmatter.status} />}
+                      meta={
+                        <>
+                          <MetaInline>
+                            {formatContentDate(entry.frontmatter.updatedAt ?? entry.frontmatter.publishedAt)}
+                          </MetaInline>
+                          <TagList tags={entry.frontmatter.tags?.slice(0, 2)} />
+                        </>
+                      }
+                    />
+                  ))}
+                </div>
               </div>
             </Reveal>
           ))}

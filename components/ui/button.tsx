@@ -12,11 +12,11 @@ const buttonVariants = cva(
         default:
           "border-transparent bg-[linear-gradient(135deg,#4d35ef_0%,#432dd7_100%)] text-white shadow-[0_14px_40px_rgba(67,45,215,0.28)] hover:-translate-y-0.5 hover:shadow-[0_20px_54px_rgba(67,45,215,0.36)]",
         outline:
-          "border-border/80 bg-background/40 text-foreground/84 backdrop-blur hover:border-primary/30 hover:bg-primary/6 hover:text-foreground",
+          "border-border/80 bg-background/52 text-foreground/84 backdrop-blur-md backdrop-saturate-[1.4] hover:border-primary/30 hover:bg-primary/8 hover:text-foreground",
         ghost:
-          "border-transparent bg-transparent text-foreground/68 hover:bg-foreground/5 hover:text-foreground",
+          "border-transparent bg-transparent text-foreground/68 hover:bg-background/52 hover:text-foreground hover:backdrop-blur-sm",
         secondary:
-          "border-border/80 bg-secondary/70 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24)] hover:-translate-y-0.5 hover:border-primary/20 hover:bg-secondary",
+          "border-border/80 bg-secondary/70 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-sm backdrop-saturate-[1.3] hover:-translate-y-0.5 hover:border-primary/20 hover:bg-secondary",
       },
       size: {
         default: "h-11 px-5",

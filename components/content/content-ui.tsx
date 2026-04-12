@@ -60,7 +60,7 @@ export function MetaRail({ items, className }: { items: MetaItem[]; className?: 
   return (
     <div
       className={cn(
-        "rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)]",
+        "rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]",
         className,
       )}
     >
@@ -194,7 +194,7 @@ export function ContentArticleShell({
         title={title}
         description={description}
         kicker={
-          <div className="rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)]">
+          <div className="rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]">
             <div className="space-y-3">
               <p className="text-[0.7rem] font-medium tracking-[0.24em] uppercase text-foreground/44">
                 Entry signal
@@ -210,7 +210,7 @@ export function ContentArticleShell({
       <section className="pb-24 sm:pb-28">
         <Container className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
           <Reveal>
-            <article className="rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-6 py-7 shadow-[var(--shadow-soft)] sm:px-8 sm:py-9">
+            <article className="rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-6 py-7 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6] sm:px-8 sm:py-9">
               <div className="space-y-6">{children}</div>
             </article>
           </Reveal>
@@ -302,7 +302,7 @@ export function SignalsSection({
                   like product signals instead of generic editorial blocks.
                 </p>
               </div>
-              <div className="rounded-[1.8rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-5 py-4 shadow-[var(--shadow-soft)]">
+              <div className="rounded-[1.8rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-5 py-4 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.5]">
                 <div className="flex items-start gap-3">
                   <Sparkles className="mt-1 size-4 text-primary" />
                   <p className="text-sm leading-7 text-foreground/68">
@@ -324,7 +324,7 @@ export function SignalsSection({
               icon={<Sparkles className="size-4" />}
             >
               {featuredBlog ? (
-                <div className="rounded-[1.5rem] border border-primary/18 bg-primary/[0.08] p-5">
+                <div className="rounded-[1.5rem] border border-primary/18 bg-primary/[0.1] p-5 backdrop-blur-sm">
                   <p className="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-primary/88">
                     Featured
                   </p>
@@ -446,7 +446,7 @@ function SignalLink({
   return (
     <Link
       href={href}
-      className="flex items-start justify-between gap-4 rounded-[1.35rem] border border-border/60 bg-background/34 px-4 py-4 transition hover:border-primary/18 hover:bg-primary/[0.04]"
+      className="flex items-start justify-between gap-4 rounded-[1.35rem] border border-border/60 bg-background/58 px-4 py-4 backdrop-blur-sm backdrop-saturate-[1.4] transition hover:border-primary/18 hover:bg-primary/[0.06]"
     >
       <div className="space-y-1.5">
         <p className="text-[1rem] leading-7 font-medium tracking-[-0.03em] text-foreground">
