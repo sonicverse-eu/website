@@ -63,7 +63,7 @@ export default function ContactPage() {
             <Reveal delay={0.06} className="section-frame px-6 py-8 md:px-8">
               <Badge>Direct contact</Badge>
               <div className="mt-5 space-y-3 text-sm leading-7 text-foreground/66">
-                <p>hello@sonicverse.dev</p>
+                <p>hello@sonicverse.eu</p>
                 <p>Open-source-first product engineering and software systems.</p>
               </div>
             </Reveal>
