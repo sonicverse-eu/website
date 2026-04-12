@@ -18,14 +18,29 @@
   // Alternatively configure an Email Workers binding named `SEND_EMAIL` (see Cloudflare docs).
   "send_email": [
     {
-      "name": "SEND_EMAIL",
+      "name": "SEND_EMAIL", 
       "destination_address": "hello@sonicverse.eu"
     }
   ],
   "images": {
     "binding": "IMAGES"
   },
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  }
+}
   // Image bindings:
   //   IMAGES — Cloudflare Images binding for server-side image transforms (send_image/input/output)
   // To use Cloudflare Images transforms from a Worker, configure a `send_image` binding named `IMAGES`.
-}
