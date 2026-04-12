@@ -5,13 +5,13 @@ import { siteName } from "./site-data";
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL && URL.canParse(process.env.NEXT_PUBLIC_SITE_URL)
     ? process.env.NEXT_PUBLIC_SITE_URL
-    : "https://sonicverse.dev";
+    : "https://sonicverse.eu";
 
 export const baseMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} | Open-source-native software systems`,
-    template: `%s | ${siteName}`,
+    default: `${siteName} - OSS for Independent Media`,
+    template: `%s - ${siteName}`,
   },
   icons: {
     icon: [
@@ -24,20 +24,20 @@ export const baseMetadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   description:
-    "Sonicverse builds modern software systems, digital products, and open-source technology with calm technical ambition.",
+    "Sonicverse builds innovative software for independent media. Always open-source, thoughtfully designed, and engineered with care.",
   openGraph: {
-    title: `${siteName} | Open-source-native software systems`,
+    title: `${siteName} - OSS for Independent Media`,
     description:
-      "Modern software systems, digital products, and open-source technology built with strong engineering taste.",
+      "Sonicverse builds innovative software for independent media. Always open-source, thoughtfully designed, and engineered with care.",
     url: siteUrl,
     siteName,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} | Open-source-native software systems`,
+    title: `${siteName} - OSS for Independent Media`,
     description:
-      "Calm, modern product engineering and open-source technology built with intent.",
+      "Sonicverse builds innovative software for independent media. Always open-source, thoughtfully designed, and engineered with care.",
   },
 };
 
@@ -53,12 +53,12 @@ export function pageMetadata(
       canonical: pathname,
     },
     openGraph: {
-      title: `${title} | ${siteName}`,
+      title: `${title} - ${siteName}`,
       description,
       url: pathname,
     },
     twitter: {
-      title: `${title} | ${siteName}`,
+      title: `${title} - ${siteName}`,
       description,
     },
   };
