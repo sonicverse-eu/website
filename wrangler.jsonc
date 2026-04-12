@@ -12,15 +12,11 @@
     "binding": "ASSETS"
   },
   // Secrets — set via: wrangler secret put <NAME>
-  // Required:
-  //   RESEND_API_KEY   — Resend API key (https://resend.com/api-keys)
-  // Or configure an Email Workers binding named `SEND_EMAIL` and a matching `send_email` binding
-  // in your Cloudflare account. When present, the app will prefer the `SEND_EMAIL` binding
-  // (see Cloudflare Email Workers / send_email binding documentation).
+  // Configure contact email addresses:
+  //   EMAIL_SENDER      — Sender address used in outgoing messages (default: "Sonicverse <hello@sonicverse.eu>")
+  //   EMAIL_RECIPIENT   — Recipient address where contact form submissions are delivered (default: "hello@sonicverse.eu")
+  // Alternatively configure an Email Workers binding named `SEND_EMAIL` (see Cloudflare docs).
   // Image bindings:
   //   IMAGES — Cloudflare Images binding for server-side image transforms (send_image/input/output)
   // To use Cloudflare Images transforms from a Worker, configure a `send_image` binding named `IMAGES`.
-  // Optional (defaults shown):
-  //   RESEND_FROM      — Verified sender address  (default: "Sonicverse <hello@sonicverse.eu>")
-  //   RESEND_TO        — Recipient address         (default: "hello@sonicverse.eu")
 }
