@@ -67,7 +67,11 @@ export const SheetTitle = React.forwardRef<
   React.ElementRef<typeof Dialog.Title>,
   React.ComponentPropsWithoutRef<typeof Dialog.Title>
 >(({ className, ...props }, ref) => (
-  <Dialog.Title ref={ref} className={cn("text-2xl font-medium tracking-[-0.04em]", className)} {...props} />
+  <Dialog.Title
+    ref={ref}
+    className={cn("text-2xl leading-[1.06] font-medium tracking-[-0.025em]", className)}
+    {...props}
+  />
 ));
 
 SheetTitle.displayName = Dialog.Title.displayName;

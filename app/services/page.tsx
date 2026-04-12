@@ -25,6 +25,7 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
+        layout="single"
         eyebrow="Services"
         title="Services for product quality and system clarity."
         description="Sonicverse helps teams ship systems that are easier to evolve, operate, and trust."
@@ -34,9 +35,7 @@ export default function ServicesPage() {
           "Technical architecture",
         ]}
         primaryAction={{ href: "/contact", label: "Discuss a project" }}
-      >
-        <ServicesVisual />
-      </PageHero>
+      />
 
       <section className="section-space">
         <Container className="space-y-10">
@@ -123,22 +122,5 @@ export default function ServicesPage() {
         description="Sonicverse is designed for the moments where technical structure matters as much as visible output."
       />
     </>
-  );
-}
-
-function ServicesVisual() {
-  return (
-    <div className="grid gap-4">
-      {[
-        ["Discover", "Clarify the system, the risks, and the quality bar."],
-        ["Shape", "Lock the architecture and the delivery path."],
-        ["Build", "Ship with accessible primitives and maintainable code."],
-      ].map(([title, copy]) => (
-        <div key={title} className="rounded-[1.5rem] border border-border/60 bg-background/44 p-5">
-          <p className="text-xs tracking-[0.18em] uppercase text-foreground/44">{title}</p>
-          <p className="mt-3 text-sm leading-7 text-foreground/72">{copy}</p>
-        </div>
-      ))}
-    </div>
   );
 }

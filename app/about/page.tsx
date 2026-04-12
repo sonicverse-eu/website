@@ -20,6 +20,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
+        layout="single"
         eyebrow="About Sonicverse"
         title="Technical ambition, with a calmer operating model."
         description="Modern software systems and digital products built with structure, clarity, and long-term care."
@@ -30,9 +31,7 @@ export default function AboutPage() {
         ]}
         primaryAction={{ href: "/contact", label: "Start a conversation" }}
         secondaryAction={{ href: "/services", label: "View services" }}
-      >
-        <AboutVisual />
-      </PageHero>
+      />
 
       <section className="section-space">
         <Container className="space-y-10">
@@ -116,25 +115,5 @@ export default function AboutPage() {
         description="Bring the system shape and the direction of travel."
       />
     </>
-  );
-}
-
-function AboutVisual() {
-  return (
-    <div className="grid gap-4">
-      {[
-        ["Intent", "Make fewer decisions by accident."],
-        ["Clarity", "Let structure explain itself."],
-        ["Durability", "Ship work the next team can still use."],
-      ].map(([title, copy]) => (
-        <div
-          key={title}
-          className="rounded-[1.5rem] border border-border/60 bg-background/44 px-5 py-4"
-        >
-          <p className="text-xs tracking-[0.18em] uppercase text-foreground/44">{title}</p>
-          <p className="mt-3 text-sm leading-7 text-foreground/72">{copy}</p>
-        </div>
-      ))}
-    </div>
   );
 }
