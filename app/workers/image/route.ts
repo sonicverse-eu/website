@@ -50,7 +50,7 @@ async function tryFetchFromAssets(env: any, source: string): Promise<Response | 
         return new Response(assetsResponse.body, { headers });
       }
     } catch (e) {
-      console.error(`Failed to fetch ${assetPath} from ASSETS:`, e);
+      console.error("Failed to fetch %s from ASSETS:", assetPath, e);
     }
   }
   return null;
