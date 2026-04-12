@@ -10,6 +10,26 @@ type ImageAssetsBucket = {
   get(key: string): Promise<R2ObjectLike | null>;
 };
 
+const ALLOWED_ORIGIN_HOSTS = new Set<string>([
+  "example.com",
+  "www.example.com"
+]);
+
+function getValidatedOriginUrl(source: string): URL | null {
+  try {
+    const parsed = new URL(source);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      return null;
+    }
+    if (!ALLOWED_ORIGIN_HOSTS.has(parsed.hostname)) {
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
 async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Promise<Response | null> {
   try {
     console.log(`Trying R2 key: ${key}`);
@@ -92,12 +112,17 @@ export async function GET(request: Request) {
   const assetsResponse = await tryFetchFromAssets(env, source);
   if (assetsResponse) return assetsResponse;
 
-  // Final fallback - try to fetch from origin
+  // Final fallback - try to fetch from allowed origin only
+  const validatedOriginUrl = getValidatedOriginUrl(source);
+  if (!validatedOriginUrl) {
+    return new Response("Invalid src URL", { status: 400 });
+  }
+
   try {
-    console.log(`Trying origin fetch for: ${source}`);
-    const originResponse = await fetch(source);
+    console.log(`Trying origin fetch for: ${validatedOriginUrl.toString()}`);
+    const originResponse = await fetch(validatedOriginUrl.toString());
     if (originResponse.ok) {
-      console.log(`Found image at origin: ${source}`);
+      console.log(`Found image at origin: ${validatedOriginUrl.toString()}`);
       const headers = new Headers(originResponse.headers);
       headers.set("cache-control", "public, max-age=31536000, immutable");
       return new Response(originResponse.body, { headers });
