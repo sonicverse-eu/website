@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 
 import { buildArticleMeta, ContentArticleShell, StatusBadge } from "@/components/content/content-ui";
 import { contentMetadata } from "@/lib/content/metadata";
-import { getRenderedEntry, getStaticSlugs } from "@/lib/content";
+import { getCollectionEntries, getStaticSlugs } from "@/lib/content";
+import { getMdxComponent } from "@/lib/content/mdx-imports";
+import { mdxComponents } from "@/components/content/mdx-components";
 
 export const dynamicParams = false;
 
@@ -17,7 +19,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = await getRenderedEntry("roadmap", slug);
+  const entries = await getCollectionEntries("roadmap");
+  const entry = entries.find((e) => e.slug === slug);
 
   if (!entry) {
     return {};
@@ -37,9 +40,15 @@ export default async function RoadmapDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const entry = await getRenderedEntry("roadmap", slug);
+  
+  const [entries, MdxComponent] = await Promise.all([
+    getCollectionEntries("roadmap"),
+    getMdxComponent("roadmap", slug),
+  ]);
+  
+  const entry = entries.find((e) => e.slug === slug);
 
-  if (!entry) {
+  if (!entry || !MdxComponent) {
     notFound();
   }
 
@@ -56,7 +65,7 @@ export default async function RoadmapDetailPage({
       badges={<StatusBadge status={entry.frontmatter.status} />}
       tags={entry.frontmatter.tags}
     >
-      {entry.content}
+      <MdxComponent components={mdxComponents} />
     </ContentArticleShell>
   );
 }
