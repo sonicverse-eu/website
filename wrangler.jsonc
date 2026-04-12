@@ -5,17 +5,17 @@
 	"compatibility_date": "2026-04-12",
 	"compatibility_flags": [
 		"nodejs_compat",
-		"nodejs_compat_populate_process_env"
+		"nodejs_compat_populate_process_env",
+		"streams_enable_constructors"
 	],
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
-	// Secrets — set via: wrangler secret put <NAME>
-	// Configure contact email addresses:
-	//   EMAIL_SENDER      — Sender address used in outgoing messages (default: "Sonicverse <hello@sonicverse.eu>")
-	//   EMAIL_RECIPIENT   — Recipient address where contact form submissions are delivered (default: "hello@sonicverse.eu")
-	// Alternatively configure an Email Workers binding named `SEND_EMAIL` (see Cloudflare docs).
+	"site": {
+		"bucket": ".open-next/assets",
+		"entry-point": ".open-next"
+	},
 	"send_email": [
 		{
 			"name": "SEND_EMAIL"
@@ -31,7 +31,7 @@
 		}
 	],
 	"observability": {
-		"enabled": false,
+		"enabled": true,
 		"head_sampling_rate": 1,
 		"logs": {
 			"enabled": true,
@@ -40,11 +40,21 @@
 			"invocation_logs": true
 		},
 		"traces": {
-			"enabled": false,
+			"enabled": true,
 			"persist": true,
 			"head_sampling_rate": 1
 		}
-	}
+	},
+	"minify": true,
+	"keep_vars": true,
+	"rules": [
+		{
+			"type": "ESModule",
+			"globs": ["**/*.js", "**/*.mjs"]
+		}
+	],
+	"node_compat": true,
+	"usage_model": "bundled"
 }
 // Image bindings:
 //   IMAGES — Cloudflare Images binding for server-side image transforms (send_image/input/output)
