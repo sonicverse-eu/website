@@ -1,0 +1,57 @@
+---
+title: "Release communication with less noise and more signal"
+description: "A technical note on changelogs, roadmap signals, and product communication that respects the reader."
+publishedAt: "2026-04-06"
+featured: false
+tags:
+  - Changelog
+  - Communication
+  - Product Ops
+---
+
+## The problem with most release feeds
+
+Release notes often collapse into one of two patterns: either they are too vague to
+help anyone, or they are so verbose that no one can scan them under pressure.
+
+For modern software products, release communication should behave more like
+infrastructure:
+
+- stable
+- easy to inspect
+- useful under time pressure
+
+## A better structure
+
+We use three connected surfaces:
+
+- Blog for system thinking and technical perspective
+- Changelog for product movement and shipped work
+- Roadmap for direction, confidence, and current shape
+
+That separation helps every page do one job well.
+
+### What a reader needs fast
+
+When someone opens a product communication page, they are usually asking:
+
+1. What changed?
+2. Why does it matter?
+3. What comes next?
+
+If the page cannot answer those three questions cleanly, the communication system is
+working against the product.
+
+```ts
+type ProductSignal = {
+  change: string;
+  impact: string;
+  nextStep?: string;
+};
+```
+
+## Technical audiences prefer precision
+
+A clear version number, a concise description, and a structured breakdown outperform
+marketing language almost every time. Precision feels premium because it respects the
+reader's attention.

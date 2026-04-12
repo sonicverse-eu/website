@@ -11,10 +11,10 @@ export function Footer() {
       <Container className="space-y-10">
         <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div className="space-y-4">
-            <p className="text-sm font-semibold tracking-[0.18em] uppercase text-foreground/62">
+            <p className="font-heading text-sm font-semibold tracking-[0.12em] uppercase text-foreground/62">
               Sonicverse
             </p>
-            <h2 className="max-w-md text-3xl leading-tight font-medium tracking-[-0.05em] text-balance">
+            <h2 className="max-w-md text-3xl leading-[1.08] font-medium tracking-[-0.03em] text-balance">
               Modern software systems, digital products, and open-source technology.
             </h2>
             <p className="max-w-xl text-sm leading-7 text-foreground/62">
@@ -23,7 +23,7 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <p className="mb-4 text-sm font-semibold text-foreground/76">Navigation</p>
+            <p className="mb-4 text-sm font-semibold tracking-[0.04em] text-foreground/76">Navigation</p>
             <div className="grid gap-2 text-sm text-foreground/62">
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href} className="hover:text-foreground">
@@ -33,7 +33,7 @@ export function Footer() {
             </div>
           </div>
           <div className="space-y-4">
-            <p className="text-sm font-semibold text-foreground/76">Contact</p>
+            <p className="text-sm font-semibold tracking-[0.04em] text-foreground/76">Contact</p>
             <div className="space-y-2 text-sm leading-7 text-foreground/62">
               <p>hello@sonicverse.dev</p>
               <p>Open collaboration, careful delivery, and long-term technical thinking.</p>

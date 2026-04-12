@@ -20,6 +20,7 @@ import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
 import { navItems, siteName } from "@/lib/site-data";
 
+import { BrandMark } from "./brand-mark";
 import { ThemeToggle } from "./theme-toggle";
 
 export function Header() {
@@ -143,14 +144,12 @@ export function Header() {
           )}
         >
           <Link href="/" className="group flex items-center gap-3 rounded-full px-2 py-1">
-            <span className="flex size-9 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-sm font-semibold text-primary">
-              SV
-            </span>
+            <BrandMark className="h-9 w-auto text-primary transition-transform duration-300 group-hover:scale-[1.06]" />
             <div className="flex flex-col leading-none">
-              <span className="text-sm font-semibold tracking-[0.16em] uppercase">
+              <span className="font-heading text-sm font-semibold tracking-[0.12em] uppercase">
                 {siteName}
               </span>
-              <span className="text-[0.72rem] text-foreground/52">
+              <span className="mt-1 text-[0.72rem] tracking-[0.04em] text-foreground/52">
                 Open-source software initiative
               </span>
             </div>
