@@ -26,10 +26,10 @@ npm install
 npm run dev
 ```
 
-### Production Build
+### Preview with Cloudflare Workers
 
 ```bash
-npm run build:worker:prod
+npm run preview
 ```
 
 ### Deployment

@@ -33,7 +33,6 @@ next-env.d.ts
 !.env.example
 !.env*.example
 .dev.vars
-.prod.vars
 .dev.vars.*
 !.dev.vars.example
 
