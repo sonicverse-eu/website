@@ -10,24 +10,26 @@ type ImageAssetsBucket = {
   get(key: string): Promise<R2ObjectLike | null>;
 };
 
-const ALLOWED_ORIGIN_HOSTS = new Set<string>([
-  "example.com",
-  "www.example.com"
-]);
+const ORIGIN_BASE_URL = new URL("https://example.com");
 
 function getValidatedOriginUrl(source: string): URL | null {
-  try {
-    const parsed = new URL(source);
-    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-      return null;
-    }
-    if (!ALLOWED_ORIGIN_HOSTS.has(parsed.hostname)) {
-      return null;
-    }
-    return parsed;
-  } catch {
+  const trimmed = source.trim();
+  if (!trimmed) return null;
+
+  // Only allow relative paths for origin fallback.
+  // Reject absolute and protocol-relative URLs.
+  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(trimmed) || trimmed.startsWith("//")) {
     return null;
   }
+
+  const normalizedPath = `/${trimmed.replace(/^\/+/, "")}`;
+
+  // Prevent traversal attempts in the pathname.
+  if (normalizedPath.split("/").some((segment) => segment === "..")) {
+    return null;
+  }
+
+  return new URL(normalizedPath, ORIGIN_BASE_URL);
 }
 
 async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Promise<Response | null> {
@@ -120,7 +122,7 @@ export async function GET(request: Request) {
 
   try {
     console.log(`Trying origin fetch for: ${validatedOriginUrl.toString()}`);
-    const originResponse = await fetch(validatedOriginUrl.toString());
+    const originResponse = await fetch(validatedOriginUrl);
     if (originResponse.ok) {
       console.log(`Found image at origin: ${validatedOriginUrl.toString()}`);
       const headers = new Headers(originResponse.headers);
