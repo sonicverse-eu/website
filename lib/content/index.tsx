@@ -5,7 +5,6 @@ import path from "node:path";
 import { cache } from "react";
 
 import matter from "gray-matter";
-import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 
 import { mdxComponents } from "@/components/content/mdx-components";
@@ -16,13 +15,10 @@ import {
   roadmapFrontmatterSchema,
 } from "./schema";
 import type {
-  BlogFrontmatter,
-  ChangelogFrontmatter,
   ContentCollection,
   ContentEntry,
   FrontmatterByCollection,
   RenderedContentEntry,
-  RoadmapFrontmatter,
   RoadmapStatus,
 } from "./types";
 import {
@@ -88,6 +84,7 @@ function parseFrontmatter<C extends ContentCollection>(
 async function compileEntry<C extends ContentCollection>(
   entry: ContentEntry<C>,
 ): Promise<RenderedContentEntry<C>> {
+  const { compileMDX } = await import("next-mdx-remote/rsc");
   const { content } = await compileMDX({
     source: entry.body,
     components: mdxComponents,
@@ -143,10 +140,9 @@ export async function getRenderedEntry<C extends ContentCollection>(
   try {
     return await getRenderedEntryCached(collection, slug);
   } catch (error) {
-    if (
-      error instanceof Error &&
-      ("code" in error || error.message.includes("ENOENT"))
-    ) {
+    const maybeFsError = error as NodeJS.ErrnoException;
+
+    if (maybeFsError.code === "ENOENT") {
       return null;
     }
 

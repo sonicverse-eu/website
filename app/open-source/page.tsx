@@ -20,6 +20,7 @@ export default function OpenSourcePage() {
   return (
     <>
       <PageHero
+        layout="single"
         eyebrow="Open Source"
         title="Open source is a product quality decision."
         description="Open collaboration makes systems more legible, reusable, and trustworthy."
@@ -30,9 +31,7 @@ export default function OpenSourcePage() {
         ]}
         primaryAction={{ href: "/contact", label: "Talk about a project" }}
         secondaryAction={{ href: "/projects", label: "See project archetypes" }}
-      >
-        <OpenSourceVisual />
-      </PageHero>
+      />
 
       <section className="section-space">
         <Container className="space-y-10">
@@ -94,31 +93,5 @@ export default function OpenSourcePage() {
         description="From reusable primitives to deployment-aware architecture, the open-source posture is part of the system design."
       />
     </>
-  );
-}
-
-function OpenSourceVisual() {
-  return (
-    <div className="space-y-4">
-      <div className="rounded-[1.6rem] border border-border/60 bg-background/44 p-5">
-        <p className="text-xs tracking-[0.18em] uppercase text-foreground/44">Manifesto</p>
-        <p className="mt-3 text-sm leading-7 text-foreground/72">
-          Share reusable thinking. Keep contribution realistic. Prefer public systems when
-          they improve the quality of the work.
-        </p>
-      </div>
-      <div className="grid gap-3">
-        {["Readable foundations", "Practical contribution paths", "Tooling that compounds"].map(
-          (item) => (
-            <div
-              key={item}
-              className="rounded-[1.3rem] border border-border/60 bg-background/40 px-4 py-3 text-sm text-foreground/68"
-            >
-              {item}
-            </div>
-          ),
-        )}
-      </div>
-    </div>
   );
 }

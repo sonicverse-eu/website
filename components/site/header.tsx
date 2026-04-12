@@ -87,6 +87,14 @@ export function Header() {
     };
   }, [menuOpen]);
 
+  const isActivePath = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   return (
     <motion.header
       className="pointer-events-none fixed inset-x-0 top-0 z-50"
@@ -155,9 +163,9 @@ export function Header() {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-background/40 p-1 backdrop-blur md:flex">
+          <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-background/40 p-1 backdrop-blur lg:flex">
             {navItems.map((item) => {
-              const active = pathname === item.href;
+              const active = isActivePath(item.href);
               return (
                 <Link
                   key={item.href}
@@ -173,14 +181,14 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <ThemeToggle className="hidden md:flex" />
+          <div className="hidden items-center gap-3 lg:flex">
+            <ThemeToggle className="hidden lg:flex" />
             <Button asChild size="sm" className="h-10 px-4">
               <Link href="/contact">Start a project</Link>
             </Button>
           </div>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Sheet
               open={menuOpen}
               onOpenChange={(open) => {
@@ -210,7 +218,7 @@ export function Header() {
                 </SheetHeader>
                 <div className="flex flex-col gap-2">
                   {navItems.map((item) => {
-                    const active = pathname === item.href;
+                    const active = isActivePath(item.href);
                     return (
                       <SheetClose asChild key={item.href}>
                         <Link

@@ -19,6 +19,7 @@ export default function ProjectsPage() {
   return (
     <>
       <PageHero
+        layout="single"
         eyebrow="Projects"
         title="Capability, shown through the systems we build."
         description="Products, platforms, internal systems, and open-source infrastructure with visible design judgment."
@@ -28,9 +29,7 @@ export default function ProjectsPage() {
           "Open-source ecosystems",
         ]}
         primaryAction={{ href: "/contact", label: "Talk through your system" }}
-      >
-        <ProjectsVisual />
-      </PageHero>
+      />
 
       <section className="section-space">
         <Container className="space-y-10">
@@ -89,24 +88,5 @@ export default function ProjectsPage() {
         description="Sonicverse is best used where long-term clarity matters as much as short-term delivery."
       />
     </>
-  );
-}
-
-function ProjectsVisual() {
-  return (
-    <div className="grid gap-4">
-      {[
-        "Marketing sites with product-grade interfaces",
-        "Developer-facing applications and docs surfaces",
-        "Operational systems with calmer internal UX",
-      ].map((item) => (
-        <div
-          key={item}
-          className="rounded-[1.45rem] border border-border/60 bg-background/44 px-5 py-4 text-sm leading-7 text-foreground/72"
-        >
-          {item}
-        </div>
-      ))}
-    </div>
   );
 }

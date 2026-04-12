@@ -20,14 +20,13 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
+        layout="single"
         eyebrow="Contact"
         title="Start with the problem shape."
         description="A short, thoughtful brief is enough."
         highlights={["Current state", "What is changing", "Where judgment matters most"]}
         compact
-      >
-        <ContactVisual />
-      </PageHero>
+      />
 
       <section className="section-space">
         <Container className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -96,22 +95,5 @@ export default function ContactPage() {
         </Container>
       </section>
     </>
-  );
-}
-
-function ContactVisual() {
-  return (
-    <div className="space-y-4">
-      {[
-        ["Best briefs", "Current state, desired direction, and the highest-risk decision."],
-        ["Response style", "Clear technical next steps instead of sales language."],
-        ["Runtime", "Prepared for Cloudflare Workers deployment."],
-      ].map(([title, copy]) => (
-        <div key={title} className="rounded-[1.45rem] border border-border/60 bg-background/44 p-5">
-          <p className="text-xs tracking-[0.18em] uppercase text-foreground/44">{title}</p>
-          <p className="mt-3 text-sm leading-7 text-foreground/72">{copy}</p>
-        </div>
-      ))}
-    </div>
   );
 }

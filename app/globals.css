@@ -184,6 +184,19 @@
     box-shadow: var(--shadow-soft);
   }
 
+  .hero-visual-shell {
+    border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+    background:
+      radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 16%, transparent), transparent 28%),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--surface-1) 94%, transparent),
+        color-mix(in srgb, var(--surface-2) 98%, transparent)
+      );
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(18px);
+  }
+
   .quiet-grid {
     background-image:
       linear-gradient(to right, color-mix(in srgb, var(--border) 80%, transparent) 1px, transparent 1px),
@@ -197,11 +210,11 @@
   }
 
   .hero-title {
-    @apply text-[3.1rem] leading-[0.96] font-semibold text-balance sm:text-[4.2rem] md:text-[5.15rem] lg:text-[5.9rem];
+    @apply text-[3rem] leading-[0.96] font-semibold text-balance sm:text-[4rem] md:text-[4.9rem] lg:text-[5.45rem];
   }
 
   .copy-lg {
-    @apply max-w-xl text-[1rem] leading-8 text-foreground/68 md:text-[1.04rem];
+    @apply max-w-2xl text-[1rem] leading-8 text-foreground/68 md:text-[1.05rem];
   }
 
   .section-title {
