@@ -9,7 +9,7 @@ export function BrandMark({
   decorative = true,
   title = "Sonicverse logo",
 }: BrandMarkProps) {
-  const source = "/branding/icon-purple.svg";
+  const source = "/icon-purple.svg";
 
   return (
     <img
