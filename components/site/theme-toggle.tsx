@@ -47,7 +47,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
 
       <motion.span
         aria-hidden="true"
-        className="absolute left-1 top-1 flex size-8 items-center justify-center rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(237,242,251,0.92))] text-amber-500 shadow-[0_10px_24px_rgba(15,23,42,0.16)] dark:bg-[linear-gradient(180deg,rgba(22,31,52,0.98),rgba(10,17,29,0.96))] dark:text-indigo-100 dark:shadow-[0_12px_28px_rgba(0,0,0,0.34)]"
+        className="absolute left-1 top-1 z-10 flex size-8 items-center justify-center rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(237,242,251,0.92))] text-amber-500 shadow-[0_10px_24px_rgba(15,23,42,0.16)] dark:bg-[linear-gradient(180deg,rgba(22,31,52,0.98),rgba(10,17,29,0.96))] dark:text-indigo-100 dark:shadow-[0_12px_28px_rgba(0,0,0,0.34)]"
         animate={{
           x: mounted ? (isDark ? 32 : 0) : 0,
         }}
@@ -98,27 +98,29 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         </motion.span>
       </motion.span>
 
-      <span
+      <motion.span
         aria-hidden="true"
-        className="relative z-10 grid w-full grid-cols-2 items-center text-[0.68rem] font-medium tracking-[0.18em] uppercase"
+        className={cn(
+          "pointer-events-none absolute top-1/2 flex size-4 -translate-y-1/2 items-center justify-center transition-[left,right,opacity,transform,color] duration-200",
+          isDark
+            ? "left-[0.72rem] text-amber-500/75"
+            : "right-[0.72rem] text-slate-500/75 dark:text-indigo-100/85",
+        )}
+        animate={
+          reduceMotion
+            ? undefined
+            : {
+                scale: isDark ? 0.96 : 1,
+                rotate: isDark ? -10 : 10,
+              }
+        }
       >
-        <span
-          className={cn(
-            "flex items-center justify-center pl-1 transition-opacity duration-200",
-            isDark ? "opacity-40" : "opacity-100",
-          )}
-        >
-          L
-        </span>
-        <span
-          className={cn(
-            "flex items-center justify-center pr-1 transition-opacity duration-200",
-            isDark ? "opacity-100" : "opacity-40",
-          )}
-        >
-          D
-        </span>
-      </span>
+        {isDark ? (
+          <SunMedium className="size-3.5" strokeWidth={2.1} />
+        ) : (
+          <MoonStar className="size-3.5" strokeWidth={2.1} />
+        )}
+      </motion.span>
 
       <span className="sr-only">
         {mounted

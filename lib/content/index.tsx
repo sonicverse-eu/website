@@ -1,13 +1,12 @@
 import "server-only";
 
-import fs from "node:fs/promises";
-import path from "node:path";
 import { cache } from "react";
 
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
 
 import { mdxComponents } from "@/components/content/mdx-components";
+import { contentManifest } from "@/generated/content-manifest";
 
 import {
   blogFrontmatterSchema,
@@ -35,8 +34,6 @@ type CollectionConfig<C extends ContentCollection> = {
   };
 };
 
-const contentRoot = path.join(process.cwd(), "content");
-
 const collectionConfig: {
   [K in ContentCollection]: CollectionConfig<K>;
 } = {
@@ -51,16 +48,13 @@ const collectionConfig: {
   },
 };
 
-async function readDirectory(collection: ContentCollection) {
-  const directory = path.join(contentRoot, collection);
-  const filenames = await fs.readdir(directory);
-
-  return filenames.filter((filename) => filename.endsWith(".mdx"));
+function listCollectionSlugs(collection: ContentCollection) {
+  return Object.keys(contentManifest[collection] as Record<string, string>);
 }
 
-async function readEntryFile(collection: ContentCollection, slug: string) {
-  const filePath = path.join(contentRoot, collection, `${slug}.mdx`);
-  return fs.readFile(filePath, "utf8");
+function readEntryFile(collection: ContentCollection, slug: string) {
+  const collectionEntries = contentManifest[collection] as Record<string, string>;
+  return collectionEntries[slug] ?? null;
 }
 
 function parseFrontmatter<C extends ContentCollection>(
@@ -103,14 +97,15 @@ async function compileEntry<C extends ContentCollection>(
 }
 
 const getCollectionEntriesCached = cache(async <C extends ContentCollection>(collection: C) => {
-  const filenames = await readDirectory(collection);
-  const entries = await Promise.all(
-    filenames.map(async (filename) => {
-      const slug = filename.replace(/\.mdx$/, "");
-      const source = await readEntryFile(collection, slug);
-      return parseFrontmatter(collection, slug, source);
-    }),
-  );
+  const entries = listCollectionSlugs(collection).map((slug) => {
+    const source = readEntryFile(collection, slug);
+
+    if (!source) {
+      throw new Error(`Missing content source for ${collection}/${slug}`);
+    }
+
+    return parseFrontmatter(collection, slug, source);
+  });
 
   if (collection === "roadmap") {
     return sortRoadmapEntries(entries as ContentEntry<"roadmap">[]) as ContentEntry<C>[];
@@ -123,7 +118,12 @@ const getRenderedEntryCached = cache(async <C extends ContentCollection>(
   collection: C,
   slug: string,
 ) => {
-  const source = await readEntryFile(collection, slug);
+  const source = readEntryFile(collection, slug);
+
+  if (!source) {
+    return null;
+  }
+
   const entry = parseFrontmatter(collection, slug, source);
 
   return compileEntry(entry);
@@ -137,17 +137,7 @@ export async function getRenderedEntry<C extends ContentCollection>(
   collection: C,
   slug: string,
 ) {
-  try {
-    return await getRenderedEntryCached(collection, slug);
-  } catch (error) {
-    const maybeFsError = error as NodeJS.ErrnoException;
-
-    if (maybeFsError.code === "ENOENT") {
-      return null;
-    }
-
-    throw error;
-  }
+  return getRenderedEntryCached(collection, slug);
 }
 
 export async function getStaticSlugs(collection: ContentCollection) {

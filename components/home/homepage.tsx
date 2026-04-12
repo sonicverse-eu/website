@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -76,7 +77,7 @@ export async function HomePage() {
         ]}
         primaryAction={{ href: "/contact", label: "Start a project" }}
         secondaryAction={{ href: "/open-source", label: "Explore open source" }}
-        visual={<HeroIntentVisual />}
+        visual={<HeroImageVisual />}
       />
 
       <section className="pb-8 sm:pb-10">
@@ -306,6 +307,7 @@ function HeroSignal({ icon: Icon, label, value }: { icon: LucideIcon; label: str
           <p className="text-[0.68rem] font-medium tracking-[0.14em] uppercase text-foreground/40">{label}</p>
           <p className="text-sm font-medium text-foreground/76">{value}</p>
         </div>
+        <div className="mt-2 h-px w-full bg-white/10" />
       </div>
     </div>
   );

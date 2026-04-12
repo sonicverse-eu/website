@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "content:manifest": "node scripts/generate-content-manifest.mjs",
+    "predev": "npm run content:manifest",
+    "prebuild": "npm run content:manifest",
     "dev": "next dev",
     "build": "next build",
     "build:worker": "opennextjs-cloudflare build",
