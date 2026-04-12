@@ -8,7 +8,7 @@ import { BrandMark } from "./brand-mark";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-border/60 py-14">
+    <footer className="relative overflow-hidden border-t border-border/60 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] py-14 backdrop-blur-xl backdrop-saturate-[1.5]">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/28 to-transparent" />
       <Container className="space-y-10">
         <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
