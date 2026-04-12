@@ -20,13 +20,13 @@ This starts the Next.js development server on `http://localhost:3000`.
 npm run preview
 ```
 
-This builds the worker and starts a local Cloudflare Workers environment.
+This builds the worker and starts a local Cloudflare Workers environment using OpenNext preview.
 
 ## Production Deployment
 
 ### Build for Production
 ```bash
-npm run build:worker:prod
+npm run build:worker
 ```
 
 ### Deploy to Cloudflare
@@ -36,7 +36,7 @@ npm run deploy
 
 ### Preview Production Build Locally
 ```bash
-npm run preview:prod
+npm run preview
 ```
 
 ## Configuration
