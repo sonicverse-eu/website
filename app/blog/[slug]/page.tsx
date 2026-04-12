@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { buildArticleMeta, ContentArticleShell } from "@/components/content/content-ui";
 import { Badge } from "@/components/ui/badge";
 import { contentMetadata } from "@/lib/content/metadata";
-import { getRenderedEntry, getStaticSlugs } from "@/lib/content";
+import { getCollectionEntries, getStaticSlugs } from "@/lib/content";
+import { getMdxComponent } from "@/lib/content/mdx-imports";
+import { mdxComponents } from "@/components/content/mdx-components";
 
 export const dynamicParams = false;
 
@@ -18,7 +20,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = await getRenderedEntry("blog", slug);
+  const entries = await getCollectionEntries("blog");
+  const entry = entries.find((e) => e.slug === slug);
 
   if (!entry) {
     return {};
@@ -38,9 +41,15 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const entry = await getRenderedEntry("blog", slug);
+  
+  const [entries, MdxComponent] = await Promise.all([
+    getCollectionEntries("blog"),
+    getMdxComponent("blog", slug),
+  ]);
+  
+  const entry = entries.find((e) => e.slug === slug);
 
-  if (!entry) {
+  if (!entry || !MdxComponent) {
     notFound();
   }
 
@@ -56,7 +65,7 @@ export default async function BlogDetailPage({
       badges={<Badge variant="muted">Technical note</Badge>}
       tags={entry.frontmatter.tags}
     >
-      {entry.content}
+      <MdxComponent components={mdxComponents} />
     </ContentArticleShell>
   );
 }

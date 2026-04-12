@@ -3,10 +3,9 @@ import "server-only";
 import { cache } from "react";
 
 import matter from "gray-matter";
-import remarkGfm from "remark-gfm";
 
-import { mdxComponents } from "@/components/content/mdx-components";
 import { contentManifest } from "@/generated/content-manifest";
+import { importMdxFile } from "./mdx-imports";
 
 import {
   blogFrontmatterSchema,
@@ -118,6 +117,22 @@ const getRenderedEntryCached = cache(async <C extends ContentCollection>(
 
   return compileEntry(entry);
 });
+
+/**
+ * Get an MDX component for direct rendering
+ */
+export async function getMdxComponent<C extends ContentCollection>(
+  collection: C,
+  slug: string,
+) {
+  try {
+    const { default: MdxComponent } = await importMdxFile(collection, slug);
+    return MdxComponent;
+  } catch (error) {
+    console.error(`Failed to get MDX component for ${collection}/${slug}:`, error);
+    return null;
+  }
+}
 
 export async function getCollectionEntries<C extends ContentCollection>(collection: C) {
   return getCollectionEntriesCached(collection);
