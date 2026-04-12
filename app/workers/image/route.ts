@@ -22,14 +22,52 @@ function getValidatedOriginUrl(source: string): URL | null {
     return null;
   }
 
-  const normalizedPath = `/${trimmed.replace(/^\/+/, "")}`;
-
-  // Prevent traversal attempts in the pathname.
-  if (normalizedPath.split("/").some((segment) => segment === "..")) {
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(trimmed);
+  } catch {
     return null;
   }
 
-  return new URL(normalizedPath, ORIGIN_BASE_URL);
+  const normalized = decoded.replace(/^\/+/, "");
+  if (!normalized) return null;
+
+  // Disallow control chars, backslashes, query/fragment injection.
+  if (/[\u0000-\u001F\u007F\\?#]/.test(normalized)) {
+    return null;
+  }
+
+  const segments = normalized.split("/");
+  // Prevent traversal and require safe path segments only.
+  if (
+    segments.some(
+      (segment) =>
+        !segment ||
+        segment === "." ||
+        segment === ".." ||
+        !/^[A-Za-z0-9._-]+$/.test(segment),
+    )
+  ) {
+    return null;
+  }
+
+  // Restrict to known image directories.
+  if (
+    !(
+      normalized.startsWith("images/") ||
+      normalized.startsWith("stock/") ||
+      normalized.startsWith("images/stock/")
+    )
+  ) {
+    return null;
+  }
+
+  // Restrict to expected image file extensions.
+  if (!/\.(?:png|jpe?g|webp|gif|svg|avif)$/i.test(normalized)) {
+    return null;
+  }
+
+  return new URL(`/${normalized}`, ORIGIN_BASE_URL);
 }
 
 async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Promise<Response | null> {
