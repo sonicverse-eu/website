@@ -22,20 +22,41 @@ export async function GET(request: Request) {
   const key = source.replace(/^\/+/, "");
   const imageAssets = (env as { IMAGE_ASSETS?: ImageAssetsBucket }).IMAGE_ASSETS;
 
-  if (!imageAssets) {
-    return new Response("Image bucket binding is not configured", { status: 500 });
+  // Try R2 first
+  if (imageAssets) {
+    const object = await imageAssets.get(key);
+    if (object) {
+      const headers = new Headers();
+      object.writeHttpMetadata(headers);
+      headers.set("etag", object.httpEtag);
+      headers.set("cache-control", "public, max-age=31536000, immutable");
+      return new Response(object.body, { headers });
+    }
   }
 
-  const object = await imageAssets.get(key);
-
-  if (!object) {
-    return new Response("Object not found", { status: 404 });
+  // Fallback to ASSETS if R2 is not configured or image not found
+  try {
+    const assetsResponse = await env.ASSETS.fetch(new Request(source));
+    if (assetsResponse.ok) {
+      const headers = new Headers(assetsResponse.headers);
+      headers.set("cache-control", "public, max-age=31536000, immutable");
+      return new Response(assetsResponse.body, { headers });
+    }
+  } catch (e) {
+    console.error("Failed to fetch from ASSETS:", e);
   }
 
-  const headers = new Headers();
-  object.writeHttpMetadata(headers);
-  headers.set("etag", object.httpEtag);
-  headers.set("cache-control", "public, max-age=31536000, immutable");
+  // Final fallback - try to fetch from origin
+  try {
+    const originResponse = await fetch(source);
+    if (originResponse.ok) {
+      const headers = new Headers(originResponse.headers);
+      headers.set("cache-control", "public, max-age=31536000, immutable");
+      return new Response(originResponse.body, { headers });
+    }
+  } catch (e) {
+    console.error("Failed to fetch from origin:", e);
+  }
 
-  return new Response(object.body, { headers });
+  return new Response("Image not found", { status: 404 });
 }
