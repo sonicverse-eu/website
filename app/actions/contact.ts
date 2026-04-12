@@ -91,7 +91,10 @@ function buildEmailHtml(values: {
           <!-- Footer -->
           <tr>
             <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
-              <p style="margin:0;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <div style="display:flex;gap:16px;">
+                <a href="https://github.com/sonicverse-eu" style="color:#432dd7;font-size:12px;text-decoration:none;">GitHub</a>
+              </div>
             </td>
           </tr>
 
@@ -119,19 +122,55 @@ function buildConfirmationEmailHtml(values: {
     <tr>
       <td align="center">
         <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:24px;border:1px solid rgba(15,23,42,0.08);overflow:hidden;">
+
+          <!-- Header -->
           <tr>
             <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
               <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
               <h1 style="margin:8px 0 0;font-size:22px;font-weight:600;color:#ffffff;letter-spacing:-0.03em;">We received your message</h1>
             </td>
           </tr>
+
+          <!-- Body -->
           <tr>
             <td style="padding:36px 40px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Hi ${values.name},</p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Thanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.</p>
-              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+
+              <!-- Call to Action -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td align="center">
+                    <a href="https://sonicverse.eu" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#4d35ef,#432dd7);color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">Visit Our Website</a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Additional Info -->
+              <p style="margin:0 0 8px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">In the meantime, you can:</p>
+              <ul style="margin:0 0 16px;padding-left:20px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">
+                <li>Explore our portfolio and services</li>
+                <li>Follow us on social media for updates</li>
+                <li>Check out our blog for insights</li>
+              </ul>
+
+              <!-- Contact Info -->
+              <p style="margin:0 0 4px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Need immediate assistance?</p>
+              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:hello@sonicverse.eu" style="color:#432dd7;text-decoration:none;">hello@sonicverse.eu</a></p>
             </td>
           </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
+              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <div style="display:flex;gap:16px;">
+                <a href="https://github.com/sonicverse-eu" style="color:#432dd7;font-size:12px;text-decoration:none;">GitHub</a>
+              </div>
+            </td>
+          </tr>
+
         </table>
       </td>
     </tr>
