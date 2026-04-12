@@ -18,8 +18,7 @@
   // Alternatively configure an Email Workers binding named `SEND_EMAIL` (see Cloudflare docs).
   "send_email": [
     {
-      "name": "SEND_EMAIL", 
-      "destination_address": "hello@sonicverse.eu"
+      "name": "SEND_EMAIL"
     }
   ],
   "images": {
