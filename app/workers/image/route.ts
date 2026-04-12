@@ -10,8 +10,7 @@ export async function GET(request: Request) {
   }
 
   const key = source.replace(/^\/+/, "");
-  const bucket = env.IMAGE_ASSETS as { get(key: string): Promise<any> };
-  const object = await bucket.get(key);
+  const object = await env.IMAGE_ASSETS.get(key);
 
   if (!object) {
     return new Response("Object not found", { status: 404 });
