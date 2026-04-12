@@ -142,34 +142,57 @@ export async function submitContactForm(
   const fromAddress = process.env.RESEND_FROM ?? "Sonicverse <hello@sonicverse.eu>";
   const toAddress = process.env.RESEND_TO ?? "hello@sonicverse.eu";
 
-  if (!apiKey) {
-    return {
-      status: "error",
-      message: "Contact delivery is not configured. Set RESEND_API_KEY in your Cloudflare secrets.",
-      errors: {},
-      values,
-    };
-  }
-
-  const resend = new Resend(apiKey);
   const submittedAt = new Date().toLocaleString("en-GB", {
     dateStyle: "medium",
     timeStyle: "short",
   });
 
-  const { error } = await resend.emails.send({
-    from: fromAddress,
-    to: [toAddress],
-    replyTo: values.email,
-    subject: `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ""}`,
-    html: buildEmailHtml({ ...values, submittedAt }),
-    tags: [
-      { name: "source", value: source.replace(/\//g, "_") || "contact" },
-      ...(values.projectType ? [{ name: "project_type", value: values.projectType.replace(/\s+/g, "_") }] : []),
-    ],
-  });
+  try {
+    const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ""}`;
 
-  if (error) {
+    // Prefer Cloudflare Email Workers binding `SEND_EMAIL` when available on globalThis.
+    const sendBinding = (globalThis as any).SEND_EMAIL;
+
+    if (sendBinding && typeof sendBinding.send === "function") {
+      await sendBinding.send({
+        from: fromAddress,
+        to: toAddress,
+        replyTo: values.email,
+        subject,
+        text: `${values.name} <${values.email}>\n\n${values.brief}`,
+        html: buildEmailHtml({ ...values, submittedAt }),
+      });
+    } else if (apiKey) {
+      const resend = new Resend(apiKey);
+      const { error } = await resend.emails.send({
+        from: fromAddress,
+        to: [toAddress],
+        replyTo: values.email,
+        subject,
+        html: buildEmailHtml({ ...values, submittedAt }),
+        tags: [
+          { name: "source", value: source.replace(/\//g, "_") || "contact" },
+          ...(values.projectType ? [{ name: "project_type", value: values.projectType.replace(/\s+/g, "_") }] : []),
+        ],
+      });
+
+      if (error) {
+        return {
+          status: "error",
+          message: "The message could not be delivered right now. Please try again or email us directly.",
+          errors: {},
+          values,
+        };
+      }
+    } else {
+      return {
+        status: "error",
+        message: "Contact delivery is not configured. Set RESEND_API_KEY or configure the SEND_EMAIL binding in your Cloudflare deployment.",
+        errors: {},
+        values,
+      };
+    }
+  } catch (e) {
     return {
       status: "error",
       message: "The message could not be delivered right now. Please try again or email us directly.",
