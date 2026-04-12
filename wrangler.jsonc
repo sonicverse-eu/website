@@ -10,5 +10,11 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  }
+  },
+  // Secrets — set via: wrangler secret put <NAME>
+  // Required:
+  //   RESEND_API_KEY   — Resend API key (https://resend.com/api-keys)
+  // Optional (defaults shown):
+  //   RESEND_FROM      — Verified sender address  (default: "Sonicverse <hello@sonicverse.eu>")
+  //   RESEND_TO        — Recipient address         (default: "hello@sonicverse.eu")
 }
