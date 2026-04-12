@@ -10,6 +10,52 @@ type ImageAssetsBucket = {
   get(key: string): Promise<R2ObjectLike | null>;
 };
 
+async function tryFetchFromR2(imageAssets: ImageAssetsBucket, key: string): Promise<Response | null> {
+  try {
+    console.log(`Trying R2 key: ${key}`);
+    const object = await imageAssets.get(key);
+    if (object) {
+      console.log(`Found image in R2: ${key}`);
+      const headers = new Headers();
+      object.writeHttpMetadata(headers);
+      headers.set("etag", object.httpEtag);
+      headers.set("cache-control", "public, max-age=31536000, immutable");
+      return new Response(object.body, { headers });
+    } else {
+      console.log(`Image not found in R2: ${key}`);
+    }
+  } catch (e) {
+    console.error(`R2 fetch error for key ${key}:`, e);
+  }
+  return null;
+}
+
+async function tryFetchFromAssets(env: any, source: string): Promise<Response | null> {
+  // Try different path variations for ASSETS
+  const assetPaths = [
+    source,
+    `/${source.replace(/^\/+/, '')}`,
+    source.replace(/^images\//, ""),
+    source.replace(/^\/images\//, "")
+  ];
+
+  for (const assetPath of assetPaths) {
+    try {
+      console.log(`Trying ASSETS path: ${assetPath}`);
+      const assetsResponse = await env.ASSETS.fetch(new Request(assetPath));
+      if (assetsResponse.ok && assetsResponse.body) {
+        console.log(`Found image in ASSETS: ${assetPath}`);
+        const headers = new Headers(assetsResponse.headers);
+        headers.set("cache-control", "public, max-age=31536000, immutable");
+        return new Response(assetsResponse.body, { headers });
+      }
+    } catch (e) {
+      console.error(`Failed to fetch ${assetPath} from ASSETS:`, e);
+    }
+  }
+  return null;
+}
+
 export async function GET(request: Request) {
   const { env } = getCloudflareContext();
   const url = new URL(request.url);
@@ -19,57 +65,39 @@ export async function GET(request: Request) {
     return new Response("Missing src parameter", { status: 400 });
   }
 
+  console.log(`Image request for: ${source}`);
+
   // Clean up the source path by removing leading slashes
   const key = source.replace(/^\/+/, "");
   const imageAssets = (env as { IMAGE_ASSETS?: ImageAssetsBucket }).IMAGE_ASSETS;
 
-  // Try R2 first
+  // Try R2 first with multiple path variations
   if (imageAssets) {
-    try {
-      const object = await imageAssets.get(key);
-      if (object) {
-        const headers = new Headers();
-        object.writeHttpMetadata(headers);
-        headers.set("etag", object.httpEtag);
-        headers.set("cache-control", "public, max-age=31536000, immutable");
-        return new Response(object.body, { headers });
-      }
-    } catch (e) {
-      console.error("R2 fetch error:", e);
+    const r2Paths = [
+      key, // Original key
+      key.replace(/^images\//, ""), // Remove images/ prefix
+      key.replace(/^stock\//, ""), // Remove stock/ prefix
+      key.replace(/^images\/stock\//, "") // Remove images/stock/ prefix
+    ];
+
+    for (const r2Path of r2Paths) {
+      const response = await tryFetchFromR2(imageAssets, r2Path);
+      if (response) return response;
     }
   } else {
     console.log("IMAGE_ASSETS binding not configured, falling back to ASSETS");
   }
 
-  // Fallback to ASSETS if R2 is not configured or image not found
-  try {
-    // Try different path variations for ASSETS
-    const assetPaths = [
-      source, // Original path
-      `/${key}`, // Ensure leading slash
-      key.replace(/^images\//, ""), // Remove images/ prefix if present
-    ];
+  // Fallback to ASSETS
+  const assetsResponse = await tryFetchFromAssets(env, source);
+  if (assetsResponse) return assetsResponse;
 
-    for (const assetPath of assetPaths) {
-      try {
-        const assetsResponse = await env.ASSETS.fetch(new Request(assetPath));
-        if (assetsResponse.ok && assetsResponse.body) {
-          const headers = new Headers(assetsResponse.headers);
-          headers.set("cache-control", "public, max-age=31536000, immutable");
-          return new Response(assetsResponse.body, { headers });
-        }
-      } catch (e) {
-        console.error(`Failed to fetch ${assetPath} from ASSETS:", e);
-      }
-    }
-  } catch (e) {
-    console.error("ASSETS fetch error:", e);
-  }
-
-  // Final fallback - try to fetch from origin or public folder
+  // Final fallback - try to fetch from origin
   try {
+    console.log(`Trying origin fetch for: ${source}`);
     const originResponse = await fetch(source);
     if (originResponse.ok) {
+      console.log(`Found image at origin: ${source}`);
       const headers = new Headers(originResponse.headers);
       headers.set("cache-control", "public, max-age=31536000, immutable");
       return new Response(originResponse.body, { headers });
@@ -78,6 +106,6 @@ export async function GET(request: Request) {
     console.error("Origin fetch error:", e);
   }
 
-  console.log(`Image not found: ${source}, tried key: ${key}`);
+  console.log(`Image not found: ${source}, tried R2 key: ${key}`);
   return new Response(`Image not found: ${source}`, { status: 404 });
 }
