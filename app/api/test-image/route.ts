@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   try {
     // Test the image worker endpoint
-    const testUrl = '/workers/image?src=/images/stock-radio-mixer.jpg';
+    const testUrl = '/workers/image?src=/images/stock/stock-radio-mixer.jpg';
     
     return NextResponse.json({
       success: true,
