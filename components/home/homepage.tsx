@@ -59,7 +59,7 @@ function HeroImageVisual() {
   return (
     <div className="relative h-full overflow-hidden rounded-[1.6rem]">
       <WorkerImage
-        src="/images/home-hero-visual.jpg"
+        src="/images/stock-radio-mixer.jpg"
         alt="Professional audio mixing console"
         fill
         className="object-cover object-center"

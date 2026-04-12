@@ -16,13 +16,17 @@
 /out/
 /build
 /dist
-/.open-next/
-/.wrangler/
+.open-next/node_modules/
+.open-next/.next/
+.open-next/assets/
+.open-next/worker.js
+.open-next/.build/
+.open-next/cloudflare/
 
 # TypeScript / generated types
 *.tsbuildinfo
 next-env.d.ts
-cloudflare-env.d.ts
+!cloudflare-env.d.ts
 
 # Environment files and local secrets
 .env*
@@ -41,6 +45,8 @@ yarn-error.log*
 
 # Deployment / platform
 .vercel
+.wrangler
+wrangler.toml
 
 # Editors / OS
 .DS_Store
@@ -51,3 +57,10 @@ yarn-error.log*
 *.pem
 *.local
 .claude/
+.continue/
+
+# R2 and other Cloudflare assets
+.r2
+
+# Next.js cache
+.next/cache/

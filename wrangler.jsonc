@@ -1,31 +1,30 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "sonicverse-website",
-  "main": ".open-next/worker.js",
-  "compatibility_date": "2026-04-12",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "nodejs_compat_populate_process_env"
-  ],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  // Secrets — set via: wrangler secret put <NAME>
-  // Configure contact email addresses:
-  //   EMAIL_SENDER      — Sender address used in outgoing messages (default: "Sonicverse <hello@sonicverse.eu>")
-  //   EMAIL_RECIPIENT   — Recipient address where contact form submissions are delivered (default: "hello@sonicverse.eu")
-  // Alternatively configure an Email Workers binding named `SEND_EMAIL` (see Cloudflare docs).
-  "send_email": [
-    {
-      "name": "SEND_EMAIL",
-      "destination_address": "hello@sonicverse.eu"
-    }
-  ],
-  "images": {
-    "binding": "IMAGES"
-  },
-  // Image bindings:
-  //   IMAGES — Cloudflare Images binding for server-side image transforms (send_image/input/output)
-  // To use Cloudflare Images transforms from a Worker, configure a `send_image` binding named `IMAGES`.
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "sonicverse-website",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-04-12",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"send_email": [
+		{
+			"name": "SEND_EMAIL"
+		}
+	],
+	"images": {
+		"binding": "IMAGES"
+	},
+	"r2_buckets": [
+		{
+			"bucket_name": "sonicverse-website-media",
+			"binding": "IMAGE_ASSETS"
+		}
+	]
 }
+// Image bindings:
+//   IMAGES — Cloudflare Images binding for server-side image transforms (send_image/input/output)
+// To use Cloudflare Images transforms from a Worker, configure a `send_image` binding named `IMAGES`.
