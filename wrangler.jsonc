@@ -24,6 +24,12 @@
   "images": {
     "binding": "IMAGES"
   },
+  "r2_buckets": [
+    {
+      "binding": "IMAGE_ASSETS",
+      "bucket_name": "sonicverse-website-media"
+    }
+  ],
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,
