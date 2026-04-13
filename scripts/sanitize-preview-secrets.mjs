@@ -11,6 +11,7 @@ const manifestPaths = [
 const bundlePaths = [
   '.open-next/middleware/handler.mjs',
   '.open-next/server-functions/default/index.mjs',
+  '.open-next/server-functions/default/handler.mjs',
 ]
 
 const runtimePreviewSecretBlock = `var runtimePreviewModeSigningKey = process.env.__NEXT_PREVIEW_MODE_SIGNING_KEY || process.env.NEXT_PREVIEW_MODE_SIGNING_KEY || "";
@@ -63,8 +64,18 @@ function sanitizeBundleSource(source) {
   )
 
   updated = updated.replace(
+    /preview:\{previewModeId:"([^"]+)",previewModeSigningKey:"[^"]*",previewModeEncryptionKey:"[^"]*"\}/,
+    'preview:{previewModeId:"$1",previewModeSigningKey:runtimePreviewModeSigningKey,previewModeEncryptionKey:runtimePreviewModeEncryptionKey}',
+  )
+
+  updated = updated.replace(
     /process\.env\.NEXT_PREVIEW_MODE_ID = PrerenderManifest\?\.preview\?\.previewModeId;/,
     runtimePreviewEnvBlock,
+  )
+
+  updated = updated.replace(
+    /process\.env\.NEXT_PREVIEW_MODE_ID=PrerenderManifest\?\.preview\?\.previewModeId;/,
+    runtimePreviewEnvBlock.replaceAll(' = ', '=').replaceAll('if (!', 'if(!').replaceAll(') process', ')process'),
   )
 
   return updated
