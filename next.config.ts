@@ -16,8 +16,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-}
+})
 
 export default withMDX(nextConfig)
 
-initOpenNextCloudflareForDev()
+export default withMdxConfig(nextConfig)
