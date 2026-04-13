@@ -84,7 +84,6 @@ export default async function BlogPage() {
                   </div>
                   <div className="space-y-4 rounded-[1.7rem] border border-border/60 bg-background/52 p-5 backdrop-blur-sm backdrop-saturate-[1.4]">
                     <MetaInline>{formatContentDate(featured.frontmatter.publishedAt)}</MetaInline>
-                    <MetaInline>{featured.readingTimeMinutes} min read</MetaInline>
                     <Button size="lg" className="w-full">
                       Read featured note
                     </Button>
@@ -120,7 +119,6 @@ export default async function BlogPage() {
                   meta={
                     <>
                       <MetaInline>{formatContentDate(entry.frontmatter.publishedAt)}</MetaInline>
-                      <MetaInline>{entry.readingTimeMinutes} min read</MetaInline>
                     </>
                   }
                 />
