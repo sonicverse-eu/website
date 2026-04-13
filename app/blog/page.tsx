@@ -1,30 +1,35 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import { ContentLinkCard, ContentPageHeader, MetaInline, TagList } from "@/components/content/content-ui";
-import { Reveal } from "@/components/site/reveal";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { getCollectionEntries, getFeaturedBlogPost, formatContentDate } from "@/lib/content";
-import { pageMetadata } from "@/lib/metadata";
+import {
+  ContentLinkCard,
+  ContentPageHeader,
+  MetaInline,
+  TagList,
+} from '@/components/content/content-ui'
+import { Reveal } from '@/components/site/reveal'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { getCollectionEntries, getFeaturedBlogPost, formatContentDate } from '@/lib/content'
+import { pageMetadata } from '@/lib/metadata'
 
 export const metadata: Metadata = pageMetadata(
-  "Blog",
-  "Technical notes, system thinking, and product-engineering perspective from Sonicverse.",
-  "/blog",
-);
+  'Blog',
+  'Technical notes, system thinking, and product-engineering perspective from Sonicverse.',
+  '/blog',
+)
 
 export default async function BlogPage() {
   const [entries, featured] = await Promise.all([
-    getCollectionEntries("blog"),
+    getCollectionEntries('blog'),
     getFeaturedBlogPost(),
-  ]);
-  const archive = entries.filter((entry) => entry.slug !== featured?.slug);
-  const tags = Array.from(
-    new Set(entries.flatMap((entry) => entry.frontmatter.tags ?? [])),
-  ).sort((left, right) => left.localeCompare(right));
+  ])
+  const archive = entries.filter((entry) => entry.slug !== featured?.slug)
+  const tags = Array.from(new Set(entries.flatMap((entry) => entry.frontmatter.tags ?? []))).sort(
+    (left, right) => left.localeCompare(right),
+  )
 
   return (
     <>
@@ -36,7 +41,9 @@ export default async function BlogPage() {
           <Card>
             <CardHeader>
               <Badge variant="muted">Index signal</Badge>
-              <CardTitle className="text-[1.25rem]">Newest first, with one featured technical note.</CardTitle>
+              <CardTitle className="text-[1.25rem]">
+                Newest first, with one featured technical note.
+              </CardTitle>
               <CardDescription>
                 The blog behaves like a product thinking layer, not a generic publishing archive.
               </CardDescription>
@@ -78,7 +85,9 @@ export default async function BlogPage() {
                   <div className="space-y-4 rounded-[1.7rem] border border-border/60 bg-background/52 p-5 backdrop-blur-sm backdrop-saturate-[1.4]">
                     <MetaInline>{formatContentDate(featured.frontmatter.publishedAt)}</MetaInline>
                     <MetaInline>{featured.readingTimeMinutes} min read</MetaInline>
-                    <Button size="lg" className="w-full">Read featured note</Button>
+                    <Button size="lg" className="w-full">
+                      Read featured note
+                    </Button>
                   </div>
                 </div>
               </Link>
@@ -121,5 +130,5 @@ export default async function BlogPage() {
         </Container>
       </section>
     </>
-  );
+  )
 }

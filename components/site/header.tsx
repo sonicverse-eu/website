@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { motion, useReducedMotion } from "framer-motion";
-import { Menu } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from 'framer-motion'
+import { Menu } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetClose,
@@ -15,85 +15,85 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Container } from "@/components/ui/container";
-import { cn } from "@/lib/utils";
-import { navItems, siteName } from "@/lib/site-data";
+} from '@/components/ui/sheet'
+import { Container } from '@/components/ui/container'
+import { cn } from '@/lib/utils'
+import { navItems, siteName } from '@/lib/site-data'
 
-import { BrandMark } from "./brand-mark";
-import { ThemeToggle } from "./theme-toggle";
+import { BrandMark } from './brand-mark'
+import { ThemeToggle } from './theme-toggle'
 
 export function Header() {
-  const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const lastScrollYRef = useRef(0);
-  const frameRef = useRef<number | null>(null);
+  const pathname = usePathname()
+  const reduceMotion = useReducedMotion()
+  const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const lastScrollYRef = useRef(0)
+  const frameRef = useRef<number | null>(null)
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
+    if (typeof window === 'undefined') {
+      return
     }
 
-    const TOP_OFFSET = 18;
-    const HIDE_OFFSET = 96;
-    const DIRECTION_THRESHOLD = 10;
+    const TOP_OFFSET = 18
+    const HIDE_OFFSET = 96
+    const DIRECTION_THRESHOLD = 10
 
     const updateHeader = () => {
-      const currentScrollY = window.scrollY;
-      const previousScrollY = lastScrollYRef.current;
-      const delta = currentScrollY - previousScrollY;
-      const nearTop = currentScrollY <= TOP_OFFSET;
+      const currentScrollY = window.scrollY
+      const previousScrollY = lastScrollYRef.current
+      const delta = currentScrollY - previousScrollY
+      const nearTop = currentScrollY <= TOP_OFFSET
 
-      const shouldShowScrolledState = !nearTop;
+      const shouldShowScrolledState = !nearTop
       setScrolled((current) =>
         current !== shouldShowScrolledState ? shouldShowScrolledState : current,
-      );
+      )
 
       if (menuOpen || nearTop) {
-        setHidden(false);
-        lastScrollYRef.current = currentScrollY;
-        frameRef.current = null;
-        return;
+        setHidden(false)
+        lastScrollYRef.current = currentScrollY
+        frameRef.current = null
+        return
       }
 
       if (Math.abs(delta) >= DIRECTION_THRESHOLD) {
-        const shouldHide = delta > 0 && currentScrollY > HIDE_OFFSET;
-        setHidden((current) => (current !== shouldHide ? shouldHide : current));
-        lastScrollYRef.current = currentScrollY;
+        const shouldHide = delta > 0 && currentScrollY > HIDE_OFFSET
+        setHidden((current) => (current !== shouldHide ? shouldHide : current))
+        lastScrollYRef.current = currentScrollY
       }
 
-      frameRef.current = null;
-    };
+      frameRef.current = null
+    }
 
     const onScroll = () => {
       if (frameRef.current !== null) {
-        return;
+        return
       }
 
-      frameRef.current = window.requestAnimationFrame(updateHeader);
-    };
+      frameRef.current = window.requestAnimationFrame(updateHeader)
+    }
 
-    updateHeader();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    updateHeader()
+    window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
+        window.cancelAnimationFrame(frameRef.current)
       }
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [menuOpen]);
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [menuOpen])
 
   const isActivePath = (href: string) => {
-    if (href === "/") {
-      return pathname === "/";
+    if (href === '/') {
+      return pathname === '/'
     }
 
-    return pathname === href || pathname.startsWith(`${href}/`);
-  };
+    return pathname === href || pathname.startsWith(`${href}/`)
+  }
 
   return (
     <>
@@ -105,14 +105,13 @@ export function Header() {
       <div
         aria-hidden="true"
         className={cn(
-          "pointer-events-none fixed inset-x-0 top-0 z-[49] h-[5.5rem] border-b border-border/60",
-          scrolled && !hidden ? "opacity-100" : "opacity-0",
+          'pointer-events-none fixed inset-x-0 top-0 z-[49] h-[5.5rem] border-b border-border/60',
+          scrolled && !hidden ? 'opacity-100' : 'opacity-0',
         )}
         style={{
-          backdropFilter: "blur(20px) saturate(1.8)",
-          WebkitBackdropFilter: "blur(20px) saturate(1.8)",
-          background:
-            "linear-gradient(180deg, var(--header-bg-from), var(--header-bg-to))",
+          backdropFilter: 'blur(20px) saturate(1.8)',
+          WebkitBackdropFilter: 'blur(20px) saturate(1.8)',
+          background: 'linear-gradient(180deg, var(--header-bg-from), var(--header-bg-to))',
         }}
       />
 
@@ -123,7 +122,7 @@ export function Header() {
           reduceMotion
             ? { y: 0, scale: 1, opacity: 1 }
             : hidden
-              ? { y: "-120%", scale: 0.96, opacity: 0 }
+              ? { y: '-120%', scale: 0.96, opacity: 0 }
               : { y: 0, scale: 1, opacity: 1 }
         }
         transition={
@@ -132,13 +131,13 @@ export function Header() {
             : hidden
               ? { duration: 0.22, ease: [0.4, 0, 1, 1] }
               : {
-                  y: { type: "spring", stiffness: 380, damping: 28, mass: 0.7 },
-                  scale: { type: "spring", stiffness: 380, damping: 28, mass: 0.7 },
-                  opacity: { duration: 0.18, ease: "easeOut" },
+                  y: { type: 'spring', stiffness: 380, damping: 28, mass: 0.7 },
+                  scale: { type: 'spring', stiffness: 380, damping: 28, mass: 0.7 },
+                  opacity: { duration: 0.18, ease: 'easeOut' },
                 }
         }
         onFocusCapture={() => setHidden(false)}
-        style={{ transformOrigin: "top center" }}
+        style={{ transformOrigin: 'top center' }}
       >
         <Container className="pt-6 pb-5">
           <div className="pointer-events-auto flex items-center justify-between px-1 sm:px-2">
@@ -153,21 +152,21 @@ export function Header() {
 
             <nav className="hidden items-center gap-1 rounded-full border border-border/50 bg-foreground/[0.04] p-1 lg:flex">
               {navItems.map((item) => {
-                const active = isActivePath(item.href);
+                const active = isActivePath(item.href)
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "rounded-full px-4 py-2 text-sm transition",
+                      'rounded-full px-4 py-2 text-sm transition',
                       active
-                        ? "bg-primary text-white shadow-[0_4px_14px_rgba(67,45,215,0.3)]"
-                        : "text-foreground/68 hover:bg-foreground/[0.06] hover:text-foreground",
+                        ? 'bg-primary text-white shadow-[0_4px_14px_rgba(67,45,215,0.3)]'
+                        : 'text-foreground/68 hover:bg-foreground/[0.06] hover:text-foreground',
                     )}
                   >
                     {item.label}
                   </Link>
-                );
+                )
               })}
             </nav>
 
@@ -182,9 +181,9 @@ export function Header() {
               <Sheet
                 open={menuOpen}
                 onOpenChange={(open) => {
-                  setMenuOpen(open);
+                  setMenuOpen(open)
                   if (open) {
-                    setHidden(false);
+                    setHidden(false)
                   }
                 }}
               >
@@ -202,28 +201,27 @@ export function Header() {
                   <SheetHeader>
                     <SheetTitle>Sonicverse</SheetTitle>
                     <SheetDescription>
-                      Open-source-native product engineering with a calm technical point of
-                      view.
+                      Open-source-native product engineering with a calm technical point of view.
                     </SheetDescription>
                   </SheetHeader>
                   <div className="flex flex-col gap-2">
                     {navItems.map((item) => {
-                      const active = isActivePath(item.href);
+                      const active = isActivePath(item.href)
                       return (
                         <SheetClose asChild key={item.href}>
                           <Link
                             href={item.href}
                             className={cn(
-                              "rounded-2xl border px-4 py-3 text-sm transition",
+                              'rounded-2xl border px-4 py-3 text-sm transition',
                               active
-                                ? "border-primary/18 bg-primary/10 text-primary"
-                                : "border-border/60 bg-background/68 text-foreground/72",
+                                ? 'border-primary/18 bg-primary/10 text-primary'
+                                : 'border-border/60 bg-background/68 text-foreground/72',
                             )}
                           >
                             {item.label}
                           </Link>
                         </SheetClose>
-                      );
+                      )
                     })}
                   </div>
                   <div className="flex items-center justify-between gap-3">
@@ -241,5 +239,5 @@ export function Header() {
         </Container>
       </motion.header>
     </>
-  );
+  )
 }
