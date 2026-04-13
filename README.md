@@ -1,6 +1,9 @@
 # Sonicverse Website
 
-A Next.js application optimized for Cloudflare Workers deployment using OpenNext.
+[![Cloudflare Worker Preview](https://github.com/sonicverse-eu/website/actions/workflows/cloudflare-preview.yml/badge.svg)](https://github.com/sonicverse-eu/website/actions/workflows/cloudflare-preview.yml)
+![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=next.js)
+![React 19](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)
 
 ## Getting Started
 
@@ -25,7 +28,7 @@ npm run preview
 Deploy the Worker manually:
 
 ```bash
-npm run deploy
+npm run dev
 ```
 
 ## Deployment
@@ -38,15 +41,46 @@ Production deployments and pull request previews are handled by Cloudflare Worke
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deployment workflow and troubleshooting notes.
 
-## Environment Variables
+```bash
+npm run build:worker
+```
 
-Copy `.dev.vars.example` to `.dev.vars` and configure:
+### Preview the Worker locally
 
 ```dotenv
 EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 ```
 
-## License
+## Common Commands
 
-MIT
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Starts the Next.js development server. |
+| `npm run lint` | Runs ESLint across the project. |
+| `npm run typecheck` | Runs TypeScript in no-emit mode. |
+| `npm run build` | Builds the Next.js app. |
+| `npm run build:worker` | Builds the OpenNext Cloudflare Worker output. |
+| `npm run preview` | Builds and previews the Worker locally. |
+| `npm run deploy` | Builds and deploys the Worker to Cloudflare. |
+| `npm run cf-typegen` | Regenerates Cloudflare environment types. |
+| `npm run clean` | Removes local build artifacts. |
+
+## Contributing
+
+Contributions are welcome through GitHub Issues and Pull Requests. If you want to propose a bug fix, content change, or improvement to the site experience, start by checking the open issues or opening a new one with the context needed to reproduce the problem or explain the idea.
+
+This repository does not currently ship a dedicated `CONTRIBUTING.md`, so the working expectation is:
+
+- keep changes focused and readable;
+- run `npm run lint`, `npm run typecheck`, and `npm run build` before opening a PR;
+- include screenshots or preview details when a change affects the UI or content presentation;
+- use the existing Cloudflare preview workflow on pull requests as an extra validation step.
+
+## Links
+
+- Live site: [sonicverse.eu](https://sonicverse.eu)
+- Repository: [github.com/sonicverse-eu/website](https://github.com/sonicverse-eu/website)
+- GitHub organization: [github.com/sonicverse-eu](https://github.com/sonicverse-eu)
+- Issues: [github.com/sonicverse-eu/website/issues](https://github.com/sonicverse-eu/website/issues)
+- Contact: [hello@sonicverse.eu](mailto:hello@sonicverse.eu)

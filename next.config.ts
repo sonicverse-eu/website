@@ -1,17 +1,22 @@
-import withMDX from '@next/mdx'
+import createMDX from '@next/mdx'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 import type { NextConfig } from 'next'
 
-const withMdxConfig = withMDX({
-  extension: /\.mdx?$/,
+const withMDX = createMDX({
+  extension: /\.(md|mdx)$/,
   options: {
-    remarkPlugins: [['remark-frontmatter'], ['remark-mdx-frontmatter']],
+    remarkPlugins: ['remark-frontmatter', 'remark-mdx-frontmatter'],
     rehypePlugins: [],
-    providerImportSource: null,
   },
 })
 
 const nextConfig: NextConfig = {
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  reactCompiler: true,
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  images: {
+    unoptimized: true,
+  },
 }
 
-export default withMdxConfig(nextConfig)
+export default withMDX(nextConfig)
+initOpenNextCloudflareForDev()
