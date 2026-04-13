@@ -58,8 +58,27 @@ function isOpenNextError(e) {
     return false;
   }
 }
+var IgnorableError, FatalError;
 var init_error = __esm({
   "node_modules/@opennextjs/aws/dist/utils/error.js"() {
+    IgnorableError = class extends Error {
+      __openNextInternal = true;
+      canIgnore = true;
+      logLevel = 0;
+      constructor(message) {
+        super(message);
+        this.name = "IgnorableError";
+      }
+    };
+    FatalError = class extends Error {
+      __openNextInternal = true;
+      canIgnore = false;
+      logLevel = 2;
+      constructor(message) {
+        super(message);
+        this.name = "FatalError";
+      }
+    };
   }
 });
 
@@ -547,6 +566,81 @@ var init_cloudflare_edge = __esm({
   }
 });
 
+// node_modules/@opennextjs/aws/dist/overrides/tagCache/dummy.js
+var dummy_exports = {};
+__export(dummy_exports, {
+  default: () => dummy_default
+});
+var dummyTagCache, dummy_default;
+var init_dummy = __esm({
+  "node_modules/@opennextjs/aws/dist/overrides/tagCache/dummy.js"() {
+    dummyTagCache = {
+      name: "dummy",
+      mode: "original",
+      getByPath: async () => {
+        return [];
+      },
+      getByTag: async () => {
+        return [];
+      },
+      getLastModified: async (_, lastModified) => {
+        return lastModified ?? Date.now();
+      },
+      writeTags: async () => {
+        return;
+      },
+      isStale: async (_path) => {
+        return false;
+      }
+    };
+    dummy_default = dummyTagCache;
+  }
+});
+
+// node_modules/@opennextjs/aws/dist/overrides/queue/dummy.js
+var dummy_exports2 = {};
+__export(dummy_exports2, {
+  default: () => dummy_default2
+});
+var dummyQueue, dummy_default2;
+var init_dummy2 = __esm({
+  "node_modules/@opennextjs/aws/dist/overrides/queue/dummy.js"() {
+    init_error();
+    dummyQueue = {
+      name: "dummy",
+      send: async () => {
+        throw new FatalError("Dummy queue is not implemented");
+      }
+    };
+    dummy_default2 = dummyQueue;
+  }
+});
+
+// node_modules/@opennextjs/aws/dist/overrides/incrementalCache/dummy.js
+var dummy_exports3 = {};
+__export(dummy_exports3, {
+  default: () => dummy_default3
+});
+var dummyIncrementalCache, dummy_default3;
+var init_dummy3 = __esm({
+  "node_modules/@opennextjs/aws/dist/overrides/incrementalCache/dummy.js"() {
+    init_error();
+    dummyIncrementalCache = {
+      name: "dummy",
+      get: async () => {
+        throw new IgnorableError('"Dummy" cache does not cache anything');
+      },
+      set: async () => {
+        throw new IgnorableError('"Dummy" cache does not cache anything');
+      },
+      delete: async () => {
+        throw new IgnorableError('"Dummy" cache does not cache anything');
+      }
+    };
+    dummy_default3 = dummyIncrementalCache;
+  }
+});
+
 // node_modules/@opennextjs/aws/dist/overrides/originResolver/pattern-env.js
 var pattern_env_exports = {};
 __export(pattern_env_exports, {
@@ -613,17 +707,17 @@ var init_pattern_env = __esm({
 });
 
 // node_modules/@opennextjs/aws/dist/overrides/assetResolver/dummy.js
-var dummy_exports = {};
-__export(dummy_exports, {
-  default: () => dummy_default
+var dummy_exports4 = {};
+__export(dummy_exports4, {
+  default: () => dummy_default4
 });
-var resolver, dummy_default;
-var init_dummy = __esm({
+var resolver, dummy_default4;
+var init_dummy4 = __esm({
   "node_modules/@opennextjs/aws/dist/overrides/assetResolver/dummy.js"() {
     resolver = {
       name: "dummy"
     };
-    dummy_default = resolver;
+    dummy_default4 = resolver;
   }
 });
 
@@ -860,6 +954,27 @@ async function resolveWrapper(wrapper) {
   const m_1 = await Promise.resolve().then(() => (init_cloudflare_edge(), cloudflare_edge_exports));
   return m_1.default;
 }
+async function resolveTagCache(tagCache) {
+  if (typeof tagCache === "function") {
+    return tagCache();
+  }
+  const m_1 = await Promise.resolve().then(() => (init_dummy(), dummy_exports));
+  return m_1.default;
+}
+async function resolveQueue(queue) {
+  if (typeof queue === "function") {
+    return queue();
+  }
+  const m_1 = await Promise.resolve().then(() => (init_dummy2(), dummy_exports2));
+  return m_1.default;
+}
+async function resolveIncrementalCache(incrementalCache) {
+  if (typeof incrementalCache === "function") {
+    return incrementalCache();
+  }
+  const m_1 = await Promise.resolve().then(() => (init_dummy3(), dummy_exports3));
+  return m_1.default;
+}
 async function resolveOriginResolver(originResolver) {
   if (typeof originResolver === "function") {
     return originResolver();
@@ -871,7 +986,7 @@ async function resolveAssetResolver(assetResolver) {
   if (typeof assetResolver === "function") {
     return assetResolver();
   }
-  const m_1 = await Promise.resolve().then(() => (init_dummy(), dummy_exports));
+  const m_1 = await Promise.resolve().then(() => (init_dummy4(), dummy_exports4));
   return m_1.default;
 }
 async function resolveProxyRequest(proxyRequest) {
@@ -906,7 +1021,7 @@ var NEXT_DIR = path.join(__dirname, ".next");
 var OPEN_NEXT_DIR = path.join(__dirname, ".open-next");
 debug({ NEXT_DIR, OPEN_NEXT_DIR });
 var NextConfig = { "env": {}, "typescript": { "ignoreBuildErrors": false }, "typedRoutes": false, "distDir": ".next", "cleanDistDir": true, "assetPrefix": "", "cacheMaxMemorySize": 52428800, "configOrigin": "next.config.ts", "useFileSystemPublicRoutes": true, "generateEtags": true, "pageExtensions": ["js", "jsx", "md", "mdx", "ts", "tsx"], "poweredByHeader": true, "compress": true, "images": { "deviceSizes": [640, 750, 828, 1080, 1200, 1920, 2048, 3840], "imageSizes": [32, 48, 64, 96, 128, 256, 384], "path": "/_next/image", "loader": "default", "loaderFile": "", "domains": [], "disableStaticImages": false, "minimumCacheTTL": 14400, "formats": ["image/webp"], "maximumRedirects": 3, "maximumResponseBody": 5e7, "dangerouslyAllowLocalIP": false, "dangerouslyAllowSVG": false, "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;", "contentDispositionType": "attachment", "localPatterns": [{ "pathname": "**", "search": "" }], "remotePatterns": [], "qualities": [75], "unoptimized": true, "customCacheHandler": false }, "devIndicators": { "position": "bottom-left" }, "onDemandEntries": { "maxInactiveAge": 6e4, "pagesBufferLength": 5 }, "basePath": "", "sassOptions": {}, "trailingSlash": false, "i18n": null, "productionBrowserSourceMaps": false, "excludeDefaultMomentLocales": true, "reactProductionProfiling": false, "reactStrictMode": null, "reactMaxHeadersLength": 6e3, "httpAgentOptions": { "keepAlive": true }, "logging": { "serverFunctions": true, "browserToTerminal": "warn" }, "compiler": {}, "expireTime": 31536e3, "staticPageGenerationTimeout": 60, "output": "standalone", "modularizeImports": { "@mui/icons-material": { "transform": "@mui/icons-material/{{member}}" }, "lodash": { "transform": "lodash/{{member}}" } }, "outputFileTracingRoot": "/Users/rikvisser/.codex/worktrees/6855/website", "cacheComponents": false, "cacheLife": { "default": { "stale": 300, "revalidate": 900, "expire": 4294967294 }, "seconds": { "stale": 30, "revalidate": 1, "expire": 60 }, "minutes": { "stale": 300, "revalidate": 60, "expire": 3600 }, "hours": { "stale": 300, "revalidate": 3600, "expire": 86400 }, "days": { "stale": 300, "revalidate": 86400, "expire": 604800 }, "weeks": { "stale": 300, "revalidate": 604800, "expire": 2592e3 }, "max": { "stale": 300, "revalidate": 2592e3, "expire": 31536e3 } }, "cacheHandlers": {}, "experimental": { "appNewScrollHandler": false, "useSkewCookie": false, "cssChunking": true, "multiZoneDraftMode": false, "appNavFailHandling": false, "prerenderEarlyExit": true, "serverMinification": true, "linkNoTouchStart": false, "caseSensitiveRoutes": false, "cachedNavigations": false, "partialFallbacks": false, "dynamicOnHover": false, "varyParams": false, "prefetchInlining": false, "preloadEntriesOnStart": true, "clientRouterFilter": true, "clientRouterFilterRedirects": false, "fetchCacheKeyPrefix": "", "proxyPrefetch": "flexible", "optimisticClientCache": true, "manualClientBasePath": false, "cpus": 9, "memoryBasedWorkersCount": false, "imgOptConcurrency": null, "imgOptTimeoutInSeconds": 7, "imgOptMaxInputPixels": 268402689, "imgOptSequentialRead": null, "imgOptSkipMetadata": null, "isrFlushToDisk": true, "workerThreads": false, "optimizeCss": false, "nextScriptWorkers": false, "scrollRestoration": false, "externalDir": false, "disableOptimizedLoading": false, "gzipSize": true, "craCompat": false, "esmExternals": true, "fullySpecified": false, "swcTraceProfiling": false, "forceSwcTransforms": false, "largePageDataBytes": 128e3, "typedEnv": false, "parallelServerCompiles": false, "parallelServerBuildTraces": false, "ppr": false, "authInterrupts": false, "webpackMemoryOptimizations": false, "optimizeServerReact": true, "strictRouteTypes": false, "viewTransition": false, "removeUncaughtErrorAndRejectionListeners": false, "validateRSCRequestHeaders": false, "staleTimes": { "dynamic": 0, "static": 300 }, "reactDebugChannel": true, "serverComponentsHmrCache": true, "staticGenerationMaxConcurrency": 8, "staticGenerationMinPagesPerWorker": 25, "transitionIndicator": false, "gestureTransition": false, "inlineCss": false, "useCache": false, "globalNotFound": false, "browserDebugInfoInTerminal": "warn", "lockDistDir": true, "proxyClientMaxBodySize": 10485760, "hideLogsAfterAbort": false, "mcpServer": true, "turbopackFileSystemCacheForDev": true, "turbopackFileSystemCacheForBuild": false, "turbopackInferModuleSideEffects": true, "turbopackPluginRuntimeStrategy": "childProcesses", "optimizePackageImports": ["lucide-react", "date-fns", "lodash-es", "ramda", "antd", "react-bootstrap", "ahooks", "@ant-design/icons", "@headlessui/react", "@headlessui-float/react", "@heroicons/react/20/solid", "@heroicons/react/24/solid", "@heroicons/react/24/outline", "@visx/visx", "@tremor/react", "rxjs", "@mui/material", "@mui/icons-material", "recharts", "react-use", "effect", "@effect/schema", "@effect/platform", "@effect/platform-node", "@effect/platform-browser", "@effect/platform-bun", "@effect/sql", "@effect/sql-mssql", "@effect/sql-mysql2", "@effect/sql-pg", "@effect/sql-sqlite-node", "@effect/sql-sqlite-bun", "@effect/sql-sqlite-wasm", "@effect/sql-sqlite-react-native", "@effect/rpc", "@effect/rpc-http", "@effect/typeclass", "@effect/experimental", "@effect/opentelemetry", "@material-ui/core", "@material-ui/icons", "@tabler/icons-react", "mui-core", "react-icons/ai", "react-icons/bi", "react-icons/bs", "react-icons/cg", "react-icons/ci", "react-icons/di", "react-icons/fa", "react-icons/fa6", "react-icons/fc", "react-icons/fi", "react-icons/gi", "react-icons/go", "react-icons/gr", "react-icons/hi", "react-icons/hi2", "react-icons/im", "react-icons/io", "react-icons/io5", "react-icons/lia", "react-icons/lib", "react-icons/lu", "react-icons/md", "react-icons/pi", "react-icons/ri", "react-icons/rx", "react-icons/si", "react-icons/sl", "react-icons/tb", "react-icons/tfi", "react-icons/ti", "react-icons/vsc", "react-icons/wi"], "trustHostHeader": false, "isExperimentalCompile": false }, "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight", "bundlePagesRouterDependencies": false, "configFileName": "next.config.ts", "reactCompiler": true, "turbopack": { "rules": { "{*,next-mdx-rule}": [{ "loaders": [{ "loader": "/Users/rikvisser/.codex/worktrees/6855/website/node_modules/@next/mdx/mdx-js-loader.js", "options": { "providerImportSource": "next-mdx-import-source-file", "remarkPlugins": ["remark-frontmatter", "remark-mdx-frontmatter"], "rehypePlugins": [] } }], "as": "*.tsx", "condition": { "path": {} } }] }, "resolveAlias": { "next-mdx-import-source-file": "@vercel/turbopack-next/mdx-import-source" }, "root": "/Users/rikvisser/.codex/worktrees/6855/website" }, "distDirRoot": ".next" };
-var BuildId = "yyi4SMYHD7bnslYBOhmDt";
+var BuildId = "5xpAswidxeBfMButJ6iow";
 var RoutesManifest = { "basePath": "", "rewrites": { "beforeFiles": [], "afterFiles": [], "fallback": [] }, "redirects": [{ "source": "/:path+/", "destination": "/:path+", "internal": true, "priority": true, "statusCode": 308, "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$" }], "routes": { "static": [{ "page": "/", "regex": "^/(?:/)?$", "routeKeys": {}, "namedRegex": "^/(?:/)?$" }, { "page": "/_global-error", "regex": "^/_global\\-error(?:/)?$", "routeKeys": {}, "namedRegex": "^/_global\\-error(?:/)?$" }, { "page": "/_not-found", "regex": "^/_not\\-found(?:/)?$", "routeKeys": {}, "namedRegex": "^/_not\\-found(?:/)?$" }, { "page": "/about", "regex": "^/about(?:/)?$", "routeKeys": {}, "namedRegex": "^/about(?:/)?$" }, { "page": "/api/test-image", "regex": "^/api/test\\-image(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/test\\-image(?:/)?$" }, { "page": "/blog", "regex": "^/blog(?:/)?$", "routeKeys": {}, "namedRegex": "^/blog(?:/)?$" }, { "page": "/changelog", "regex": "^/changelog(?:/)?$", "routeKeys": {}, "namedRegex": "^/changelog(?:/)?$" }, { "page": "/contact", "regex": "^/contact(?:/)?$", "routeKeys": {}, "namedRegex": "^/contact(?:/)?$" }, { "page": "/open-source", "regex": "^/open\\-source(?:/)?$", "routeKeys": {}, "namedRegex": "^/open\\-source(?:/)?$" }, { "page": "/projects", "regex": "^/projects(?:/)?$", "routeKeys": {}, "namedRegex": "^/projects(?:/)?$" }, { "page": "/roadmap", "regex": "^/roadmap(?:/)?$", "routeKeys": {}, "namedRegex": "^/roadmap(?:/)?$" }, { "page": "/services", "regex": "^/services(?:/)?$", "routeKeys": {}, "namedRegex": "^/services(?:/)?$" }], "dynamic": [{ "page": "/blog/[slug]", "regex": "^/blog/([^/]+?)(?:/)?$", "routeKeys": { "nxtPslug": "nxtPslug" }, "namedRegex": "^/blog/(?<nxtPslug>[^/]+?)(?:/)?$" }, { "page": "/changelog/[slug]", "regex": "^/changelog/([^/]+?)(?:/)?$", "routeKeys": { "nxtPslug": "nxtPslug" }, "namedRegex": "^/changelog/(?<nxtPslug>[^/]+?)(?:/)?$" }, { "page": "/roadmap/[slug]", "regex": "^/roadmap/([^/]+?)(?:/)?$", "routeKeys": { "nxtPslug": "nxtPslug" }, "namedRegex": "^/roadmap/(?<nxtPslug>[^/]+?)(?:/)?$" }], "data": { "static": [], "dynamic": [] } }, "locales": [] };
 var ConfigHeaders = [];
 var PrerenderManifest = { "version": 4, "routes": { "/": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/", "dataRoute": "/index.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/_global-error": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/_global-error", "dataRoute": "/_global-error.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/_not-found": { "initialStatus": 404, "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/_not-found", "dataRoute": "/_not-found.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/about": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/about", "dataRoute": "/about.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/blog": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/blog", "dataRoute": "/blog.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/blog/broadcast-industry-has-software-problem": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/blog/[slug]", "dataRoute": "/blog/broadcast-industry-has-software-problem.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/changelog": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/changelog", "dataRoute": "/changelog.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/contact": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/contact", "dataRoute": "/contact.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/open-source": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/open-source", "dataRoute": "/open-source.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/projects": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/projects", "dataRoute": "/projects.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/roadmap": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/roadmap", "dataRoute": "/roadmap.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/services": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/services", "dataRoute": "/services.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] } }, "dynamicRoutes": { "/blog/[slug]": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "routeRegex": "^/blog/([^/]+?)(?:/)?$", "dataRoute": "/blog/[slug].rsc", "fallback": false, "fallbackRootParams": [], "fallbackRouteParams": [], "dataRouteRegex": "^/blog/([^/]+?)\\.rsc$", "prefetchDataRoute": null, "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/changelog/[slug]": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "routeRegex": "^/changelog/([^/]+?)(?:/)?$", "dataRoute": "/changelog/[slug].rsc", "fallback": false, "fallbackRootParams": [], "fallbackRouteParams": [], "dataRouteRegex": "^/changelog/([^/]+?)\\.rsc$", "prefetchDataRoute": null, "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/roadmap/[slug]": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "routeRegex": "^/roadmap/([^/]+?)(?:/)?$", "dataRoute": "/roadmap/[slug].rsc", "fallback": false, "fallbackRootParams": [], "fallbackRouteParams": [], "dataRouteRegex": "^/roadmap/([^/]+?)\\.rsc$", "prefetchDataRoute": null, "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] } }, "notFoundRoutes": [], "preview": { "previewModeId": "c8dec461f4f6e753cd3221556c29fd6b", "previewModeSigningKey": "84097920931cc0986ca47a0b9ef80afada5d2f36f039f67b542b678974d2aecf", "previewModeEncryptionKey": "0c51732ed90df62ec60544f61c836a50467dca3edcc5d1797e05eb0b4ce3a993" } };
@@ -2615,6 +2730,9 @@ var defaultHandler = async (internalEvent, options) => {
   const originResolver = await resolveOriginResolver(middlewareConfig?.originResolver);
   const externalRequestProxy = await resolveProxyRequest(middlewareConfig?.override?.proxyExternalRequest);
   const assetResolver = await resolveAssetResolver(middlewareConfig?.assetResolver);
+  globalThis.tagCache = await resolveTagCache(middlewareConfig?.override?.tagCache);
+  globalThis.queue = await resolveQueue(middlewareConfig?.override?.queue);
+  globalThis.incrementalCache = await resolveIncrementalCache(middlewareConfig?.override?.incrementalCache);
   const requestId = Math.random().toString(36);
   return runWithOpenNextRequestContext({
     isISRRevalidation: internalEvent.headers["x-isr"] === "1",

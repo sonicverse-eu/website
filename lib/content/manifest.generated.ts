@@ -1,4 +1,4 @@
-import * as blog_broadcast_industry_has_software_problem from '@/content/blog/broadcast-industry-has-software-problem.mdx'
+import * as blog_broadcast_industry_has_software_problem from "@/content/blog/broadcast-industry-has-software-problem.mdx"
 
 import type { MDXProps } from 'mdx/types'
 import type { ComponentType } from 'react'
@@ -20,21 +20,30 @@ export type ContentManifestEntry = {
 export const contentManifest: Record<ContentCollection, ContentManifestEntry[]> = {
   blog: [
     {
-      slug: 'broadcast-industry-has-software-problem',
+      slug: "broadcast-industry-has-software-problem",
       frontmatter: {
-        title: 'The Broadcast Industry Has a Software Problem',
-        description:
-          'Explore how open source solutions can resolve the software challenges in the broadcast industry for improved efficiency and innovation.',
-        publishedAt: '2026-04-13T13:45:00.276Z',
-        preview: '/images/pexels-alexis-emanuel-salinas-54517535-10960346.jpg',
-        draft: false,
-        tags: ['Editorial', 'Open Source', 'Operations'],
-        categories: ['Inspiration'],
-      },
+  "title": "The Broadcast Industry Has a Software Problem",
+  "description": "Explore how open source solutions can resolve the software challenges in the broadcast industry for improved efficiency and innovation.",
+  "publishedAt": "2026-04-13T13:45:00.276Z",
+  "preview": "/images/pexels-alexis-emanuel-salinas-54517535-10960346.jpg",
+  "draft": false,
+  "tags": [
+    "Editorial",
+    "Open Source",
+    "Operations"
+  ],
+  "categories": [
+    "Inspiration"
+  ]
+},
       body: "For decades, radio stations have relied on a small handful of proprietary vendors to power their infrastructure. Playout systems, scheduling tools, streaming servers — the choices were limited, the contracts long, and the pricing... let's say opaque. Broadcasters accepted this as the cost of doing business.\n\n**That era is ending.**\n\nOpen source software has quietly matured into a broadcast-ready force. The tools exist. The communities are active. And for stations willing to look beyond the legacy vendors, the upside is significant — not just financially, but strategically.\n\n## Why Broadcasting Stayed Behind\n\nThe broadcast industry has always been conservative about technology adoption, and for understandable reasons. On-air reliability is non-negotiable. A software bug that crashes a CRM is an inconvenience. One that silences your station at 8am on a Monday is a crisis.\n\nThis risk aversion made proprietary software appealing: someone else was accountable, there was a support number to call, and switching costs were high enough that vendors rarely disappeared overnight.\n\nBut that model came with trade-offs that are increasingly hard to justify. Vendor lock-in means your roadmap is dictated by someone else's priorities. Licensing fees scale with your growth.\n\nAnd when a vendor sunsets a product or gets acquired, you're left scrambling.\n\nMeanwhile, open source has been solving exactly these problems — for industries far more demanding than broadcasting.\n\n## The Infrastructure Is Already There\n\nThe Linux kernel runs the majority of the world's servers, including most broadcast infrastructure whether stations know it or not. FFmpeg — open source — is the backbone of virtually every audio and video processing pipeline on the planet. These aren't experimental tools. They're the foundation.\n\nThe question is no longer whether open source can handle broadcast workloads. It clearly can. The question is whether your organisation is structured to take advantage of it.\n\n## What \"Open Source First\" Looks Like in Practice\n\nAdopting open source doesn't mean abandoning all vendor relationships or building everything from scratch. It means changing your default question from \"which vendor sells this?\" to \"does a good open solution exist first?\"\n\nFor station managers, this shifts budget conversations. Licensing costs that once felt fixed become variable. That money can be redirected toward people, content, or tooling that actually differentiates your station.\n\nFor technical teams, open source means access to the source code — which sounds obvious but has profound implications. You can fix bugs without waiting for a support ticket to be resolved. You can extend functionality to fit your exact workflow. You're not blocked by a vendor's quarterly release cycle when you need something now.\n\nAnd critically: open source projects don't get acquired and sunset. The community owns the roadmap.\n\n## The Interoperability Advantage\n\nOne of the less-discussed benefits of open source in broadcasting is how well these tools play together. Proprietary systems are often designed with lock-in as a feature — APIs are limited, data formats are proprietary, integrations require expensive middleware.\n\nOpen source tools, by contrast, are typically built around open standards. That means a scheduling system, a playout engine, a streaming server, and an analytics platform can be wired together in ways that genuinely serve your operational needs — not the vendor's upsell strategy.\n\nFor broadcasters thinking about the next five years — more personalisation, smarter automation, tighter integration between on-air and digital — this interoperability isn't a nice-to-have. It's a prerequisite.\n\n## What We're Building at Sonicverse\n\nWe started Sonicverse because we felt the gap firsthand. As broadcasters and developers, we kept running into the same friction: tools that didn't talk to each other, vendor roadmaps that didn't reflect how stations actually work, and a lack of software built specifically for the realities of modern radio.\n\nSo we're building it — in the open.\n\nSonicverse is early. We're not going to pretend otherwise. But the foundation is intentional: open source at the core, designed for broadcasters, built by people who understand the industry from the inside. We're developing tools that cover the parts of the broadcast workflow that have been underserved for too long — from show preparation to station management to infrastructure tooling.\n\nWe're just getting started, and there's a lot ahead. But we believe the broadcast industry deserves software built with the same craft and ambition that goes into the content stations produce every day. We're here to build that.\n\nIf you're a broadcaster curious about what we're working on, we'd love to hear from you.\n\n## The Broadcast Industry of 2030\n\nThe stations that will thrive over the next decade won't be the ones with the most expensive software contracts. They'll be the ones with the most flexible infrastructure, the fastest ability to adapt, and the lowest friction between an idea and its implementation.\n\nOpen source is how you build that. Not because it's free — though that helps — but because it puts you in control of your own stack, your own roadmap, and your own future.\n\nThe tools are ready. The only question is whether the industry is ready to use them.",
       module: blog_broadcast_industry_has_software_problem,
-    },
+    }
   ],
-  changelog: [],
-  roadmap: [],
+  changelog: [
+
+  ],
+  roadmap: [
+
+  ]
 }
