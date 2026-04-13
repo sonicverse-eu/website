@@ -5,85 +5,42 @@
 ![React 19](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
 ![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)
 
-Sonicverse Website is the public web presence for Sonicverse, built with Next.js App Router, MDX content, and Cloudflare Workers via OpenNext. It combines marketing pages, editorial content, and a contact workflow in a deployment setup designed for edge delivery.
-
-## What's Inside
-
-- Marketing and company pages built with the Next.js App Router.
-- MDX-backed blog, changelog, and roadmap content.
-- A contact flow that sends submissions through the configured email delivery path.
-- Cloudflare-focused build, preview, and deployment scripts powered by OpenNext.
-
 ## Getting Started
 
-### Prerequisites
-
-- A recent Node.js LTS release and `npm`.
-- A Cloudflare account plus Wrangler CLI if you want to preview or deploy the Worker build.
-
-### Installation
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### Environment Setup
-
-Create the local environment files used by Next.js and the Cloudflare Worker preview:
-
-```bash
-cp .env.example .env.local
-cp .dev.vars.example .dev.vars
-```
-
-Update the copied files with values that match your environment. The most important settings are:
-
-- `EMAIL_SENDER` and `EMAIL_RECIPIENT` for contact form delivery.
-- `NEXT_PUBLIC_SITE_URL` for canonical metadata in Worker preview and deployment environments.
-- `NEXT_PUBLIC_IMAGE_WORKER_URL` if image requests should be served from a dedicated image worker URL.
-
-If you use Cloudflare Email Workers bindings instead of direct provider credentials, keep `SEND_EMAIL` configured in the Worker environment as described in the existing comments inside [.env.example](./.env.example) and [.dev.vars.example](./.dev.vars.example).
-
-### Local Development
-
-Run the standard Next.js development server:
+Run the Next.js development server:
 
 ```bash
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000).
-
-### Cloudflare Worker Preview
-
-Run the OpenNext Cloudflare preview flow when you want to test the Worker build locally:
+Preview the production Worker locally:
 
 ```bash
 npm run preview
 ```
 
-For deployment-specific details, see [DEPLOYMENT.md](./DEPLOYMENT.md).
-
-## Usage Examples
-
-### Start the app locally
+Deploy the Worker manually:
 
 ```bash
 npm run dev
 ```
 
-### Run the project checks
+## Deployment
 
-```bash
-npm run lint
-npm run typecheck
-npm run build
-```
+Production deployments and pull request previews are handled by Cloudflare Workers Builds.
 
-### Build the Cloudflare Worker bundle
+- `main` deploys through the connected Workers Builds integration.
+- Pull requests rely on Cloudflare's native preview flow rather than a separate GitHub Actions workflow.
+- `wrangler.jsonc` enables `preview_urls` so version uploads can surface preview URLs.
+- Non-production Workers Builds should upload preview versions with `npm run deploy:preview` rather than promote a full deployment with `npm run deploy`.
 
-External contributors should start with [CONTRIBUTING.md](CONTRIBUTING.md) for setup, workflow, and pull request guidelines.
-
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deployment workflow and troubleshooting notes.
 
 ```bash
 npm run build:worker
@@ -91,14 +48,9 @@ npm run build:worker
 
 ### Preview the Worker locally
 
-```bash
-npm run preview
-```
-
-### Deploy to Cloudflare
-
-```bash
-npm run deploy
+```dotenv
+EMAIL_SENDER = "noreply@mail.sonicverse.eu"
+EMAIL_RECIPIENT = "hello@sonicverse.eu"
 ```
 
 ## Common Commands
