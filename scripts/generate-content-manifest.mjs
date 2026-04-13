@@ -11,9 +11,20 @@ const manifest = {}
 
 for (const collection of collections) {
   const directory = path.join(contentDir, collection)
-  const files = (await fs.readdir(directory))
-    .filter((filename) => filename.endsWith('.mdx'))
-    .sort((left, right) => left.localeCompare(right))
+
+  let files = []
+
+  try {
+    files = (await fs.readdir(directory))
+      .filter((filename) => filename.endsWith('.mdx'))
+      .sort((left, right) => left.localeCompare(right))
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      files = []
+    } else {
+      throw error
+    }
+  }
 
   manifest[collection] = {}
 
