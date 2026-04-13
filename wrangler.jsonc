@@ -4,6 +4,7 @@
 	"main": ".open-next/worker.js",
 	"preview_urls": true,
 	"keep_vars": true,
+	"preview_urls": true,
 	"compatibility_date": "2026-04-12",
 	"compatibility_flags": [
 		"nodejs_compat"
@@ -16,7 +17,7 @@
 		"binding": "IMAGES"
 	},
 	"vars": {
-		"EMAIL_SENDER": "noreply@sonicverse.eu",
+		"EMAIL_SENDER": "noreply@mail.sonicverse.eu",
 		"EMAIL_RECIPIENT": "hello@sonicverse.eu"
 	}
 }
