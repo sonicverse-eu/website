@@ -250,7 +250,7 @@ function HeroIntentVisual() {
   const railIcons = capabilityRows.map(({ id, icon }) => ({ id, icon }))
 
   return (
-    <div className="relative isolate flex h-full min-h-[320px] items-stretch">
+    <div className="relative isolate flex h-full min-h-80 items-stretch">
       <div className="absolute inset-0 rounded-[1.8rem] bg-[radial-gradient(circle_at_top_right,rgba(117,95,255,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(117,95,255,0.1),transparent_30%)]" />
       <div className="hero-section-mask absolute inset-0 opacity-45">
         <div className="quiet-grid h-full w-full" />
