@@ -1,7 +1,6 @@
 declare global {
 	interface CloudflareEnv {
 		ASSETS: Fetcher;
-		IMAGES: any;
 
 		// Add any additional bindings here
 		// Example:
