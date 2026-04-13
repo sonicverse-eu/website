@@ -191,7 +191,6 @@ export async function submitContactForm(
     brief: getString(formData, "brief"),
   };
 
-  const source = getString(formData, "source") || "/contact";
   const errors: ContactFormState["errors"] = {};
 
   if (!values.name) errors.name = "Please share your name.";
@@ -272,7 +271,7 @@ export async function submitContactForm(
     if (!confirmationResponse.ok) {
       throw new Error(`Resend API error: ${confirmationResponse.status}`);
     }
-  } catch (e) {
+  } catch {
     return {
       status: "error",
       message: "The message could not be delivered right now. Please try again or email us directly.",
