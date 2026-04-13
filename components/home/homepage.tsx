@@ -1,5 +1,4 @@
 import Image from "next/image";
-import WorkerImage from "@/components/ui/worker-image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -58,8 +57,8 @@ const statusSignals: { id: string; icon: LucideIcon; label: string; value: strin
 function HeroImageVisual() {
   return (
     <div className="relative h-full overflow-hidden rounded-[1.6rem]">
-      <WorkerImage
-        src="/images/stock/stock-radio-mixer.jpg"
+      <Image
+        src="/images/radio-mixer.jpg"
         alt="Professional audio mixing console"
         fill
         className="object-cover object-center"
