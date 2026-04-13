@@ -6,10 +6,10 @@ import {
   ContentArticleShell,
   VersionBadge,
 } from '@/components/content/content-ui'
+import { mdxComponents } from '@/components/content/mdx-components'
 import { contentMetadata } from '@/lib/content/metadata'
 import { getCollectionEntries, getStaticSlugs } from '@/lib/content'
 import { getMdxComponent } from '@/lib/content/mdx-imports'
-import { mdxComponents } from '@/components/content/mdx-components'
 
 export const dynamicParams = false
 

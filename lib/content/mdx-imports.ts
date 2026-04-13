@@ -1,9 +1,8 @@
 import 'server-only'
 
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
 import type { ContentCollection } from './types'
 import type { MDXProps } from 'mdx/types'
+import { contentManifest } from './manifest.generated'
 
 /**
  * Dynamically import an MDX file based on collection and slug
@@ -15,12 +14,17 @@ export async function importMdxFile<C extends ContentCollection>(
   default: React.ComponentType<MDXProps>
   frontmatter: Record<string, unknown>
 }> {
+  const manifestEntry = contentManifest[collection].find((entry) => entry.slug === slug)
+
+  if (!manifestEntry) {
+    throw new Error(`MDX file not found for ${collection}/${slug}`)
+  }
+
   try {
-    // Construct the import path based on collection and slug
-    const importedMdx = await import(`../../content/${collection}/${slug}.mdx`)
+    const importedMdx = await manifestEntry.module
     return {
       default: importedMdx.default,
-      frontmatter: importedMdx.frontmatter,
+      frontmatter: importedMdx.frontmatter ?? manifestEntry.frontmatter,
     }
   } catch (error) {
     console.error(`Failed to import MDX file for ${collection}/${slug}:`, error)
@@ -48,20 +52,5 @@ export async function getMdxComponent<C extends ContentCollection>(
  * Get all slugs for a collection by reading the content directory
  */
 export async function getCollectionSlugs(collection: ContentCollection): Promise<string[]> {
-  const directory = path.join(process.cwd(), 'content', collection)
-
-  try {
-    return (await fs.readdir(directory))
-      .filter((filename) => filename.endsWith('.mdx'))
-      .sort((left, right) => left.localeCompare(right))
-      .map((filename) => filename.replace(/\.mdx$/, ''))
-  } catch (unknownError) {
-    const error = unknownError as NodeJS.ErrnoException
-
-    if (error.code === 'ENOENT') {
-      return []
-    }
-
-    throw error
-  }
+  return contentManifest[collection].map((entry) => entry.slug)
 }
