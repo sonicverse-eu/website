@@ -7292,8 +7292,14 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/open-next.config.mjs": {
-      "bytes": 6832,
-      "imports": [],
+      "bytes": 11201,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
       "format": "esm"
     },
     ".open-next/server-functions/default/index.mjs": {
@@ -9137,13 +9143,13 @@
           "bytesInOutput": 27891
         },
         ".open-next/server-functions/default/open-next.config.mjs": {
-          "bytesInOutput": 5074
+          "bytesInOutput": 8466
         },
         ".open-next/server-functions/default/index.mjs": {
-          "bytesInOutput": 63861
+          "bytesInOutput": 63912
         }
       },
-      "bytes": 4615936
+      "bytes": 4619379
     }
   }
 }
