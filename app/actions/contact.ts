@@ -115,7 +115,11 @@ function buildEmailHtml(values: {
 </html>`
 }
 
-function buildConfirmationEmailHtml(values: { name: string; submittedAt: string }): string {
+function buildConfirmationEmailHtml(values: {
+  name: string
+  submittedAt: string
+  replyToAddress: string
+}): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,7 +167,7 @@ function buildConfirmationEmailHtml(values: { name: string; submittedAt: string 
 
               <!-- Contact Info -->
               <p style="margin:0 0 4px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Need immediate assistance?</p>
-              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:hello@sonicverse.eu" style="color:#432dd7;text-decoration:none;">hello@sonicverse.eu</a></p>
+              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:${values.replyToAddress}" style="color:#432dd7;text-decoration:none;">${values.replyToAddress}</a></p>
             </td>
           </tr>
 
@@ -219,6 +223,7 @@ export async function submitContactForm(
 
   const senderAddress = process.env.EMAIL_SENDER ?? 'noreply@mail.sonicverse.eu'
   const recipientAddress = process.env.EMAIL_RECIPIENT ?? 'hello@sonicverse.eu'
+  const confirmationReplyToAddress = 'hello@sonicverse.eu'
   const resendApiKey = process.env.RESEND_API_KEY
 
   const submittedAt = new Date().toLocaleString('en-GB', {
@@ -270,8 +275,13 @@ export async function submitContactForm(
         from: senderAddress,
         to: [values.email],
         subject: confirmationSubject,
-        text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
-        html: buildConfirmationEmailHtml({ name: values.name, submittedAt }),
+        text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
+        html: buildConfirmationEmailHtml({
+          name: values.name,
+          submittedAt,
+          replyToAddress: confirmationReplyToAddress,
+        }),
+        reply_to: confirmationReplyToAddress,
       }),
     })
 
