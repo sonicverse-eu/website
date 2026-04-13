@@ -1,0 +1,33 @@
+name: Cloudflare Worker Preview
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci
+      - name: Build site
+        run: npm run build
+      - name: Upload Worker version
+        id: upload
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print preview URL
+        if: success()
+        run: |
+          echo "Preview URL from Wrangler action: ${{ steps.upload.outputs.deployment-url }}"
+          echo "Alias URL: ${{ steps.upload.outputs.pages-deployment-alias-url }}"
