@@ -380,7 +380,7 @@
   "notFoundRoutes": [],
   "preview": {
     "previewModeId": "c8dec461f4f6e753cd3221556c29fd6b",
-    "previewModeSigningKey": "84097920931cc0986ca47a0b9ef80afada5d2f36f039f67b542b678974d2aecf",
-    "previewModeEncryptionKey": "0c51732ed90df62ec60544f61c836a50467dca3edcc5d1797e05eb0b4ce3a993"
+    "previewModeSigningKey": "",
+    "previewModeEncryptionKey": ""
   }
 }
