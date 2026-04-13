@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { ContactForm } from "@/components/forms/contact-form";
-import { PageHero } from "@/components/site/page-hero";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { pageMetadata } from "@/lib/metadata";
-import { collaborationPrompts, contactFaq } from "@/lib/site-data";
+import { ContactForm } from '@/components/forms/contact-form'
+import { PageHero } from '@/components/site/page-hero'
+import { Reveal } from '@/components/site/reveal'
+import { SectionHeader } from '@/components/site/section-header'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { pageMetadata } from '@/lib/metadata'
+import { collaborationPrompts, contactFaq } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  "Contact",
-  "Start a conversation with Sonicverse about a product, platform, or open-source initiative.",
-  "/contact",
-);
+  'Contact',
+  'Start a conversation with Sonicverse about a product, platform, or open-source initiative.',
+  '/contact',
+)
 
 export default function ContactPage() {
   return (
@@ -24,7 +24,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Start with the problem shape."
         description="A short, thoughtful brief is enough."
-        highlights={["Current state", "What is changing", "Where judgment matters most"]}
+        highlights={['Current state', 'What is changing', 'Where judgment matters most']}
         compact
       />
 
@@ -95,5 +95,5 @@ export default function ContactPage() {
         </Container>
       </section>
     </>
-  );
+  )
 }

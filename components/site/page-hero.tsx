@@ -1,45 +1,45 @@
-import Link from "next/link";
-import type { ReactNode } from "react";
+import Link from 'next/link'
+import type { ReactNode } from 'react'
 
-import { Spotlight } from "@/components/magicui/spotlight";
-import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
-import { Badge } from "@/components/ui/badge";
-import { BorderBeam } from "@/components/ui/border-beam";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { cn } from "@/lib/utils";
+import { Spotlight } from '@/components/magicui/spotlight'
+import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern'
+import { Badge } from '@/components/ui/badge'
+import { BorderBeam } from '@/components/ui/border-beam'
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
+import { cn } from '@/lib/utils'
 
-import { Reveal } from "./reveal";
+import { Reveal } from './reveal'
 
 type HeroAction = {
-  href: string;
-  label: string;
-  variant?: "default" | "outline";
-};
+  href: string
+  label: string
+  variant?: 'default' | 'outline'
+}
 
 type BaseHeroProps = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  highlights?: string[];
-  primaryAction?: HeroAction;
-  secondaryAction?: HeroAction;
-  className?: string;
-  compact?: boolean;
-};
+  eyebrow: string
+  title: string
+  description: string
+  highlights?: string[]
+  primaryAction?: HeroAction
+  secondaryAction?: HeroAction
+  className?: string
+  compact?: boolean
+}
 
 type SingleHeroProps = BaseHeroProps & {
-  layout?: "single";
-  visual?: never;
-};
+  layout?: 'single'
+  visual?: never
+}
 
 type SplitHeroProps = BaseHeroProps & {
-  layout: "split";
+  layout: 'split'
   // Visual-only slot for illustration, icons, or UI shapes. Avoid prose here.
-  visual: ReactNode;
-};
+  visual: ReactNode
+}
 
-type PageHeroProps = SingleHeroProps | SplitHeroProps;
+type PageHeroProps = SingleHeroProps | SplitHeroProps
 
 export function PageHero({
   eyebrow,
@@ -48,18 +48,18 @@ export function PageHero({
   highlights,
   primaryAction,
   secondaryAction,
-  layout = "single",
+  layout = 'single',
   visual,
   className,
   compact = false,
 }: PageHeroProps) {
-  const isSplit = layout === "split";
+  const isSplit = layout === 'split'
 
   return (
     <section
       className={cn(
-        "relative overflow-hidden pt-32 pb-[4.5rem] sm:pt-36 sm:pb-[5.5rem] lg:pt-40 lg:pb-24",
-        compact && "pb-16 sm:pb-20",
+        'relative overflow-hidden pt-32 pb-[4.5rem] sm:pt-36 sm:pb-[5.5rem] lg:pt-40 lg:pb-24',
+        compact && 'pb-16 sm:pb-20',
         className,
       )}
     >
@@ -76,25 +76,21 @@ export function PageHero({
         <div
           className={cn(
             isSplit
-              ? "grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_30rem] lg:gap-12"
-              : "max-w-5xl",
+              ? 'grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_30rem] lg:gap-12'
+              : 'max-w-5xl',
           )}
         >
-          <Reveal className={cn("space-y-6", isSplit && "lg:pb-3")}>
+          <Reveal className={cn('space-y-6', isSplit && 'lg:pb-3')}>
             <Badge>{eyebrow}</Badge>
             <div className="space-y-4 sm:space-y-5">
-              <h1 className={cn("hero-title", isSplit ? "max-w-3xl" : "max-w-5xl")}>
-                {title}
-              </h1>
-              <p className={cn("copy-lg", isSplit ? "max-w-2xl" : "max-w-3xl")}>
-                {description}
-              </p>
+              <h1 className={cn('hero-title', isSplit ? 'max-w-3xl' : 'max-w-5xl')}>{title}</h1>
+              <p className={cn('copy-lg', isSplit ? 'max-w-2xl' : 'max-w-3xl')}>{description}</p>
             </div>
             {highlights?.length ? (
               <div
                 className={cn(
-                  "grid gap-3 sm:grid-cols-2",
-                  isSplit ? "sm:max-w-xl" : "sm:max-w-3xl",
+                  'grid gap-3 sm:grid-cols-2',
+                  isSplit ? 'sm:max-w-xl' : 'sm:max-w-3xl',
                 )}
               >
                 {highlights.map((item) => (
@@ -110,16 +106,12 @@ export function PageHero({
             {(primaryAction || secondaryAction) && (
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 {primaryAction ? (
-                  <Button asChild size="lg" variant={primaryAction.variant ?? "default"}>
+                  <Button asChild size="lg" variant={primaryAction.variant ?? 'default'}>
                     <Link href={primaryAction.href}>{primaryAction.label}</Link>
                   </Button>
                 ) : null}
                 {secondaryAction ? (
-                  <Button
-                    asChild
-                    size="lg"
-                    variant={secondaryAction.variant ?? "outline"}
-                  >
+                  <Button asChild size="lg" variant={secondaryAction.variant ?? 'outline'}>
                     <Link href={secondaryAction.href}>{secondaryAction.label}</Link>
                   </Button>
                 ) : null}
@@ -137,5 +129,5 @@ export function PageHero({
         </div>
       </Container>
     </section>
-  );
+  )
 }

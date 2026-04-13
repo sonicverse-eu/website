@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   useCallback,
@@ -7,27 +7,27 @@ import {
   useRef,
   useState,
   type ComponentPropsWithoutRef,
-} from "react";
-import { motion } from "motion/react";
+} from 'react'
+import { motion } from 'motion/react'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type Square = {
-  id: number;
-  pos: [number, number];
-  iteration: number;
-};
+  id: number
+  pos: [number, number]
+  iteration: number
+}
 
-export interface AnimatedGridPatternProps extends ComponentPropsWithoutRef<"svg"> {
-  width?: number;
-  height?: number;
-  x?: number;
-  y?: number;
-  strokeDasharray?: number;
-  numSquares?: number;
-  maxOpacity?: number;
-  duration?: number;
-  repeatDelay?: number;
+export interface AnimatedGridPatternProps extends ComponentPropsWithoutRef<'svg'> {
+  width?: number
+  height?: number
+  x?: number
+  y?: number
+  strokeDasharray?: number
+  numSquares?: number
+  maxOpacity?: number
+  duration?: number
+  repeatDelay?: number
 }
 
 export function AnimatedGridPattern({
@@ -43,10 +43,10 @@ export function AnimatedGridPattern({
   repeatDelay = 0.8,
   ...props
 }: AnimatedGridPatternProps) {
-  const id = useId();
-  const containerRef = useRef<SVGSVGElement | null>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [squares, setSquares] = useState<Array<Square>>([]);
+  const id = useId()
+  const containerRef = useRef<SVGSVGElement | null>(null)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const [squares, setSquares] = useState<Array<Square>>([])
 
   const generateSquaresForDimensions = useCallback(
     (count: number, containerWidth: number, containerHeight: number) =>
@@ -59,7 +59,7 @@ export function AnimatedGridPattern({
         iteration: 0,
       })),
     [height, width],
-  );
+  )
 
   const getPos = useCallback(
     (): [number, number] => [
@@ -67,87 +67,71 @@ export function AnimatedGridPattern({
       Math.floor((Math.random() * dimensions.height) / height),
     ],
     [dimensions.height, dimensions.width, height, width],
-  );
+  )
 
   const updateSquarePosition = useCallback(
     (squareId: number) => {
       setSquares((currentSquares) => {
-        const current = currentSquares[squareId];
+        const current = currentSquares[squareId]
         if (!current || current.id !== squareId) {
-          return currentSquares;
+          return currentSquares
         }
 
-        const nextSquares = currentSquares.slice();
+        const nextSquares = currentSquares.slice()
         nextSquares[squareId] = {
           ...current,
           pos: getPos(),
           iteration: current.iteration + 1,
-        };
+        }
 
-        return nextSquares;
-      });
+        return nextSquares
+      })
     },
     [getPos],
-  );
+  )
 
   useEffect(() => {
-    const element = containerRef.current;
+    const element = containerRef.current
     if (!element) {
-      return;
+      return
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         setDimensions((currentDimensions) => {
-          const nextWidth = entry.contentRect.width;
-          const nextHeight = entry.contentRect.height;
+          const nextWidth = entry.contentRect.width
+          const nextHeight = entry.contentRect.height
 
-          if (
-            currentDimensions.width === nextWidth &&
-            currentDimensions.height === nextHeight
-          ) {
-            return currentDimensions;
+          if (currentDimensions.width === nextWidth && currentDimensions.height === nextHeight) {
+            return currentDimensions
           }
 
-          setSquares(
-            generateSquaresForDimensions(numSquares, nextWidth, nextHeight),
-          );
-          return { width: nextWidth, height: nextHeight };
-        });
+          setSquares(generateSquaresForDimensions(numSquares, nextWidth, nextHeight))
+          return { width: nextWidth, height: nextHeight }
+        })
       }
-    });
+    })
 
-    resizeObserver.observe(element);
+    resizeObserver.observe(element)
 
     return () => {
-      resizeObserver.disconnect();
-    };
-  }, [generateSquaresForDimensions, numSquares]);
+      resizeObserver.disconnect()
+    }
+  }, [generateSquaresForDimensions, numSquares])
 
   return (
     <svg
       ref={containerRef}
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-current stroke-current",
+        'pointer-events-none absolute inset-0 h-full w-full fill-current stroke-current',
         className,
       )}
       {...props}
     >
       <defs>
-        <pattern
-          id={id}
-          width={width}
-          height={height}
-          patternUnits="userSpaceOnUse"
-          x={x}
-          y={y}
-        >
-          <path
-            d={`M.5 ${height}V.5H${width}`}
-            fill="none"
-            strokeDasharray={strokeDasharray}
-          />
+        <pattern id={id} width={width} height={height} patternUnits="userSpaceOnUse" x={x} y={y}>
+          <path d={`M.5 ${height}V.5H${width}`} fill="none" strokeDasharray={strokeDasharray} />
         </pattern>
       </defs>
       <rect width="100%" height="100%" fill={`url(#${id})`} />
@@ -167,7 +151,7 @@ export function AnimatedGridPattern({
               duration,
               repeat: 1,
               delay: index * 0.12,
-              repeatType: "reverse",
+              repeatType: 'reverse',
               repeatDelay,
             }}
             onAnimationComplete={() => updateSquarePosition(id)}
@@ -175,5 +159,5 @@ export function AnimatedGridPattern({
         ))}
       </svg>
     </svg>
-  );
+  )
 }

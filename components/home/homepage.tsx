@@ -1,58 +1,54 @@
-import Image from "next/image";
-import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
-import {
-  ArrowUpRight,
-  Cloud,
-  Globe,
-  Package2,
-  Server,
-  Sparkles,
-} from "lucide-react";
+import Image from 'next/image'
+import Link from 'next/link'
+import type { LucideIcon } from 'lucide-react'
+import { ArrowUpRight, Cloud, Globe, Package2, Server, Sparkles } from 'lucide-react'
 
-import { SignalsSection } from "@/components/content/content-ui";
-import { CTASection } from "@/components/site/cta-section";
-import { PageHero } from "@/components/site/page-hero";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
+import { SignalsSection } from '@/components/content/content-ui'
+import { CTASection } from '@/components/site/cta-section'
+import { PageHero } from '@/components/site/page-hero'
+import { Reveal } from '@/components/site/reveal'
+import { SectionHeader } from '@/components/site/section-header'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
 import {
   capabilities,
   principles,
   projectArchetypes,
   repositorySignals,
   serviceAreas,
-} from "@/lib/site-data";
+} from '@/lib/site-data'
 import {
   getFeaturedBlogPost,
   getLatestBlogPosts,
   getLatestChangelogEntries,
   getRecentRoadmapEntries,
-} from "@/lib/content";
+} from '@/lib/content'
 
-const capabilityIcons: LucideIcon[] = [Sparkles, Server, Package2];
+const capabilityIcons: LucideIcon[] = [Sparkles, Server, Package2]
 
 const capabilityRows: { id: string; icon: LucideIcon; label: string; sub: string }[] = [
-  { id: "product",  icon: Sparkles, label: "Product engineering",  sub: "Modern surfaces & delivery systems" },
-  { id: "platform", icon: Server,   label: "Platform foundations", sub: "Cloudflare-ready web platforms"     },
-  { id: "oss",      icon: Package2, label: "Open-source tooling",  sub: "Public primitives & packages"       },
-];
+  {
+    id: 'product',
+    icon: Sparkles,
+    label: 'Product engineering',
+    sub: 'Modern surfaces & delivery systems',
+  },
+  {
+    id: 'platform',
+    icon: Server,
+    label: 'Platform foundations',
+    sub: 'Cloudflare-ready web platforms',
+  },
+  { id: 'oss', icon: Package2, label: 'Open-source tooling', sub: 'Public primitives & packages' },
+]
 
 const statusSignals: { id: string; icon: LucideIcon; label: string; value: string }[] = [
-  { id: "reach",    icon: Globe,        label: "Platform",  value: "Edge-ready"   },
-  { id: "finish",   icon: Sparkles,     label: "Quality",   value: "Intent-first" },
-  { id: "momentum", icon: ArrowUpRight, label: "Delivery",  value: "Open source"  },
-];
-
+  { id: 'reach', icon: Globe, label: 'Platform', value: 'Edge-ready' },
+  { id: 'finish', icon: Sparkles, label: 'Quality', value: 'Intent-first' },
+  { id: 'momentum', icon: ArrowUpRight, label: 'Delivery', value: 'Open source' },
+]
 
 function HeroImageVisual() {
   return (
@@ -66,7 +62,7 @@ function HeroImageVisual() {
         priority
       />
     </div>
-  );
+  )
 }
 
 export async function HomePage() {
@@ -74,10 +70,10 @@ export async function HomePage() {
     getFeaturedBlogPost(),
     getLatestChangelogEntries(3),
     getRecentRoadmapEntries(3),
-  ]);
+  ])
   const recentBlog = await getLatestBlogPosts(2, {
     excludeSlug: featuredBlog?.slug,
-  });
+  })
 
   return (
     <>
@@ -87,12 +83,12 @@ export async function HomePage() {
         title="Software systems with intent."
         description="Modern products, platform foundations, and open-source technology built with calm technical ambition."
         highlights={[
-          "Premium product surfaces",
-          "Cloudflare-ready foundations",
-          "Open source by default",
+          'Premium product surfaces',
+          'Cloudflare-ready foundations',
+          'Open source by default',
         ]}
-        primaryAction={{ href: "/contact", label: "Start a project" }}
-        secondaryAction={{ href: "/open-source", label: "Explore open source" }}
+        primaryAction={{ href: '/contact', label: 'Start a project' }}
+        secondaryAction={{ href: '/open-source', label: 'Explore open source' }}
         visual={<HeroImageVisual />}
       />
 
@@ -124,7 +120,7 @@ export async function HomePage() {
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-3">
             {capabilities.map((item, index) => {
-              const CapIcon = capabilityIcons[index];
+              const CapIcon = capabilityIcons[index]
               return (
                 <Reveal key={item.title} delay={index * 0.05}>
                   <Card className="h-full">
@@ -138,7 +134,7 @@ export async function HomePage() {
                     </CardHeader>
                   </Card>
                 </Reveal>
-              );
+              )
             })}
           </div>
         </Container>
@@ -247,11 +243,11 @@ export async function HomePage() {
         description="The strongest briefs are clear, direct, and grounded in real constraints."
       />
     </>
-  );
+  )
 }
 
 function HeroIntentVisual() {
-  const railIcons = capabilityRows.map(({ id, icon }) => ({ id, icon }));
+  const railIcons = capabilityRows.map(({ id, icon }) => ({ id, icon }))
 
   return (
     <div className="relative isolate flex h-full min-h-[320px] items-stretch">
@@ -286,13 +282,18 @@ function HeroIntentVisual() {
             </div>
             <div className="grid gap-3">
               {capabilityRows.map(({ id, icon: Icon, label, sub }) => (
-                <div key={id} className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4">
+                <div
+                  key={id}
+                  className="rounded-[1.35rem] border border-border/60 bg-background/52 p-4"
+                >
                   <div className="flex items-center gap-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-border/60 bg-primary/10 text-primary">
                       <Icon className="size-5" strokeWidth={1.8} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium tracking-[-0.01em] text-foreground/84">{label}</p>
+                      <p className="truncate text-sm font-medium tracking-[-0.01em] text-foreground/84">
+                        {label}
+                      </p>
                       <p className="mt-0.5 truncate text-xs text-foreground/48">{sub}</p>
                     </div>
                   </div>
@@ -309,10 +310,18 @@ function HeroIntentVisual() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-function HeroSignal({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
+function HeroSignal({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: LucideIcon
+  label: string
+  value: string
+}) {
   return (
     <div className="rounded-[1.35rem] border border-border/60 bg-background/54 p-3 shadow-[0_16px_40px_rgba(16,18,33,0.08)]">
       <div className="flex items-center gap-3">
@@ -320,11 +329,13 @@ function HeroSignal({ icon: Icon, label, value }: { icon: LucideIcon; label: str
           <Icon className="size-4" strokeWidth={1.8} />
         </div>
         <div className="min-w-0">
-          <p className="text-[0.68rem] font-medium tracking-[0.14em] uppercase text-foreground/40">{label}</p>
+          <p className="text-[0.68rem] font-medium tracking-[0.14em] uppercase text-foreground/40">
+            {label}
+          </p>
           <p className="text-sm font-medium text-foreground/76">{value}</p>
         </div>
         <div className="mt-2 h-px w-full bg-white/10" />
       </div>
     </div>
-  );
+  )
 }
