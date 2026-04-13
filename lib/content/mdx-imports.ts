@@ -1,7 +1,8 @@
 import 'server-only'
 
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 import type { ContentCollection } from './types'
-import { contentManifest } from '@/generated/content-manifest'
 import type { MDXProps } from 'mdx/types'
 
 /**
@@ -47,6 +48,20 @@ export async function getMdxComponent<C extends ContentCollection>(
  * Get all slugs for a collection by reading the content directory
  */
 export async function getCollectionSlugs(collection: ContentCollection): Promise<string[]> {
-  // Use the manifest as the source of truth
-  return Object.keys(contentManifest[collection] || {})
+  const directory = path.join(process.cwd(), 'content', collection)
+
+  try {
+    return (await fs.readdir(directory))
+      .filter((filename) => filename.endsWith('.mdx'))
+      .sort((left, right) => left.localeCompare(right))
+      .map((filename) => filename.replace(/\.mdx$/, ''))
+  } catch (unknownError) {
+    const error = unknownError as NodeJS.ErrnoException
+
+    if (error.code === 'ENOENT') {
+      return []
+    }
+
+    throw error
+  }
 }
