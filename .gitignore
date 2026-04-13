@@ -19,6 +19,7 @@
 .open-next/node_modules/
 .open-next/.next/
 .open-next/assets/
+.open-next/cache/
 .open-next/worker.js
 .open-next/.build/
 .open-next/cloudflare/
@@ -27,6 +28,7 @@
 *.tsbuildinfo
 next-env.d.ts
 !cloudflare-env.d.ts
+lib/content/manifest.generated.ts
 
 # Environment files and local secrets
 .env*
