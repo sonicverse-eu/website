@@ -1,29 +1,33 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
-import { buildArticleMeta, ContentArticleShell, VersionBadge } from "@/components/content/content-ui";
-import { contentMetadata } from "@/lib/content/metadata";
-import { getCollectionEntries, getStaticSlugs } from "@/lib/content";
-import { getMdxComponent } from "@/lib/content/mdx-imports";
-import { mdxComponents } from "@/components/content/mdx-components";
+import {
+  buildArticleMeta,
+  ContentArticleShell,
+  VersionBadge,
+} from '@/components/content/content-ui'
+import { contentMetadata } from '@/lib/content/metadata'
+import { getCollectionEntries, getStaticSlugs } from '@/lib/content'
+import { getMdxComponent } from '@/lib/content/mdx-imports'
+import { mdxComponents } from '@/components/content/mdx-components'
 
-export const dynamicParams = false;
+export const dynamicParams = false
 
 export async function generateStaticParams() {
-  return getStaticSlugs("changelog");
+  return getStaticSlugs('changelog')
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const entries = await getCollectionEntries("changelog");
-  const entry = entries.find((e) => e.slug === slug);
+  const { slug } = await params
+  const entries = await getCollectionEntries('changelog')
+  const entry = entries.find((e) => e.slug === slug)
 
   if (!entry) {
-    return {};
+    return {}
   }
 
   return contentMetadata({
@@ -31,25 +35,25 @@ export async function generateMetadata({
     description: entry.frontmatter.description,
     pathname: entry.href,
     publishedAt: entry.frontmatter.publishedAt,
-  });
+  })
 }
 
 export default async function ChangelogDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>
 }) {
-  const { slug } = await params;
-  
+  const { slug } = await params
+
   const [entries, MdxComponent] = await Promise.all([
-    getCollectionEntries("changelog"),
-    getMdxComponent("changelog", slug),
-  ]);
-  
-  const entry = entries.find((e) => e.slug === slug);
+    getCollectionEntries('changelog'),
+    getMdxComponent('changelog', slug),
+  ])
+
+  const entry = entries.find((e) => e.slug === slug)
 
   if (!entry || !MdxComponent) {
-    notFound();
+    notFound()
   }
 
   return (
@@ -66,5 +70,5 @@ export default async function ChangelogDetailPage({
     >
       <MdxComponent components={mdxComponents} />
     </ContentArticleShell>
-  );
+  )
 }

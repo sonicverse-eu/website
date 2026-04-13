@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { CTASection } from "@/components/site/cta-section";
-import { PageHero } from "@/components/site/page-hero";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { pageMetadata } from "@/lib/metadata";
-import { operatingModel, principles } from "@/lib/site-data";
+import { CTASection } from '@/components/site/cta-section'
+import { PageHero } from '@/components/site/page-hero'
+import { Reveal } from '@/components/site/reveal'
+import { SectionHeader } from '@/components/site/section-header'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { pageMetadata } from '@/lib/metadata'
+import { operatingModel, principles } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  "About",
-  "How Sonicverse thinks about modern software systems, open-source technology, and long-term technical quality.",
-  "/about",
-);
+  'About',
+  'How Sonicverse thinks about modern software systems, open-source technology, and long-term technical quality.',
+  '/about',
+)
 
 export default function AboutPage() {
   return (
@@ -24,13 +24,9 @@ export default function AboutPage() {
         eyebrow="About Sonicverse"
         title="Technical ambition, with a calmer operating model."
         description="Modern software systems and digital products built with structure, clarity, and long-term care."
-        highlights={[
-          "Direct collaboration",
-          "Transparent tradeoffs",
-          "Long-term structure",
-        ]}
-        primaryAction={{ href: "/contact", label: "Start a conversation" }}
-        secondaryAction={{ href: "/services", label: "View services" }}
+        highlights={['Direct collaboration', 'Transparent tradeoffs', 'Long-term structure']}
+        primaryAction={{ href: '/contact', label: 'Start a conversation' }}
+        secondaryAction={{ href: '/services', label: 'View services' }}
       />
 
       <section className="section-space">
@@ -73,7 +69,9 @@ export default function AboutPage() {
                   <CardHeader>
                     <Badge variant="muted">0{index + 1}</Badge>
                     <CardTitle>{principle}</CardTitle>
-                    <CardDescription>A preference for systems that remain useful over time.</CardDescription>
+                    <CardDescription>
+                      A preference for systems that remain useful over time.
+                    </CardDescription>
                   </CardHeader>
                 </Card>
               </Reveal>
@@ -93,9 +91,9 @@ export default function AboutPage() {
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              "Architecture stays easier to inspect.",
-              "Contribution becomes more realistic.",
-              "Shared patterns become easier to maintain.",
+              'Architecture stays easier to inspect.',
+              'Contribution becomes more realistic.',
+              'Shared patterns become easier to maintain.',
             ].map((item, index) => (
               <Reveal key={item} delay={index * 0.05}>
                 <Card className="h-full">
@@ -115,5 +113,5 @@ export default function AboutPage() {
         description="Bring the system shape and the direction of travel."
       />
     </>
-  );
+  )
 }

@@ -1,30 +1,33 @@
-import { ImageLoaderProps } from 'next/image';
+import { ImageLoaderProps } from 'next/image'
 
 // Builds a URL that points to a deployed Image Worker which applies transforms.
 // Configure `NEXT_PUBLIC_IMAGE_WORKER_URL` to your worker endpoint (absolute or relative).
 export function workerImageLoader({ src, width, quality }: ImageLoaderProps) {
   // Use environment variable if set, otherwise default to the local worker endpoint
-  const base = process.env.NEXT_PUBLIC_IMAGE_WORKER_URL ?? '/workers/image';
-  
+  const base = process.env.NEXT_PUBLIC_IMAGE_WORKER_URL ?? '/workers/image'
+
   // Normalize the src path to ensure it starts with a slash
-  const normalizedSrc = src.startsWith('/') ? src : `/${src}`;
-  
-  console.log(`workerImageLoader: src=${src}, normalized=${normalizedSrc}, base=${base}`);
-  
+  const normalizedSrc = src.startsWith('/') ? src : `/${src}`
+
+  console.log(`workerImageLoader: src=${src}, normalized=${normalizedSrc}, base=${base}`)
+
   try {
-    const url = new URL(base, typeof window === 'undefined' ? 'http://localhost' : window.location.origin);
-    url.searchParams.set('src', normalizedSrc);
-    if (width) url.searchParams.set('w', String(width));
-    if (quality) url.searchParams.set('q', String(quality));
-    const result = url.toString();
-    console.log(`workerImageLoader result: ${result}`);
-    return result;
+    const url = new URL(
+      base,
+      typeof window === 'undefined' ? 'http://localhost' : window.location.origin,
+    )
+    url.searchParams.set('src', normalizedSrc)
+    if (width) url.searchParams.set('w', String(width))
+    if (quality) url.searchParams.set('q', String(quality))
+    const result = url.toString()
+    console.log(`workerImageLoader result: ${result}`)
+    return result
   } catch (e) {
-    console.error('workerImageLoader error:', e);
+    console.error('workerImageLoader error:', e)
     // Fallback: append query params manually
-    const sep = base.includes('?') ? '&' : '?';
-    return `${base}${sep}src=${encodeURIComponent(normalizedSrc)}${width ? `&w=${width}` : ''}${quality ? `&q=${quality}` : ''}`;
+    const sep = base.includes('?') ? '&' : '?'
+    return `${base}${sep}src=${encodeURIComponent(normalizedSrc)}${width ? `&w=${width}` : ''}${quality ? `&q=${quality}` : ''}`
   }
 }
 
-export default workerImageLoader;
+export default workerImageLoader

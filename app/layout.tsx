@@ -1,37 +1,37 @@
-import type { Metadata } from "next";
-import { IBM_Plex_Mono, Manrope, Unbounded } from "next/font/google";
-import type { ReactNode } from "react";
+import type { Metadata } from 'next'
+import { IBM_Plex_Mono, Manrope, Unbounded } from 'next/font/google'
+import type { ReactNode } from 'react'
 
-import { Footer } from "@/components/site/footer";
-import { Header } from "@/components/site/header";
-import { ThemeProvider } from "@/components/theme-provider";
-import { baseMetadata } from "@/lib/metadata";
-import { cn } from "@/lib/utils";
+import { Footer } from '@/components/site/footer'
+import { Header } from '@/components/site/header'
+import { ThemeProvider } from '@/components/theme-provider'
+import { baseMetadata } from '@/lib/metadata'
+import { cn } from '@/lib/utils'
 
-import "./globals.css";
+import './globals.css'
 
 const heading = Unbounded({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-heading",
-  weight: ["500", "600", "700"],
-});
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-heading',
+  weight: ['500', '600', '700'],
+})
 
 const body = Manrope({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
-});
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
+  weight: ['400', '500', '600', '700'],
+})
 
 const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-  weight: ["400", "500"],
-});
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
+  weight: ['400', '500'],
+})
 
-export const metadata: Metadata = baseMetadata;
+export const metadata: Metadata = baseMetadata
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -58,5 +58,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

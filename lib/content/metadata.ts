@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { siteName } from "@/lib/site-data";
+import { siteName } from '@/lib/site-data'
 
 type ContentMetadataInput = {
-  title: string;
-  description: string;
-  pathname: string;
-  publishedAt?: string;
-};
+  title: string
+  description: string
+  pathname: string
+  publishedAt?: string
+}
 
 export function contentMetadata({
   title,
@@ -25,12 +25,12 @@ export function contentMetadata({
       title: `${title} | ${siteName}`,
       description,
       url: pathname,
-      type: "article",
+      type: 'article',
       publishedTime: publishedAt,
     },
     twitter: {
       title: `${title} | ${siteName}`,
       description,
     },
-  };
+  }
 }

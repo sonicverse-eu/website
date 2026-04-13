@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, useReducedMotion } from 'framer-motion'
+import type { ReactNode } from 'react'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type RevealProps = {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  y?: number;
-};
+  children: ReactNode
+  className?: string
+  delay?: number
+  y?: number
+}
 
 export function Reveal({ children, className, delay = 0, y = 18 }: RevealProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion()
 
   return (
     <motion.div
@@ -25,5 +25,5 @@ export function Reveal({ children, className, delay = 0, y = 18 }: RevealProps) 
     >
       {children}
     </motion.div>
-  );
+  )
 }

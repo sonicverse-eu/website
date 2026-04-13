@@ -1,10 +1,10 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { Container } from "@/components/ui/container";
-import { Separator } from "@/components/ui/separator";
-import { navItems } from "@/lib/site-data";
+import { Container } from '@/components/ui/container'
+import { Separator } from '@/components/ui/separator'
+import { navItems } from '@/lib/site-data'
 
-import { BrandMark } from "./brand-mark";
+import { BrandMark } from './brand-mark'
 
 export function Footer() {
   return (
@@ -23,12 +23,14 @@ export function Footer() {
               Modern software systems, digital products, and open-source technology.
             </h2>
             <p className="max-w-xl text-sm leading-7 text-foreground/62">
-              Built with strong engineering taste, open collaboration, and a preference
-              for systems that stay understandable as they grow.
+              Built with strong engineering taste, open collaboration, and a preference for systems
+              that stay understandable as they grow.
             </p>
           </div>
           <div>
-            <p className="mb-4 text-sm font-semibold tracking-[0.04em] text-foreground/76">Navigation</p>
+            <p className="mb-4 text-sm font-semibold tracking-[0.04em] text-foreground/76">
+              Navigation
+            </p>
             <div className="grid gap-2 text-sm text-foreground/62">
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href} className="hover:text-foreground">
@@ -52,5 +54,5 @@ export function Footer() {
         </div>
       </Container>
     </footer>
-  );
+  )
 }

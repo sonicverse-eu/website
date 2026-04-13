@@ -1,16 +1,16 @@
-"use client";
+'use client'
 
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from 'framer-motion'
 
 type ContentHoverCardProps = {
-  children: ReactNode;
-  className?: string;
-};
+  children: ReactNode
+  className?: string
+}
 
 export function ContentHoverCard({ children, className }: ContentHoverCardProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion()
 
   return (
     <motion.div
@@ -26,5 +26,5 @@ export function ContentHoverCard({ children, className }: ContentHoverCardProps)
     >
       {children}
     </motion.div>
-  );
+  )
 }
