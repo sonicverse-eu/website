@@ -214,54 +214,63 @@ export async function submitContactForm(
 
   const senderAddress = process.env.EMAIL_SENDER ?? "Sonicverse <hello@sonicverse.eu>";
   const recipientAddress = process.env.EMAIL_RECIPIENT ?? "hello@sonicverse.eu";
+  const resendApiKey = process.env.RESEND_API_KEY;
 
   const submittedAt = new Date().toLocaleString("en-GB", {
     dateStyle: "medium",
     timeStyle: "short",
   });
 
+  if (!resendApiKey) {
+    return {
+      status: "error",
+      message: "Contact delivery is not configured. Set RESEND_API_KEY in your deployment environment.",
+      errors: {},
+      values,
+    };
+  }
+
   try {
     const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ""}`;
     const confirmationSubject = "We received your message";
 
-    // Prefer Cloudflare Email Workers binding `SEND_EMAIL` when available on globalThis.
-
-    type SendEmailBinding = {
-      send: (options: {
-        from: string;
-        to: string;
-        replyTo?: string;
-        subject: string;
-        text: string;
-        html: string;
-      }) => Promise<void>;
-    };
-    const sendBinding = (globalThis as { SEND_EMAIL?: SendEmailBinding }).SEND_EMAIL;
-
-    if (sendBinding && typeof sendBinding.send === "function") {
-      await sendBinding.send({
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         from: senderAddress,
-        to: recipientAddress,
-        replyTo: values.email,
+        to: [recipientAddress],
         subject,
         text: `${values.name} <${values.email}>\n\n${values.brief}`,
         html: buildEmailHtml({ ...values, submittedAt }),
-      });
+        reply_to: values.email,
+      }),
+    });
 
-      await sendBinding.send({
+    if (!response.ok) {
+      throw new Error(`Resend API error: ${response.status}`);
+    }
+
+    const confirmationResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         from: senderAddress,
-        to: values.email,
+        to: [values.email],
         subject: confirmationSubject,
         text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
         html: buildConfirmationEmailHtml({ name: values.name, submittedAt }),
-      });
-    } else {
-      return {
-        status: "error",
-        message: "Contact delivery is not configured. Configure the SEND_EMAIL binding in your Cloudflare deployment and set EMAIL_SENDER / EMAIL_RECIPIENT.",
-        errors: {},
-        values,
-      };
+      }),
+    });
+
+    if (!confirmationResponse.ok) {
+      throw new Error(`Resend API error: ${confirmationResponse.status}`);
     }
   } catch (e) {
     return {
