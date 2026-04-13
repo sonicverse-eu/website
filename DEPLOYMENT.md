@@ -24,6 +24,16 @@ npm run preview
 
 This builds the worker and starts a local Cloudflare Workers environment using OpenNext preview.
 
+## Cloudflare Workers Builds
+
+This repository uses Cloudflare Workers Builds as the single deployment and preview system.
+
+- Pull requests are previewed through the existing Cloudflare Git integration for `sonicverse-website`.
+- `wrangler.jsonc` sets `preview_urls` to `true` so uploaded Worker versions can expose preview URLs.
+- There is no separate GitHub Actions preview workflow to maintain.
+
+When a pull request updates successfully, GitHub should show the native Cloudflare Workers status for the connected Worker. If Cloudflare only shows a logs link instead of a direct preview link, treat that as a Cloudflare-side limitation rather than adding a second preview pipeline in GitHub Actions.
+
 ## Production Deployment
 
 ### Build for Production
@@ -37,6 +47,8 @@ npm run build:worker
 ```bash
 npm run deploy
 ```
+
+This is the manual Wrangler path. The default production path for merged changes remains the connected Cloudflare Workers Builds integration.
 
 ### Preview Production Build Locally
 
@@ -85,7 +97,7 @@ wrangler secret put EMAIL_RECIPIENT
 ```bash
 npm run clean
 npm install
-npm run build
+npm run build:worker
 ```
 
 ### Type Generation
@@ -102,7 +114,8 @@ wrangler --version
 
 ## Useful Commands
 
-- `npm run optimize` - Build and generate types
-- `npm run deploy:preview` - Deploy to preview environment
+- `npm run build:worker` - Build the OpenNext Worker bundle
+- `npm run preview` - Preview the built Worker locally
+- `npm run deploy` - Manually deploy the Worker with Wrangler
 - `npm run lint` - Run ESLint
 - `npm run clean` - Clean build artifacts
