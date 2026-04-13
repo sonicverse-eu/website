@@ -37,7 +37,8 @@ Production deployments and pull request previews are handled by Cloudflare Worke
 
 - `main` deploys through the connected Workers Builds integration.
 - Pull requests rely on Cloudflare's native preview flow rather than a separate GitHub Actions workflow.
-- `wrangler.jsonc` enables `preview_urls` so Workers Builds can surface preview URLs for version uploads.
+- `wrangler.jsonc` enables `preview_urls` so version uploads can surface preview URLs.
+- Non-production Workers Builds should upload preview versions with `npm run deploy:preview` rather than promote a full deployment with `npm run deploy`.
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deployment workflow and troubleshooting notes.
 

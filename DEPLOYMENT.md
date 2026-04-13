@@ -30,9 +30,10 @@ This repository uses Cloudflare Workers Builds as the single deployment and prev
 
 - Pull requests are previewed through the existing Cloudflare Git integration for `sonicverse-website`.
 - `wrangler.jsonc` sets `preview_urls` to `true` so uploaded Worker versions can expose preview URLs.
+- The non-production branch trigger should use `npm run deploy:preview`, which runs `wrangler versions upload`.
 - There is no separate GitHub Actions preview workflow to maintain.
 
-When a pull request updates successfully, GitHub should show the native Cloudflare Workers status for the connected Worker. If Cloudflare only shows a logs link instead of a direct preview link, treat that as a Cloudflare-side limitation rather than adding a second preview pipeline in GitHub Actions.
+When a pull request updates successfully, GitHub should show the native Cloudflare Workers status for the connected Worker. A direct preview URL is only expected when the preview trigger uploads a Worker version instead of performing a full `wrangler deploy`.
 
 ## Production Deployment
 
@@ -49,6 +50,15 @@ npm run deploy
 ```
 
 This is the manual Wrangler path. The default production path for merged changes remains the connected Cloudflare Workers Builds integration.
+
+### Upload a Preview Version
+
+```bash
+npm run build:worker
+npm run deploy:preview
+```
+
+Use this for manual preview-version uploads. It creates a version preview instead of promoting production traffic.
 
 ### Preview Production Build Locally
 
@@ -117,5 +127,6 @@ wrangler --version
 - `npm run build:worker` - Build the OpenNext Worker bundle
 - `npm run preview` - Preview the built Worker locally
 - `npm run deploy` - Manually deploy the Worker with Wrangler
+- `npm run deploy:preview` - Upload a preview Worker version with Wrangler
 - `npm run lint` - Run ESLint
 - `npm run clean` - Clean build artifacts
