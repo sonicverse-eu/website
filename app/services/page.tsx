@@ -1,25 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { CTASection } from "@/components/site/cta-section";
-import { PageHero } from "@/components/site/page-hero";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { pageMetadata } from "@/lib/metadata";
-import { serviceAreas, technicalStandards } from "@/lib/site-data";
+import { CTASection } from '@/components/site/cta-section'
+import { PageHero } from '@/components/site/page-hero'
+import { Reveal } from '@/components/site/reveal'
+import { SectionHeader } from '@/components/site/section-header'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { pageMetadata } from '@/lib/metadata'
+import { serviceAreas, technicalStandards } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  "Services",
-  "Product engineering, software foundations, web platforms, design systems, and open-source tooling.",
-  "/services",
-);
+  'Services',
+  'Product engineering, software foundations, web platforms, design systems, and open-source tooling.',
+  '/services',
+)
 
 export default function ServicesPage() {
   return (
@@ -29,12 +23,8 @@ export default function ServicesPage() {
         eyebrow="Services"
         title="Services for product quality and system clarity."
         description="Sonicverse helps teams ship systems that are easier to evolve, operate, and trust."
-        highlights={[
-          "Product engineering",
-          "Platform foundations",
-          "Technical architecture",
-        ]}
-        primaryAction={{ href: "/contact", label: "Discuss a project" }}
+        highlights={['Product engineering', 'Platform foundations', 'Technical architecture']}
+        primaryAction={{ href: '/contact', label: 'Discuss a project' }}
       />
 
       <section className="section-space">
@@ -82,9 +72,9 @@ export default function ServicesPage() {
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              "Frame the system and the highest-risk decisions.",
-              "Lock the architecture, interfaces, and delivery order.",
-              "Ship in focused increments with a cleaner codebase.",
+              'Frame the system and the highest-risk decisions.',
+              'Lock the architecture, interfaces, and delivery order.',
+              'Ship in focused increments with a cleaner codebase.',
             ].map((item, index) => (
               <Reveal key={item} delay={index * 0.05}>
                 <Card className="h-full">
@@ -122,5 +112,5 @@ export default function ServicesPage() {
         description="Sonicverse is designed for the moments where technical structure matters as much as visible output."
       />
     </>
-  );
+  )
 }

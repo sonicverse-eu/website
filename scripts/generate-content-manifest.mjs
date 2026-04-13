@@ -1,26 +1,26 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 
-const rootDir = process.cwd();
-const contentDir = path.join(rootDir, "content");
-const outputDir = path.join(rootDir, "generated");
-const outputFile = path.join(outputDir, "content-manifest.ts");
-const collections = ["blog", "changelog", "roadmap"];
+const rootDir = process.cwd()
+const contentDir = path.join(rootDir, 'content')
+const outputDir = path.join(rootDir, 'generated')
+const outputFile = path.join(outputDir, 'content-manifest.ts')
+const collections = ['blog', 'changelog', 'roadmap']
 
-const manifest = {};
+const manifest = {}
 
 for (const collection of collections) {
-  const directory = path.join(contentDir, collection);
+  const directory = path.join(contentDir, collection)
   const files = (await fs.readdir(directory))
-    .filter((filename) => filename.endsWith(".mdx"))
-    .sort((left, right) => left.localeCompare(right));
+    .filter((filename) => filename.endsWith('.mdx'))
+    .sort((left, right) => left.localeCompare(right))
 
-  manifest[collection] = {};
+  manifest[collection] = {}
 
   for (const filename of files) {
-    const slug = filename.replace(/\.mdx$/, "");
-    const source = await fs.readFile(path.join(directory, filename), "utf8");
-    manifest[collection][slug] = source;
+    const slug = filename.replace(/\.mdx$/, '')
+    const source = await fs.readFile(path.join(directory, filename), 'utf8')
+    manifest[collection][slug] = source
   }
 }
 
@@ -34,7 +34,7 @@ export const contentManifest = ${JSON.stringify(manifest, null, 2)} as const sat
   ContentCollection,
   Record<string, string>
 >;
-`;
+`
 
-await fs.mkdir(outputDir, { recursive: true });
-await fs.writeFile(outputFile, fileContents);
+await fs.mkdir(outputDir, { recursive: true })
+await fs.writeFile(outputFile, fileContents)

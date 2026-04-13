@@ -1,22 +1,19 @@
-"use client";
+'use client'
 
-import type { ReactNode } from "react";
-import { useActionState } from "react";
+import type { ReactNode } from 'react'
+import { useActionState } from 'react'
 
-import { submitContactForm } from "@/app/actions/contact";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { initialContactFormState } from "@/lib/contact-form";
-import { cn } from "@/lib/utils";
+import { submitContactForm } from '@/app/actions/contact'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { initialContactFormState } from '@/lib/contact-form'
+import { cn } from '@/lib/utils'
 
 export function ContactForm() {
-  const [state, action, pending] = useActionState(
-    submitContactForm,
-    initialContactFormState,
-  );
-  const currentState = state ?? initialContactFormState;
+  const [state, action, pending] = useActionState(submitContactForm, initialContactFormState)
+  const currentState = state ?? initialContactFormState
 
   return (
     <form action={action} className="space-y-5">
@@ -91,50 +88,47 @@ export function ContactForm() {
         />
       </div>
 
-        <Field
-          id="brief"
-          label="Project brief"
-          error={currentState.errors.brief}
-          description="Share the shape of the system, what is changing, and what a good outcome looks like."
-          input={
-            <Textarea
-              id="brief"
-              name="brief"
-              defaultValue={currentState.values.brief}
-              placeholder="We need a modern platform foundation with a premium public site and a calmer delivery path for the next release cycle."
-              disabled={pending}
-              aria-invalid={Boolean(currentState.errors.brief)}
-            />
-          }
-        />
+      <Field
+        id="brief"
+        label="Project brief"
+        error={currentState.errors.brief}
+        description="Share the shape of the system, what is changing, and what a good outcome looks like."
+        input={
+          <Textarea
+            id="brief"
+            name="brief"
+            defaultValue={currentState.values.brief}
+            placeholder="We need a modern platform foundation with a premium public site and a calmer delivery path for the next release cycle."
+            disabled={pending}
+            aria-invalid={Boolean(currentState.errors.brief)}
+          />
+        }
+      />
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div
           className={cn(
-            "text-sm leading-6",
-            currentState.status === "success"
-              ? "text-primary"
-              : "text-foreground/56",
+            'text-sm leading-6',
+            currentState.status === 'success' ? 'text-primary' : 'text-foreground/56',
           )}
         >
-          {currentState.message ??
-            "A thoughtful brief is enough for a strong first conversation."}
+          {currentState.message ?? 'A thoughtful brief is enough for a strong first conversation.'}
         </div>
         <Button type="submit" size="lg" disabled={pending}>
-          {pending ? "Sending..." : "Send inquiry"}
+          {pending ? 'Sending...' : 'Send inquiry'}
         </Button>
       </div>
     </form>
-  );
+  )
 }
 
 type FieldProps = {
-  id: string;
-  label: string;
-  input: ReactNode;
-  description?: string;
-  error?: string;
-};
+  id: string
+  label: string
+  input: ReactNode
+  description?: string
+  error?: string
+}
 
 function Field({ id, label, input, description, error }: FieldProps) {
   return (
@@ -144,5 +138,5 @@ function Field({ id, label, input, description, error }: FieldProps) {
       {description ? <p className="text-sm leading-6 text-foreground/52">{description}</p> : null}
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </div>
-  );
+  )
 }

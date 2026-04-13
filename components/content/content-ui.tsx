@@ -1,66 +1,64 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
-import { CalendarDays, Clock3, GitCommitHorizontal, MoveRight, Radar, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { CalendarDays, Clock3, GitCommitHorizontal, MoveRight, Radar, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
-import type { ContentEntry, RoadmapStatus } from "@/lib/content";
-import { formatContentDate } from "@/lib/content";
-import { cn } from "@/lib/utils";
+import type { ContentEntry, RoadmapStatus } from '@/lib/content'
+import { formatContentDate } from '@/lib/content'
+import { cn } from '@/lib/utils'
 
-import { Reveal } from "@/components/site/reveal";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { Separator } from "@/components/ui/separator";
+import { Reveal } from '@/components/site/reveal'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { Separator } from '@/components/ui/separator'
 
-import { ContentHoverCard } from "./content-hover-card";
+import { ContentHoverCard } from './content-hover-card'
 
 export function TagList({ tags, className }: { tags?: string[]; className?: string }) {
   if (!tags?.length) {
-    return null;
+    return null
   }
 
   return (
-    <div className={cn("flex flex-wrap gap-2", className)}>
+    <div className={cn('flex flex-wrap gap-2', className)}>
       {tags.map((tag) => (
         <Badge key={tag} variant="muted">
           {tag}
         </Badge>
       ))}
     </div>
-  );
+  )
 }
 
 const statusStyles: Record<RoadmapStatus, string> = {
-  Exploring: "border-[rgba(89,104,144,0.14)] bg-background/54 text-foreground/72",
-  Planned: "border-primary/18 bg-primary/[0.08] text-primary",
-  "In Progress": "border-[rgba(71,128,255,0.18)] bg-[rgba(71,128,255,0.12)] text-[rgb(73,103,209)] dark:text-[rgb(167,189,255)]",
-  Shipped: "border-[rgba(40,167,105,0.18)] bg-[rgba(40,167,105,0.12)] text-[rgb(27,122,78)] dark:text-[rgb(126,219,178)]",
-};
+  Exploring: 'border-[rgba(89,104,144,0.14)] bg-background/54 text-foreground/72',
+  Planned: 'border-primary/18 bg-primary/[0.08] text-primary',
+  'In Progress':
+    'border-[rgba(71,128,255,0.18)] bg-[rgba(71,128,255,0.12)] text-[rgb(73,103,209)] dark:text-[rgb(167,189,255)]',
+  Shipped:
+    'border-[rgba(40,167,105,0.18)] bg-[rgba(40,167,105,0.12)] text-[rgb(27,122,78)] dark:text-[rgb(126,219,178)]',
+}
 
 export function StatusBadge({ status }: { status: RoadmapStatus }) {
-  return <Badge className={statusStyles[status]}>{status}</Badge>;
+  return <Badge className={statusStyles[status]}>{status}</Badge>
 }
 
 export function VersionBadge({ version }: { version: string }) {
-  return (
-    <Badge className="border-primary/18 bg-primary/[0.08] text-primary">
-      {version}
-    </Badge>
-  );
+  return <Badge className="border-primary/18 bg-primary/[0.08] text-primary">{version}</Badge>
 }
 
 type MetaItem = {
-  label: string;
-  value: string;
-  icon?: ReactNode;
-};
+  label: string
+  value: string
+  icon?: ReactNode
+}
 
 export function MetaRail({ items, className }: { items: MetaItem[]; className?: string }) {
   return (
     <div
       className={cn(
-        "rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]",
+        'rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]',
         className,
       )}
     >
@@ -85,18 +83,18 @@ export function MetaRail({ items, className }: { items: MetaItem[]; className?: 
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 type ContentLinkCardProps = {
-  href: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  meta?: ReactNode;
-  badges?: ReactNode;
-  className?: string;
-};
+  href: string
+  eyebrow: string
+  title: string
+  description: string
+  meta?: ReactNode
+  badges?: ReactNode
+  className?: string
+}
 
 export function ContentLinkCard({
   href,
@@ -119,7 +117,9 @@ export function ContentLinkCard({
             <CardTitle className="text-[1.5rem] leading-[1.04] sm:text-[1.6rem]">{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
-          {meta ? <div className="flex flex-wrap gap-3 text-sm text-foreground/58">{meta}</div> : null}
+          {meta ? (
+            <div className="flex flex-wrap gap-3 text-sm text-foreground/58">{meta}</div>
+          ) : null}
         </CardHeader>
         <CardContent className="flex items-center justify-between pt-0">
           <Link
@@ -132,22 +132,17 @@ export function ContentLinkCard({
         </CardContent>
       </Card>
     </ContentHoverCard>
-  );
+  )
 }
 
 type ContentPageHeaderProps = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  kicker?: ReactNode;
-};
+  eyebrow: string
+  title: string
+  description: string
+  kicker?: ReactNode
+}
 
-export function ContentPageHeader({
-  eyebrow,
-  title,
-  description,
-  kicker,
-}: ContentPageHeaderProps) {
+export function ContentPageHeader({ eyebrow, title, description, kicker }: ContentPageHeaderProps) {
   return (
     <section className="relative overflow-hidden pt-36 pb-12 sm:pt-40 sm:pb-16">
       <Container className="relative space-y-8">
@@ -165,18 +160,18 @@ export function ContentPageHeader({
         </Reveal>
       </Container>
     </section>
-  );
+  )
 }
 
 type ContentArticleShellProps = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  meta: MetaItem[];
-  badges?: ReactNode;
-  tags?: string[];
-  children: ReactNode;
-};
+  eyebrow: string
+  title: string
+  description: string
+  meta: MetaItem[]
+  badges?: ReactNode
+  tags?: string[]
+  children: ReactNode
+}
 
 export function ContentArticleShell({
   eyebrow,
@@ -199,9 +194,7 @@ export function ContentArticleShell({
               <p className="text-[0.7rem] font-medium tracking-[0.24em] uppercase text-foreground/44">
                 Entry signal
               </p>
-              <div className="flex flex-wrap gap-2">
-                {badges}
-              </div>
+              <div className="flex flex-wrap gap-2">{badges}</div>
               <TagList tags={tags} />
             </div>
           </div>
@@ -220,10 +213,10 @@ export function ContentArticleShell({
         </Container>
       </section>
     </>
-  );
+  )
 }
 
-export function TimelineEntry({ entry }: { entry: ContentEntry<"changelog"> }) {
+export function TimelineEntry({ entry }: { entry: ContentEntry<'changelog'> }) {
   return (
     <Reveal>
       <div className="grid gap-4 lg:grid-cols-[170px_minmax(0,1fr)]">
@@ -257,30 +250,24 @@ export function TimelineEntry({ entry }: { entry: ContentEntry<"changelog"> }) {
         </div>
       </div>
     </Reveal>
-  );
+  )
 }
 
-export function MetaInline({
-  icon,
-  children,
-}: {
-  icon?: ReactNode;
-  children: ReactNode;
-}) {
+export function MetaInline({ icon, children }: { icon?: ReactNode; children: ReactNode }) {
   return (
     <span className="inline-flex items-center gap-2">
       {icon ? <span className="text-foreground/42">{icon}</span> : null}
       <span>{children}</span>
     </span>
-  );
+  )
 }
 
 type SignalsSectionProps = {
-  featuredBlog: ContentEntry<"blog"> | null;
-  recentBlog: ContentEntry<"blog">[];
-  recentChangelog: ContentEntry<"changelog">[];
-  recentRoadmap: ContentEntry<"roadmap">[];
-};
+  featuredBlog: ContentEntry<'blog'> | null
+  recentBlog: ContentEntry<'blog'>[]
+  recentChangelog: ContentEntry<'changelog'>[]
+  recentRoadmap: ContentEntry<'roadmap'>[]
+}
 
 export function SignalsSection({
   featuredBlog,
@@ -296,10 +283,12 @@ export function SignalsSection({
             <Badge variant="muted">Signals</Badge>
             <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
               <div className="space-y-4">
-                <h2 className="section-title">A cleaner communication layer for product and platform work.</h2>
+                <h2 className="section-title">
+                  A cleaner communication layer for product and platform work.
+                </h2>
                 <p className="section-copy">
-                  Recent thinking, shipped releases, and the direction of travel, presented
-                  like product signals instead of generic editorial blocks.
+                  Recent thinking, shipped releases, and the direction of travel, presented like
+                  product signals instead of generic editorial blocks.
                 </p>
               </div>
               <div className="rounded-[1.8rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-5 py-4 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.5]">
@@ -385,7 +374,9 @@ export function SignalsSection({
                     key={entry.slug}
                     href={entry.href}
                     title={entry.frontmatter.title}
-                    meta={formatContentDate(entry.frontmatter.updatedAt ?? entry.frontmatter.publishedAt)}
+                    meta={formatContentDate(
+                      entry.frontmatter.updatedAt ?? entry.frontmatter.publishedAt,
+                    )}
                     trailing={<StatusBadge status={entry.frontmatter.status} />}
                   />
                 ))}
@@ -395,7 +386,7 @@ export function SignalsSection({
         </div>
       </Container>
     </section>
-  );
+  )
 }
 
 function SignalColumn({
@@ -405,11 +396,11 @@ function SignalColumn({
   icon,
   children,
 }: {
-  title: string;
-  description: string;
-  href: string;
-  icon: ReactNode;
-  children: ReactNode;
+  title: string
+  description: string
+  href: string
+  icon: ReactNode
+  children: ReactNode
 }) {
   return (
     <Card className="h-full">
@@ -429,7 +420,7 @@ function SignalColumn({
       </CardHeader>
       <CardContent className="space-y-4">{children}</CardContent>
     </Card>
-  );
+  )
 }
 
 function SignalLink({
@@ -438,10 +429,10 @@ function SignalLink({
   meta,
   trailing,
 }: {
-  href: string;
-  title: string;
-  meta: string;
-  trailing?: ReactNode;
+  href: string
+  title: string
+  meta: string
+  trailing?: ReactNode
 }) {
   return (
     <Link
@@ -456,55 +447,55 @@ function SignalLink({
       </div>
       {trailing}
     </Link>
-  );
+  )
 }
 
 export function buildArticleMeta(options: {
-  publishedAt: string;
-  readingTimeMinutes?: number;
-  version?: string;
-  status?: RoadmapStatus;
-  updatedAt?: string;
+  publishedAt: string
+  readingTimeMinutes?: number
+  version?: string
+  status?: RoadmapStatus
+  updatedAt?: string
 }) {
   const items: MetaItem[] = [
     {
-      label: "Published",
+      label: 'Published',
       value: formatContentDate(options.publishedAt),
       icon: <CalendarDays className="size-4" />,
     },
-  ];
+  ]
 
   if (options.updatedAt) {
     items.push({
-      label: "Updated",
+      label: 'Updated',
       value: formatContentDate(options.updatedAt),
       icon: <CalendarDays className="size-4" />,
-    });
+    })
   }
 
   if (options.readingTimeMinutes) {
     items.push({
-      label: "Reading time",
+      label: 'Reading time',
       value: `${options.readingTimeMinutes} min`,
       icon: <Clock3 className="size-4" />,
-    });
+    })
   }
 
   if (options.version) {
     items.push({
-      label: "Version",
+      label: 'Version',
       value: options.version,
       icon: <GitCommitHorizontal className="size-4" />,
-    });
+    })
   }
 
   if (options.status) {
     items.push({
-      label: "Status",
+      label: 'Status',
       value: options.status,
       icon: <Radar className="size-4" />,
-    });
+    })
   }
 
-  return items;
+  return items
 }
