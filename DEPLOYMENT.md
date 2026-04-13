@@ -9,6 +9,7 @@
 ## Development
 
 ### Local Development
+
 ```bash
 npm run dev
 ```
@@ -16,6 +17,7 @@ npm run dev
 This starts the Next.js development server on `http://localhost:3000`.
 
 ### Preview with Cloudflare Workers
+
 ```bash
 npm run preview
 ```
@@ -25,16 +27,19 @@ This builds the worker and starts a local Cloudflare Workers environment using O
 ## Production Deployment
 
 ### Build for Production
+
 ```bash
 npm run build:worker
 ```
 
 ### Deploy to Cloudflare
+
 ```bash
 npm run deploy
 ```
 
 ### Preview Production Build Locally
+
 ```bash
 npm run preview
 ```
@@ -76,6 +81,7 @@ wrangler secret put EMAIL_RECIPIENT
 ## Troubleshooting
 
 ### Clean Build
+
 ```bash
 npm run clean
 npm install
@@ -83,11 +89,13 @@ npm run build
 ```
 
 ### Type Generation
+
 ```bash
 npm run cf-typegen
 ```
 
 ### Check Wrangler Version
+
 ```bash
 wrangler --version
 ```

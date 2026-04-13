@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import { motion, useReducedMotion } from "framer-motion";
-import { MoonStar, SunMedium } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useSyncExternalStore } from "react";
+import { motion, useReducedMotion } from 'framer-motion'
+import { MoonStar, SunMedium } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { useSyncExternalStore } from 'react'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type ThemeToggleProps = {
-  className?: string;
-};
+  className?: string
+}
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-  const { resolvedTheme, setTheme } = useTheme();
-  const reduceMotion = useReducedMotion();
+  const { resolvedTheme, setTheme } = useTheme()
+  const reduceMotion = useReducedMotion()
   const mounted = useSyncExternalStore(
     () => () => undefined,
     () => true,
     () => false,
-  );
+  )
 
-  const isDark = mounted && resolvedTheme === "dark";
-  const nextTheme = isDark ? "light" : "dark";
+  const isDark = mounted && resolvedTheme === 'dark'
+  const nextTheme = isDark ? 'light' : 'dark'
   const transition = reduceMotion
-    ? { duration: 0.14, ease: "linear" as const }
-    : { type: "spring" as const, stiffness: 420, damping: 30, mass: 0.78 };
+    ? { duration: 0.14, ease: 'linear' as const }
+    : { type: 'spring' as const, stiffness: 420, damping: 30, mass: 0.78 }
 
   return (
     <motion.button
@@ -35,7 +35,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       title={`Switch to ${nextTheme} mode`}
       onClick={() => setTheme(nextTheme)}
       className={cn(
-        "relative inline-flex h-10 w-[4.5rem] shrink-0 items-center rounded-full border border-border/70 bg-background/62 p-1 text-foreground/78 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md backdrop-saturate-[1.5] transition-[border-color,background-color,box-shadow,color] duration-300 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40 dark:shadow-[0_12px_32px_rgba(0,0,0,0.24)]",
+        'relative inline-flex h-10 w-[4.5rem] shrink-0 items-center rounded-full border border-border/70 bg-background/62 p-1 text-foreground/78 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md backdrop-saturate-[1.5] transition-[border-color,background-color,box-shadow,color] duration-300 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40 dark:shadow-[0_12px_32px_rgba(0,0,0,0.24)]',
         className,
       )}
       whileTap={reduceMotion ? undefined : { scale: 0.98 }}
@@ -60,7 +60,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
           }}
           transition={
             reduceMotion
-              ? { duration: 0.12, ease: "linear" }
+              ? { duration: 0.12, ease: 'linear' }
               : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }
           }
           className="relative flex size-4 items-center justify-center"
@@ -74,7 +74,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
             }}
             transition={
               reduceMotion
-                ? { duration: 0.1, ease: "linear" }
+                ? { duration: 0.1, ease: 'linear' }
                 : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
             }
           >
@@ -89,7 +89,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
             }}
             transition={
               reduceMotion
-                ? { duration: 0.1, ease: "linear" }
+                ? { duration: 0.1, ease: 'linear' }
                 : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
             }
           >
@@ -101,10 +101,10 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       <motion.span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute top-1/2 flex size-4 -translate-y-1/2 items-center justify-center transition-[left,right,opacity,transform,color] duration-200",
+          'pointer-events-none absolute top-1/2 flex size-4 -translate-y-1/2 items-center justify-center transition-[left,right,opacity,transform,color] duration-200',
           isDark
-            ? "left-[0.72rem] text-amber-500/75"
-            : "right-[0.72rem] text-slate-500/75 dark:text-indigo-100/85",
+            ? 'left-[0.72rem] text-amber-500/75'
+            : 'right-[0.72rem] text-slate-500/75 dark:text-indigo-100/85',
         )}
         animate={
           reduceMotion
@@ -124,9 +124,9 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
 
       <span className="sr-only">
         {mounted
-          ? `Current theme: ${isDark ? "dark" : "light"}. Activate to switch to ${nextTheme} mode.`
-          : "Toggle color theme"}
+          ? `Current theme: ${isDark ? 'dark' : 'light'}. Activate to switch to ${nextTheme} mode.`
+          : 'Toggle color theme'}
       </span>
     </motion.button>
-  );
+  )
 }

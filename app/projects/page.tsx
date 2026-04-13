@@ -1,19 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { CTASection } from "@/components/site/cta-section";
-import { PageHero } from "@/components/site/page-hero";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { pageMetadata } from "@/lib/metadata";
-import { projectArchetypes } from "@/lib/site-data";
+import { CTASection } from '@/components/site/cta-section'
+import { PageHero } from '@/components/site/page-hero'
+import { Reveal } from '@/components/site/reveal'
+import { SectionHeader } from '@/components/site/section-header'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { pageMetadata } from '@/lib/metadata'
+import { projectArchetypes } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  "Projects",
-  "Project archetypes and system types Sonicverse is designed to build without inventing fake case studies.",
-  "/projects",
-);
+  'Projects',
+  'Project archetypes and system types Sonicverse is designed to build without inventing fake case studies.',
+  '/projects',
+)
 
 export default function ProjectsPage() {
   return (
@@ -24,11 +24,11 @@ export default function ProjectsPage() {
         title="Capability, shown through the systems we build."
         description="Products, platforms, internal systems, and open-source infrastructure with visible design judgment."
         highlights={[
-          "Operational platforms",
-          "Developer-facing products",
-          "Open-source ecosystems",
+          'Operational platforms',
+          'Developer-facing products',
+          'Open-source ecosystems',
         ]}
-        primaryAction={{ href: "/contact", label: "Talk through your system" }}
+        primaryAction={{ href: '/contact', label: 'Talk through your system' }}
       />
 
       <section className="section-space">
@@ -66,9 +66,9 @@ export default function ProjectsPage() {
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              "Multiple audiences and complex interaction surfaces",
-              "Technical credibility is part of the brand experience",
-              "Shared structure needs to get stronger before the platform can scale",
+              'Multiple audiences and complex interaction surfaces',
+              'Technical credibility is part of the brand experience',
+              'Shared structure needs to get stronger before the platform can scale',
             ].map((item, index) => (
               <Reveal key={item} delay={index * 0.05}>
                 <Card className="h-full">
@@ -88,5 +88,5 @@ export default function ProjectsPage() {
         description="Sonicverse is best used where long-term clarity matters as much as short-term delivery."
       />
     </>
-  );
+  )
 }

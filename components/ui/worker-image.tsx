@@ -1,29 +1,29 @@
-"use client";
+'use client'
 
-import Image, { ImageProps } from 'next/image';
-import { workerImageLoader } from '@/lib/worker-image-loader';
-import { useState } from 'react';
+import Image, { ImageProps } from 'next/image'
+import { workerImageLoader } from '@/lib/worker-image-loader'
+import { useState } from 'react'
 
 export default function WorkerImage(props: ImageProps) {
-  const [error, setError] = useState(false);
-  
+  const [error, setError] = useState(false)
+
   if (error) {
     // Return a simple placeholder or fallback image
     return (
       <div className="bg-gray-200 w-full h-full flex items-center justify-center">
         <span className="text-gray-500 text-sm">Image not available</span>
       </div>
-    );
+    )
   }
-  
+
   return (
     <Image
       {...props}
       loader={workerImageLoader}
       onError={() => {
-        console.error(`Failed to load worker image: ${props.src}`);
-        setError(true);
+        console.error(`Failed to load worker image: ${props.src}`)
+        setError(true)
       }}
     />
-  );
+  )
 }

@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { CTASection } from "@/components/site/cta-section";
-import { PageHero } from "@/components/site/page-hero";
-import { Reveal } from "@/components/site/reveal";
-import { SectionHeader } from "@/components/site/section-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { pageMetadata } from "@/lib/metadata";
-import { openSourceProjects, repositorySignals } from "@/lib/site-data";
+import { CTASection } from '@/components/site/cta-section'
+import { PageHero } from '@/components/site/page-hero'
+import { Reveal } from '@/components/site/reveal'
+import { SectionHeader } from '@/components/site/section-header'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { pageMetadata } from '@/lib/metadata'
+import { openSourceProjects, repositorySignals } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  "Open Source",
-  "Sonicverse treats open source as a core brand pillar and a practical way of building better systems.",
-  "/open-source",
-);
+  'Open Source',
+  'Sonicverse treats open source as a core brand pillar and a practical way of building better systems.',
+  '/open-source',
+)
 
 export default function OpenSourcePage() {
   return (
@@ -25,12 +25,12 @@ export default function OpenSourcePage() {
         title="Open source is a product quality decision."
         description="Open collaboration makes systems more legible, reusable, and trustworthy."
         highlights={[
-          "Readable foundations",
-          "Practical contribution paths",
-          "Tooling that compounds",
+          'Readable foundations',
+          'Practical contribution paths',
+          'Tooling that compounds',
         ]}
-        primaryAction={{ href: "/contact", label: "Talk about a project" }}
-        secondaryAction={{ href: "/projects", label: "See project archetypes" }}
+        primaryAction={{ href: '/contact', label: 'Talk about a project' }}
+        secondaryAction={{ href: '/projects', label: 'See project archetypes' }}
       />
 
       <section className="section-space">
@@ -93,5 +93,5 @@ export default function OpenSourcePage() {
         description="From reusable primitives to deployment-aware architecture, the open-source posture is part of the system design."
       />
     </>
-  );
+  )
 }
