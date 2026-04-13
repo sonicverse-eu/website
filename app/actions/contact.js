@@ -265,7 +265,7 @@ function submitContactForm(_previousState, formData) {
           senderAddress =
             (_a = process.env.EMAIL_SENDER) !== null && _a !== void 0
               ? _a
-              : 'Sonicverse <hello@sonicverse.eu>'
+              : 'noreply@mail.sonicverse.eu'
           recipientAddress =
             (_b = process.env.EMAIL_RECIPIENT) !== null && _b !== void 0
               ? _b

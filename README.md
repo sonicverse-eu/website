@@ -49,7 +49,7 @@ npm run build:worker
 ### Preview the Worker locally
 
 ```dotenv
-EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
+EMAIL_SENDER = "noreply@mail.sonicverse.eu"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 ```
 

@@ -74,7 +74,7 @@ Create `.dev.vars` for local development and `.prod.vars` for production. Exampl
 
 ```
 # Email configuration
-EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
+EMAIL_SENDER = "noreply@mail.sonicverse.eu"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 
 # Environment

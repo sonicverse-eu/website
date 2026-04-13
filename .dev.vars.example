@@ -2,7 +2,7 @@
 # Copy this file to .dev.vars and configure for local development
 
 # Email configuration
-EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
+EMAIL_SENDER = "noreply@mail.sonicverse.eu"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 
 # Environment
