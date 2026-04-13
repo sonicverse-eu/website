@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import { ContentPageHeader, TimelineEntry, VersionBadge } from "@/components/content/content-ui";
-import { Reveal } from "@/components/site/reveal";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { getCollectionEntries } from "@/lib/content";
-import { pageMetadata } from "@/lib/metadata";
+import { ContentPageHeader, TimelineEntry, VersionBadge } from '@/components/content/content-ui'
+import { Reveal } from '@/components/site/reveal'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Container } from '@/components/ui/container'
+import { getCollectionEntries } from '@/lib/content'
+import { pageMetadata } from '@/lib/metadata'
 
 export const metadata: Metadata = pageMetadata(
-  "Changelog",
-  "Release notes, shipped improvements, and software-native product movement from Sonicverse.",
-  "/changelog",
-);
+  'Changelog',
+  'Release notes, shipped improvements, and software-native product movement from Sonicverse.',
+  '/changelog',
+)
 
 export default async function ChangelogPage() {
-  const entries = await getCollectionEntries("changelog");
-  const latestRelease = entries[0];
+  const entries = await getCollectionEntries('changelog')
+  const latestRelease = entries[0]
 
   return (
     <>
@@ -56,5 +56,5 @@ export default async function ChangelogPage() {
         </Container>
       </section>
     </>
-  );
+  )
 }

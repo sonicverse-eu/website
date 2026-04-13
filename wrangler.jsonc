@@ -1,32 +1,30 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "sonicverse-website",
-	"main": ".open-next/worker.js",
-	"keep_vars": true,
-	"compatibility_date": "2026-04-12",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
-	"assets": {
-		"directory": ".open-next/assets",
-		"binding": "ASSETS"
-	},
-	"send_email": [
-		{
-			"name": "SEND_EMAIL"
-		}
-	],
-	"images": {
-		"binding": "IMAGES"
-	},
-	"r2_buckets": [
-		{
-			"bucket_name": "sonicverse-website-media",
-			"binding": "IMAGE_ASSETS"
-		}
-	],
-	"vars": {
-		"EMAIL_SENDER": "noreply@sonicverse.eu",
-		"EMAIL_RECIPIENT": "hello@sonicverse.eu"
-	}
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sonicverse-website",
+  "main": ".open-next/worker.js",
+  "keep_vars": true,
+  "compatibility_date": "2026-04-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "send_email": [
+    {
+      "name": "SEND_EMAIL",
+    },
+  ],
+  "images": {
+    "binding": "IMAGES",
+  },
+  "r2_buckets": [
+    {
+      "bucket_name": "sonicverse-website-media",
+      "binding": "IMAGE_ASSETS",
+    },
+  ],
+  "vars": {
+    "EMAIL_SENDER": "noreply@sonicverse.eu",
+    "EMAIL_RECIPIENT": "hello@sonicverse.eu",
+  },
 }

@@ -1,13 +1,13 @@
 declare global {
-	interface CloudflareEnv {
-		ASSETS: Fetcher;
-		IMAGES: any;
+  interface CloudflareEnv {
+    ASSETS: Fetcher
+    IMAGES: any
 
-		// Add any additional bindings here
-		// Example:
-		// MY_KV: KVNamespace;
-		// MY_DURABLE_OBJECT: DurableObjectNamespace;
-	}
+    // Add any additional bindings here
+    // Example:
+    // MY_KV: KVNamespace;
+    // MY_DURABLE_OBJECT: DurableObjectNamespace;
+  }
 }
 
-export {};
+export {}

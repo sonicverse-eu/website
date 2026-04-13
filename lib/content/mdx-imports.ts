@@ -1,31 +1,29 @@
-import "server-only";
+import 'server-only'
 
-import type { ContentCollection } from "./types";
-import { contentManifest } from "@/generated/content-manifest";
-import type { MDXProps } from "mdx/types";
+import type { ContentCollection } from './types'
+import { contentManifest } from '@/generated/content-manifest'
+import type { MDXProps } from 'mdx/types'
 
 /**
  * Dynamically import an MDX file based on collection and slug
  */
-export async function importMdxFile<
-  C extends ContentCollection,
->(
+export async function importMdxFile<C extends ContentCollection>(
   collection: C,
   slug: string,
-): Promise<{ 
-  default: React.ComponentType<MDXProps>;
-  frontmatter: Record<string, unknown>;
+): Promise<{
+  default: React.ComponentType<MDXProps>
+  frontmatter: Record<string, unknown>
 }> {
   try {
     // Construct the import path based on collection and slug
-    const importedMdx = await import(`../../content/${collection}/${slug}.mdx`);
+    const importedMdx = await import(`../../content/${collection}/${slug}.mdx`)
     return {
       default: importedMdx.default,
       frontmatter: importedMdx.frontmatter,
-    };
+    }
   } catch (error) {
-    console.error(`Failed to import MDX file for ${collection}/${slug}:`, error);
-    throw new Error(`MDX file not found for ${collection}/${slug}`);
+    console.error(`Failed to import MDX file for ${collection}/${slug}:`, error)
+    throw new Error(`MDX file not found for ${collection}/${slug}`)
   }
 }
 
@@ -37,11 +35,11 @@ export async function getMdxComponent<C extends ContentCollection>(
   slug: string,
 ): Promise<React.ComponentType<MDXProps> | null> {
   try {
-    const { default: MdxComponent } = await importMdxFile(collection, slug);
-    return MdxComponent;
+    const { default: MdxComponent } = await importMdxFile(collection, slug)
+    return MdxComponent
   } catch (error) {
-    console.error(`Failed to get MDX component for ${collection}/${slug}:`, error);
-    return null;
+    console.error(`Failed to get MDX component for ${collection}/${slug}:`, error)
+    return null
   }
 }
 
@@ -50,5 +48,5 @@ export async function getMdxComponent<C extends ContentCollection>(
  */
 export async function getCollectionSlugs(collection: ContentCollection): Promise<string[]> {
   // Use the manifest as the source of truth
-  return Object.keys(contentManifest[collection] || {});
+  return Object.keys(contentManifest[collection] || {})
 }

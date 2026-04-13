@@ -1,22 +1,19 @@
-"use server";
+'use server'
 
-import {
-  initialContactFormState,
-  type ContactFormState,
-} from "@/lib/contact-form";
+import { initialContactFormState, type ContactFormState } from '@/lib/contact-form'
 
 function getString(formData: FormData, key: string) {
-  const value = formData.get(key);
-  return typeof value === "string" ? value.trim() : "";
+  const value = formData.get(key)
+  return typeof value === 'string' ? value.trim() : ''
 }
 
 function buildEmailHtml(values: {
-  name: string;
-  email: string;
-  company: string;
-  projectType: string;
-  brief: string;
-  submittedAt: string;
+  name: string
+  email: string
+  company: string
+  projectType: string
+  brief: string
+  submittedAt: string
 }): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -60,21 +57,33 @@ function buildEmailHtml(values: {
               </table>
 
               <!-- Company & Project Type -->
-              ${values.company || values.projectType ? `
+              ${
+                values.company || values.projectType
+                  ? `
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 <tr>
-                  ${values.company ? `
+                  ${
+                    values.company
+                      ? `
                   <td width="50%" style="padding-right:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Company</p>
                     <p style="margin:0;font-size:15px;color:#0d1727;">${values.company}</p>
-                  </td>` : "<td></td>"}
-                  ${values.projectType ? `
+                  </td>`
+                      : '<td></td>'
+                  }
+                  ${
+                    values.projectType
+                      ? `
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Project type</p>
                     <p style="margin:0;font-size:15px;color:#0d1727;">${values.projectType}</p>
-                  </td>` : "<td></td>"}
+                  </td>`
+                      : '<td></td>'
+                  }
                 </tr>
-              </table>` : ""}
+              </table>`
+                  : ''
+              }
 
               <!-- Divider -->
               <hr style="border:none;border-top:1px solid rgba(15,23,42,0.08);margin:0 0 24px;" />
@@ -82,7 +91,7 @@ function buildEmailHtml(values: {
               <!-- Brief -->
               <p style="margin:0 0 8px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Project brief</p>
               <div style="background:#f4f7fd;border-radius:16px;padding:20px 24px;border:1px solid rgba(15,23,42,0.06);">
-                <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">${values.brief.replace(/\n/g, "<br/>")}</p>
+                <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">${values.brief.replace(/\n/g, '<br/>')}</p>
               </div>
 
             </td>
@@ -103,13 +112,10 @@ function buildEmailHtml(values: {
     </tr>
   </table>
 </body>
-</html>`;
+</html>`
 }
 
-function buildConfirmationEmailHtml(values: {
-  name: string;
-  submittedAt: string;
-}): string {
+function buildConfirmationEmailHtml(values: { name: string; submittedAt: string }): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,7 +182,7 @@ function buildConfirmationEmailHtml(values: {
     </tr>
   </table>
 </body>
-</html>`;
+</html>`
 }
 
 export async function submitContactForm(
@@ -184,61 +190,62 @@ export async function submitContactForm(
   formData: FormData,
 ): Promise<ContactFormState> {
   const values = {
-    name: getString(formData, "name"),
-    email: getString(formData, "email"),
-    company: getString(formData, "company"),
-    projectType: getString(formData, "projectType"),
-    brief: getString(formData, "brief"),
-  };
+    name: getString(formData, 'name'),
+    email: getString(formData, 'email'),
+    company: getString(formData, 'company'),
+    projectType: getString(formData, 'projectType'),
+    brief: getString(formData, 'brief'),
+  }
 
-  const source = getString(formData, "source") || "/contact";
-  const errors: ContactFormState["errors"] = {};
+  const source = getString(formData, 'source') || '/contact'
+  const errors: ContactFormState['errors'] = {}
 
-  if (!values.name) errors.name = "Please share your name.";
+  if (!values.name) errors.name = 'Please share your name.'
 
   if (!values.email) {
-    errors.email = "Please share an email address.";
+    errors.email = 'Please share an email address.'
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = "Please enter a valid email address.";
+    errors.email = 'Please enter a valid email address.'
   }
 
   if (!values.brief) {
-    errors.brief = "Please include a short project brief.";
+    errors.brief = 'Please include a short project brief.'
   } else if (values.brief.length < 30) {
-    errors.brief = "A little more context will help us respond usefully.";
+    errors.brief = 'A little more context will help us respond usefully.'
   }
 
   if (Object.keys(errors).length > 0) {
-    return { status: "error", message: "Please review the highlighted fields.", errors, values };
+    return { status: 'error', message: 'Please review the highlighted fields.', errors, values }
   }
 
-  const senderAddress = process.env.EMAIL_SENDER ?? "Sonicverse <hello@sonicverse.eu>";
-  const recipientAddress = process.env.EMAIL_RECIPIENT ?? "hello@sonicverse.eu";
-  const resendApiKey = process.env.RESEND_API_KEY;
+  const senderAddress = process.env.EMAIL_SENDER ?? 'Sonicverse <hello@sonicverse.eu>'
+  const recipientAddress = process.env.EMAIL_RECIPIENT ?? 'hello@sonicverse.eu'
+  const resendApiKey = process.env.RESEND_API_KEY
 
-  const submittedAt = new Date().toLocaleString("en-GB", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  const submittedAt = new Date().toLocaleString('en-GB', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })
 
   if (!resendApiKey) {
     return {
-      status: "error",
-      message: "Contact delivery is not configured. Set RESEND_API_KEY in your deployment environment.",
+      status: 'error',
+      message:
+        'Contact delivery is not configured. Set RESEND_API_KEY in your deployment environment.',
       errors: {},
       values,
-    };
+    }
   }
 
   try {
-    const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ""}`;
-    const confirmationSubject = "We received your message";
+    const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ''}`
+    const confirmationSubject = 'We received your message'
 
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         from: senderAddress,
@@ -248,17 +255,17 @@ export async function submitContactForm(
         html: buildEmailHtml({ ...values, submittedAt }),
         reply_to: values.email,
       }),
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`Resend API error: ${response.status}`);
+      throw new Error(`Resend API error: ${response.status}`)
     }
 
-    const confirmationResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
+    const confirmationResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         from: senderAddress,
@@ -267,24 +274,25 @@ export async function submitContactForm(
         text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
         html: buildConfirmationEmailHtml({ name: values.name, submittedAt }),
       }),
-    });
+    })
 
     if (!confirmationResponse.ok) {
-      throw new Error(`Resend API error: ${confirmationResponse.status}`);
+      throw new Error(`Resend API error: ${confirmationResponse.status}`)
     }
   } catch (e) {
     return {
-      status: "error",
-      message: "The message could not be delivered right now. Please try again or email us directly.",
+      status: 'error',
+      message:
+        'The message could not be delivered right now. Please try again or email us directly.',
       errors: {},
       values,
-    };
+    }
   }
 
   return {
-    status: "success",
-    message: "Thanks. We sent a confirmation email and will reply with a thoughtful next step.",
+    status: 'success',
+    message: 'Thanks. We sent a confirmation email and will reply with a thoughtful next step.',
     errors: {},
     values: initialContactFormState.values,
-  };
+  }
 }

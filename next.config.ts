@@ -1,13 +1,13 @@
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
-import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
   images: {
     unoptimized: true,
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
 
-initOpenNextCloudflareForDev();
+initOpenNextCloudflareForDev()
