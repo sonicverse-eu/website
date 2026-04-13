@@ -42,7 +42,7 @@ Update the copied files with values that match your environment. The most import
 - `NEXT_PUBLIC_SITE_URL` for canonical metadata in Worker preview and deployment environments.
 - `NEXT_PUBLIC_IMAGE_WORKER_URL` if image requests should be served from a dedicated image worker URL.
 
-If you use Cloudflare Email Workers bindings instead of direct provider credentials, keep `SEND_EMAIL` configured in the Worker environment as described in the existing comments inside [.env.example](/Users/rikvisser/.codex/worktrees/41ca/website/.env.example) and [.dev.vars.example](/Users/rikvisser/.codex/worktrees/41ca/website/.dev.vars.example).
+If you use Cloudflare Email Workers bindings instead of direct provider credentials, keep `SEND_EMAIL` configured in the Worker environment as described in the existing comments inside [.env.example](./.env.example) and [.dev.vars.example](./.dev.vars.example).
 
 ### Local Development
 
@@ -62,7 +62,7 @@ Run the OpenNext Cloudflare preview flow when you want to test the Worker build 
 npm run preview
 ```
 
-For deployment-specific details, see [DEPLOYMENT.md](/Users/rikvisser/.codex/worktrees/41ca/website/DEPLOYMENT.md).
+For deployment-specific details, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## Usage Examples
 
