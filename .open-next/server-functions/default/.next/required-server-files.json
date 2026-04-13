@@ -106,7 +106,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/rikvisser/.codex/worktrees/d3d2/website",
+    "outputFileTracingRoot": "/Users/rikvisser/.codex/worktrees/6855/website",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -312,7 +312,7 @@
           {
             "loaders": [
               {
-                "loader": "/Users/rikvisser/.codex/worktrees/d3d2/website/node_modules/@next/mdx/mdx-js-loader.js",
+                "loader": "/Users/rikvisser/.codex/worktrees/6855/website/node_modules/@next/mdx/mdx-js-loader.js",
                 "options": {
                   "providerImportSource": "next-mdx-import-source-file",
                   "remarkPlugins": [
@@ -333,11 +333,11 @@
       "resolveAlias": {
         "next-mdx-import-source-file": "@vercel/turbopack-next/mdx-import-source"
       },
-      "root": "/Users/rikvisser/.codex/worktrees/d3d2/website"
+      "root": "/Users/rikvisser/.codex/worktrees/6855/website"
     },
     "distDirRoot": ".next"
   },
-  "appDir": "/Users/rikvisser/.codex/worktrees/d3d2/website",
+  "appDir": "/Users/rikvisser/.codex/worktrees/6855/website",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",

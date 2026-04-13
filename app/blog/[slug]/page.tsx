@@ -2,13 +2,22 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { buildArticleMeta, ContentArticleShell } from '@/components/content/content-ui'
+import { mdxComponents } from '@/components/content/mdx-components'
 import { Badge } from '@/components/ui/badge'
 import { contentMetadata } from '@/lib/content/metadata'
 import { getCollectionEntries, getStaticSlugs } from '@/lib/content'
-import { getMdxComponent } from '@/lib/content/mdx-imports'
-import { mdxComponents } from '@/components/content/mdx-components'
 
 export const dynamicParams = false
+
+async function loadBlogPost(slug: string) {
+  try {
+    const { default: Post } = await import(`@/content/blog/${slug}.mdx`)
+    return Post
+  } catch (error) {
+    console.error(`Failed to import blog post for slug "${slug}":`, error)
+    return null
+  }
+}
 
 export async function generateStaticParams() {
   return getStaticSlugs('blog')
@@ -40,7 +49,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   const [entries, MdxComponent] = await Promise.all([
     getCollectionEntries('blog'),
-    getMdxComponent('blog', slug),
+    loadBlogPost(slug),
   ])
 
   const entry = entries.find((e) => e.slug === slug)
