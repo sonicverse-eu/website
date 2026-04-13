@@ -54,6 +54,8 @@ npm run deploy
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
 
+External contributors should start with [CONTRIBUTING.md](CONTRIBUTING.md) for setup, workflow, and pull request guidelines.
+
 ## Environment Variables
 
 Copy `.dev.vars.example` to `.dev.vars` and configure:
