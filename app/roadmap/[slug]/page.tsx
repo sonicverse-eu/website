@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { mdxComponents } from '@/components/content/mdx-components'
 import { buildArticleMeta, ContentArticleShell, StatusBadge } from '@/components/content/content-ui'
 import { contentMetadata } from '@/lib/content/metadata'
 import { getCollectionEntries, getStaticSlugs } from '@/lib/content'
 import { getMdxComponent } from '@/lib/content/mdx-imports'
-import { mdxComponents } from '@/components/content/mdx-components'
 
 export const dynamicParams = false
 

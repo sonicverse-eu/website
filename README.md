@@ -1,68 +1,87 @@
 # Sonicverse Website
 
-A Next.js application optimized for Cloudflare Workers deployment using OpenNext.
-
-## Features
-
-- ✅ Next.js 16 with React 19
-- ✅ Cloudflare Workers deployment
-- ✅ OpenNext integration
-- ✅ Optimized for edge runtime
-- ✅ Email functionality via Cloudflare Workers
-- ✅ R2 storage integration
-- ✅ Cloudflare Images support
+[![Cloudflare Worker Preview](https://github.com/sonicverse-eu/website/actions/workflows/cloudflare-preview.yml/badge.svg)](https://github.com/sonicverse-eu/website/actions/workflows/cloudflare-preview.yml)
+![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=next.js)
+![React 19](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)
 
 ## Getting Started
 
-### Installation
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### Development
+Run the Next.js development server:
 
 ```bash
 npm run dev
 ```
 
-### Preview with Cloudflare Workers
+Preview the production Worker locally:
 
 ```bash
 npm run preview
 ```
 
-### Deployment
+Deploy the Worker manually:
 
 ```bash
-npm run deploy
+npm run dev
 ```
 
-## Project Structure
+## Deployment
 
-- `app/` - Next.js app router pages
-- `app/actions/` - Server actions
-- `app/services/` - API routes
-- `app/blog/` - Blog content
-- `public/` - Static assets
-- `.open-next/` - OpenNext build output
-- `wrangler.jsonc` - Cloudflare Workers configuration
-- `next.config.ts` - Next.js configuration
-- `open-next.config.ts` - OpenNext configuration
+Production deployments and pull request previews are handled by Cloudflare Workers Builds.
 
-## Configuration
+- `main` deploys through the connected Workers Builds integration.
+- Pull requests rely on Cloudflare's native preview flow rather than a separate GitHub Actions workflow.
+- `wrangler.jsonc` enables `preview_urls` so version uploads can surface preview URLs.
+- Non-production Workers Builds should upload preview versions with `npm run deploy:preview` rather than promote a full deployment with `npm run deploy`.
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deployment workflow and troubleshooting notes.
 
-## Environment Variables
-
-Copy `.dev.vars.example` to `.dev.vars` and configure:
-
+```bash
+npm run build:worker
 ```
-EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
+
+### Preview the Worker locally
+
+```dotenv
+EMAIL_SENDER = "noreply@mail.sonicverse.eu"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 ```
 
-## License
+## Common Commands
 
-MIT
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Starts the Next.js development server. |
+| `npm run lint` | Runs ESLint across the project. |
+| `npm run typecheck` | Runs TypeScript in no-emit mode. |
+| `npm run build` | Builds the Next.js app. |
+| `npm run build:worker` | Builds the OpenNext Cloudflare Worker output. |
+| `npm run preview` | Builds and previews the Worker locally. |
+| `npm run deploy` | Builds and deploys the Worker to Cloudflare. |
+| `npm run cf-typegen` | Regenerates Cloudflare environment types. |
+| `npm run clean` | Removes local build artifacts. |
+
+## Contributing
+
+Contributions are welcome through GitHub Issues and Pull Requests. If you want to propose a bug fix, content change, or improvement to the site experience, start by checking the open issues or opening a new one with the context needed to reproduce the problem or explain the idea.
+
+This repository does not currently ship a dedicated `CONTRIBUTING.md`, so the working expectation is:
+
+- keep changes focused and readable;
+- run `npm run lint`, `npm run typecheck`, and `npm run build` before opening a PR;
+- include screenshots or preview details when a change affects the UI or content presentation;
+- use the existing Cloudflare preview workflow on pull requests as an extra validation step.
+
+## Links
+
+- Live site: [sonicverse.eu](https://sonicverse.eu)
+- Repository: [github.com/sonicverse-eu/website](https://github.com/sonicverse-eu/website)
+- GitHub organization: [github.com/sonicverse-eu](https://github.com/sonicverse-eu)
+- Issues: [github.com/sonicverse-eu/website/issues](https://github.com/sonicverse-eu/website/issues)
+- Contact: [hello@sonicverse.eu](mailto:hello@sonicverse.eu)
