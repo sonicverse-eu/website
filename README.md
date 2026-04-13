@@ -82,6 +82,9 @@ npm run build
 
 ### Build the Cloudflare Worker bundle
 
+External contributors should start with [CONTRIBUTING.md](CONTRIBUTING.md) for setup, workflow, and pull request guidelines.
+
+
 ```bash
 npm run build:worker
 ```
