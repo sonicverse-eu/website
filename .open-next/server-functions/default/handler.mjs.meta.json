@@ -7303,7 +7303,7 @@
       "format": "esm"
     },
     ".open-next/server-functions/default/index.mjs": {
-      "bytes": 90995,
+      "bytes": 90867,
       "imports": [
         {
           "path": "node:module",
@@ -9146,10 +9146,10 @@
           "bytesInOutput": 8466
         },
         ".open-next/server-functions/default/index.mjs": {
-          "bytesInOutput": 63912
+          "bytesInOutput": 63784
         }
       },
-      "bytes": 4619379
+      "bytes": 4619251
     }
   }
 }
