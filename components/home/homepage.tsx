@@ -80,13 +80,9 @@ export async function HomePage() {
       <PageHero
         layout="split"
         eyebrow="Open-source-native software systems"
-        title="Software systems with intent."
-        description="Modern products, platform foundations, and open-source technology built with calm technical ambition."
-        highlights={[
-          'Premium product surfaces',
-          'Cloudflare-ready foundations',
-          'Open source by default',
-        ]}
+        title="OSS for independent media."
+        description="Innovating in public, with a focus on product surfaces and the systems for independent media organisations."
+        highlights={['OSS-native']}
         primaryAction={{ href: '/contact', label: 'Start a project' }}
         secondaryAction={{ href: '/open-source', label: 'Explore open source' }}
         visual={<HeroImageVisual />}
