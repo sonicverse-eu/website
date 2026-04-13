@@ -1,0 +1,18 @@
+{
+  "node": {
+    "6037f4bf12a7e1bf509f8d0a48b3171da7cdc2421a": {
+      "workers": {
+        "app/contact/page": {
+          "moduleId": 27797,
+          "async": false,
+          "exportedName": "submitContactForm",
+          "filename": "app/actions/contact.ts"
+        }
+      },
+      "filename": "app/actions/contact.ts",
+      "exportedName": "submitContactForm"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "oYvIYTgL166HWzFXO5fLyuLwfQiOGwykEPPA1Rcbm8E="
+}

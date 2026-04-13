@@ -24,6 +24,17 @@ npm run preview
 
 This builds the worker and starts a local Cloudflare Workers environment using OpenNext preview.
 
+## Cloudflare Workers Builds
+
+This repository uses Cloudflare Workers Builds as the single deployment and preview system.
+
+- Pull requests are previewed through the existing Cloudflare Git integration for `sonicverse-website`.
+- `wrangler.jsonc` sets `preview_urls` to `true` so uploaded Worker versions can expose preview URLs.
+- The non-production branch trigger should use `npm run deploy:preview`, which runs `wrangler versions upload`.
+- There is no separate GitHub Actions preview workflow to maintain.
+
+When a pull request updates successfully, GitHub should show the native Cloudflare Workers status for the connected Worker. A direct preview URL is only expected when the preview trigger uploads a Worker version instead of performing a full `wrangler deploy`.
+
 ## Production Deployment
 
 ### Build for Production
@@ -37,6 +48,17 @@ npm run build:worker
 ```bash
 npm run deploy
 ```
+
+This is the manual Wrangler path. The default production path for merged changes remains the connected Cloudflare Workers Builds integration.
+
+### Upload a Preview Version
+
+```bash
+npm run build:worker
+npm run deploy:preview
+```
+
+Use this for manual preview-version uploads. It creates a version preview instead of promoting production traffic.
 
 ### Preview Production Build Locally
 
@@ -52,7 +74,7 @@ Create `.dev.vars` for local development and `.prod.vars` for production. Exampl
 
 ```
 # Email configuration
-EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
+EMAIL_SENDER = "noreply@mail.sonicverse.eu"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 
 # Environment
@@ -85,7 +107,7 @@ wrangler secret put EMAIL_RECIPIENT
 ```bash
 npm run clean
 npm install
-npm run build
+npm run build:worker
 ```
 
 ### Type Generation
@@ -102,7 +124,9 @@ wrangler --version
 
 ## Useful Commands
 
-- `npm run optimize` - Build and generate types
-- `npm run deploy:preview` - Deploy to preview environment
+- `npm run build:worker` - Build the OpenNext Worker bundle
+- `npm run preview` - Preview the built Worker locally
+- `npm run deploy` - Manually deploy the Worker with Wrangler
+- `npm run deploy:preview` - Upload a preview Worker version with Wrangler
 - `npm run lint` - Run ESLint
 - `npm run clean` - Clean build artifacts
