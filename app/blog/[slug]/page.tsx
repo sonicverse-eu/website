@@ -56,7 +56,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
       description={entry.frontmatter.description}
       meta={buildArticleMeta({
         publishedAt: entry.frontmatter.publishedAt,
-        readingTimeMinutes: entry.readingTimeMinutes,
       })}
       badges={<Badge variant="muted">Technical note</Badge>}
       tags={entry.frontmatter.tags}
