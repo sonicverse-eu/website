@@ -17,7 +17,7 @@
 		"binding": "IMAGES"
 	},
 	"vars": {
-		"EMAIL_SENDER": "noreply@sonicverse.eu",
+		"EMAIL_SENDER": "noreply@mail.sonicverse.eu",
 		"EMAIL_RECIPIENT": "hello@sonicverse.eu"
 	}
 }
