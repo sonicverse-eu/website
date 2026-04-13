@@ -2,6 +2,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "sonicverse-website",
 	"main": ".open-next/worker.js",
+	"preview_urls": true,
 	"keep_vars": true,
 	"preview_urls": true,
 	"compatibility_date": "2026-04-12",
