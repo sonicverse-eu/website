@@ -38,6 +38,16 @@ npm run build:worker
 npm run deploy
 ```
 
+### Branch Previews on Cloudflare Workers
+
+This project deploys to **Cloudflare Workers**, not Pages. Workers previews are only created when:
+
+1. The Worker is connected to Git using **Workers Builds**
+2. A commit is pushed to a **non-production branch**
+3. `preview_urls` is enabled in `wrangler.jsonc`
+
+This repository enables `preview_urls`, but Cloudflare still needs the Git preview trigger configured in the dashboard for branch previews to appear automatically.
+
 ### Preview Production Build Locally
 
 ```bash
