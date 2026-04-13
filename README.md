@@ -2,63 +2,47 @@
 
 A Next.js application optimized for Cloudflare Workers deployment using OpenNext.
 
-## Features
-
-- ✅ Next.js 16 with React 19
-- ✅ Cloudflare Workers deployment
-- ✅ OpenNext integration
-- ✅ Optimized for edge runtime
-- ✅ Email functionality via Cloudflare Workers
-- ✅ R2 storage integration
-- ✅ Cloudflare Images support
-
 ## Getting Started
 
-### Installation
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### Development
+Run the Next.js development server:
 
 ```bash
 npm run dev
 ```
 
-### Preview with Cloudflare Workers
+Preview the production Worker locally:
 
 ```bash
 npm run preview
 ```
 
-### Deployment
+Deploy the Worker manually:
 
 ```bash
 npm run deploy
 ```
 
-## Project Structure
+## Deployment
 
-- `app/` - Next.js app router pages
-- `app/actions/` - Server actions
-- `app/services/` - API routes
-- `app/blog/` - Blog content
-- `public/` - Static assets
-- `.open-next/` - OpenNext build output
-- `wrangler.jsonc` - Cloudflare Workers configuration
-- `next.config.ts` - Next.js configuration
-- `open-next.config.ts` - OpenNext configuration
+Production deployments and pull request previews are handled by Cloudflare Workers Builds.
 
-## Configuration
+- `main` deploys through the connected Workers Builds integration.
+- Pull requests rely on Cloudflare's native preview flow rather than a separate GitHub Actions workflow.
+- `wrangler.jsonc` enables `preview_urls` so Workers Builds can surface preview URLs for version uploads.
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deployment workflow and troubleshooting notes.
 
 ## Environment Variables
 
 Copy `.dev.vars.example` to `.dev.vars` and configure:
 
-```
+```dotenv
 EMAIL_SENDER = "Sonicverse <hello@sonicverse.eu>"
 EMAIL_RECIPIENT = "hello@sonicverse.eu"
 ```
