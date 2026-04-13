@@ -2,11 +2,13 @@
 
 ## Reporting a Vulnerability
 
-Please report suspected vulnerabilities privately by email to [hello@sonicverse.eu](mailto:hello@sonicverse.eu) with the subject line `Security Report`.
+Use this intake order for all security reports:
 
-Do not open a public GitHub issue for security-sensitive reports. Public issues can expose users, deployments, or maintainers before a fix is available.
+- Primary: GitHub Private Vulnerability Reporting for this repository
+- Fallback: [support@sonicverse.eu](mailto:support@sonicverse.eu) with the subject line `Security Report`
+- Do not use public GitHub issues for security-sensitive reports
 
-If email is not practical, you may also use the contact form on the Sonicverse website and clearly mark the message as a security report. Email is still preferred for the fastest handling.
+Public GitHub issues can expose users, deployments, or maintainers before a fix is available, so please use a private reporting channel.
 
 ## What to Include
 
