@@ -13,9 +13,10 @@ import { initialVulnReportFormState } from '@/lib/vuln-report-form'
 export function VulnReportForm() {
   const [state, action, pending] = useActionState(submitVulnReport, initialVulnReportFormState)
   const currentState = state ?? initialVulnReportFormState
+  const formKey = JSON.stringify(currentState.values)
 
   return (
-    <form action={action} className="space-y-5">
+    <form key={formKey} action={action} className="space-y-5">
       <div className="rounded-[1.6rem] border border-border/70 bg-background/56 px-5 py-4 text-sm leading-6 text-foreground/68 backdrop-blur-sm">
         Please report issues in good faith, avoid accessing other people’s data, and include enough
         detail for us to reproduce and verify the problem safely.
