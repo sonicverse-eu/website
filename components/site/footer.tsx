@@ -39,18 +39,15 @@ export function Footer() {
               ))}
             </div>
           </div>
-          <div className="space-y-4">
-            <p className="text-sm font-semibold tracking-[0.04em] text-foreground/76">Contact</p>
-            <div className="space-y-2 text-sm leading-7 text-foreground/62">
-              <p>hello@sonicverse.eu</p>
-              <p>Open collaboration, careful delivery, and long-term technical thinking.</p>
-            </div>
-          </div>
         </div>
         <Separator />
         <div className="flex flex-col gap-2 text-sm text-foreground/48 sm:flex-row sm:items-center sm:justify-between">
-          <p>Open source by default. Built to be readable, maintainable, and calm.</p>
-          <p>Cloudflare-ready Next.js App Router implementation.</p>
+          <p>© 2026 Sonicverse - MIT License</p>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
+            <Link href="/security" className="transition hover:text-foreground">
+              Security
+            </Link>
+          </div>
         </div>
       </Container>
     </footer>
