@@ -64,8 +64,8 @@ function buildEmailHtml(values: {
         <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:24px;border:1px solid rgba(15,23,42,0.08);overflow:hidden;">
           <tr>
             <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
-              <p style="margin:0;font-family:${EMAIL_HEADING_FONT};font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
-              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.03em;">New Security Report</h1>
+              <p style="margin:0;font-family:${EMAIL_HEADING_FONT};font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
+              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:400;color:#ffffff;letter-spacing:-0.03em;">New Security Report</h1>
             </td>
           </tr>
           <tr>

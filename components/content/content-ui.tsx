@@ -114,7 +114,9 @@ export function ContentLinkCard({
             {badges}
           </div>
           <div className="space-y-3">
-            <CardTitle className="text-[1.5rem] leading-[1.04] sm:text-[1.6rem]">{title}</CardTitle>
+            <CardTitle className="text-[1.5rem] leading-[1.15] sm:text-[1.6rem] sm:leading-[1.11]">
+              {title}
+            </CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
           {meta ? (
@@ -318,7 +320,7 @@ export function SignalsSection({
                     Featured
                   </p>
                   <Link href={featuredBlog.href} className="mt-3 block space-y-3">
-                    <h3 className="text-[1.35rem] leading-[1.04] font-medium tracking-[-0.05em] text-foreground">
+                    <h3 className="text-[1.35rem] leading-[1.16] font-medium tracking-[-0.05em] text-foreground">
                       {featuredBlog.frontmatter.title}
                     </h3>
                     <p className="text-sm leading-7 text-foreground/68">
