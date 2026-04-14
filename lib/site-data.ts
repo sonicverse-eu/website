@@ -3,6 +3,15 @@ export type NavItem = {
   label: string
 }
 
+export type FooterNavGroup = {
+  title: string
+  links: Array<{
+    href: string
+    label: string
+    description: string
+  }>
+}
+
 export const siteName = 'Sonicverse'
 
 export const navItems: NavItem[] = [
@@ -10,6 +19,50 @@ export const navItems: NavItem[] = [
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
   { href: '/projects', label: 'Projects' },
+]
+
+export const footerNavGroups: FooterNavGroup[] = [
+  {
+    title: 'Explore',
+    links: [
+      {
+        href: '/about',
+        label: 'About',
+        description: 'How Sonicverse works, what it values, and the shape of the collaboration.',
+      },
+      {
+        href: '/services',
+        label: 'Services',
+        description: 'Engineering, platform, and systems work for high-trust digital products.',
+      },
+      {
+        href: '/contact',
+        label: 'Contact',
+        description: 'Start a conversation with a brief, an idea, or a messy problem statement.',
+      },
+    ],
+  },
+  {
+    title: 'Work',
+    links: [
+      {
+        href: '/projects',
+        label: 'Projects',
+        description: 'Selected work spanning product systems, platforms, and implementation.',
+      },
+      {
+        href: '/open-source',
+        label: 'Open Source',
+        description: 'Public packages, starters, and building blocks meant to compound.',
+      },
+      {
+        href: '/roadmap',
+        label: 'Roadmap',
+        description:
+          'A transparent view of the open-source work planned for the next year and beyond.',
+      },
+    ],
+  },
 ]
 
 export const principles = [
