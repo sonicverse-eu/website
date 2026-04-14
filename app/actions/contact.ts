@@ -145,7 +145,7 @@ function buildConfirmationEmailHtml(values: {
           <tr>
             <td style="padding:36px 40px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Hi ${values.name},</p>
-              <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Thanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Thank you for getting in touch. We have received your message and will review it before replying.</p>
               <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${values.submittedAt} · sonicverse.eu</p>
 
               <!-- Call to Action -->
@@ -275,7 +275,7 @@ export async function submitContactForm(
         from: senderAddress,
         to: [values.email],
         subject: confirmationSubject,
-        text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
+        text: `Hi ${values.name},\n\nThank you for getting in touch. We have received your message and will review it before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
         html: buildConfirmationEmailHtml({
           name: values.name,
           submittedAt,
@@ -300,7 +300,7 @@ export async function submitContactForm(
 
   return {
     status: 'success',
-    message: 'Thanks. We sent a confirmation email and will reply with a thoughtful next step.',
+    message: 'Thank you. We received your message and will follow up by email.',
     errors: {},
     values: initialContactFormState.values,
   }
