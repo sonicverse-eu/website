@@ -1,5 +1,9 @@
 {
     "snyk.advanced.autoSelectOrganization": true,
     "[markdown]": {
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "sonicverse-eu",
+        "projectKey": "sonicverse-eu_website"
     }
 }
