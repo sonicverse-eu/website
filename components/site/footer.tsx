@@ -10,9 +10,8 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative overflow-hidden border-t border-border/60 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] py-14 backdrop-blur-xl backdrop-saturate-[1.5]">
+    <footer className="footer-shell relative overflow-hidden border-t border-border/60 py-14 backdrop-blur-xl backdrop-saturate-[1.5]">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/28 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(circle_at_top_left,rgba(67,45,215,0.14),transparent_54%)]" />
       <Container className="space-y-10">
         <div className="grid gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1.45fr)]">
           <div className="space-y-5">
@@ -22,7 +21,7 @@ export function Footer() {
                 Sonicverse
               </p>
             </div>
-            <h2 className="max-w-md text-3xl leading-[1.08] font-medium tracking-[-0.03em] text-balance">
+            <h2 className="max-w-md text-3xl leading-[1.18] font-medium tracking-[-0.03em] text-balance">
               Modern software systems, digital products, and open-source technology.
             </h2>
             <p className="max-w-xl text-sm leading-7 text-foreground/62">

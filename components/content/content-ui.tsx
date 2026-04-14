@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 
 import { Reveal } from '@/components/site/reveal'
 import { Badge } from '@/components/ui/badge'
+import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Container } from '@/components/ui/container'
 import { Separator } from '@/components/ui/separator'
@@ -114,7 +115,9 @@ export function ContentLinkCard({
             {badges}
           </div>
           <div className="space-y-3">
-            <CardTitle className="text-[1.5rem] leading-[1.04] sm:text-[1.6rem]">{title}</CardTitle>
+            <CardTitle className="text-[1.5rem] leading-[1.15] sm:text-[1.6rem] sm:leading-[1.11]">
+              {title}
+            </CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
           {meta ? (
@@ -140,11 +143,35 @@ type ContentPageHeaderProps = {
   title: string
   description: string
   kicker?: ReactNode
+  showGridPattern?: boolean
 }
 
-export function ContentPageHeader({ eyebrow, title, description, kicker }: ContentPageHeaderProps) {
+export function ContentPageHeader({
+  eyebrow,
+  title,
+  description,
+  kicker,
+  showGridPattern = false,
+}: ContentPageHeaderProps) {
   return (
     <section className="relative overflow-hidden pt-36 pb-12 sm:pt-40 sm:pb-16">
+      {showGridPattern ? (
+        <>
+          <AnimatedGridPattern
+            numSquares={24}
+            maxOpacity={0.14}
+            duration={5.5}
+            repeatDelay={1}
+            className="hero-grid-mask absolute inset-0 text-foreground/10 pointer-events-none"
+            aria-hidden="true"
+            focusable="false"
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background pointer-events-none"
+            aria-hidden="true"
+          />
+        </>
+      ) : null}
       <Container className="relative space-y-8">
         <Reveal className="space-y-6">
           <Badge>{eyebrow}</Badge>
@@ -318,7 +345,7 @@ export function SignalsSection({
                     Featured
                   </p>
                   <Link href={featuredBlog.href} className="mt-3 block space-y-3">
-                    <h3 className="text-[1.35rem] leading-[1.04] font-medium tracking-[-0.05em] text-foreground">
+                    <h3 className="text-[1.35rem] leading-[1.16] font-medium tracking-[-0.05em] text-foreground">
                       {featuredBlog.frontmatter.title}
                     </h3>
                     <p className="text-sm leading-7 text-foreground/68">

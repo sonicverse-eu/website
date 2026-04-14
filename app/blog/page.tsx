@@ -37,6 +37,7 @@ export default async function BlogPage() {
         eyebrow="Blog"
         title="Technical perspective, product systems, and quiet software ambition."
         description="Long-form notes from Sonicverse on software architecture, communication systems, design-aware implementation, and open-source-native delivery."
+        showGridPattern
         kicker={
           <Card>
             <CardHeader>
@@ -73,7 +74,7 @@ export default async function BlogPage() {
                   <div className="space-y-5">
                     <Badge>Featured post</Badge>
                     <div className="space-y-4">
-                      <h2 className="text-[2.2rem] leading-[0.96] font-semibold tracking-[-0.06em] text-foreground sm:text-[2.9rem]">
+                      <h2 className="text-[2.2rem] leading-[1.18] font-medium tracking-[-0.04em] text-foreground sm:text-[2.9rem] sm:leading-[1.12]">
                         {featured.frontmatter.title}
                       </h2>
                       <p className="max-w-2xl text-[0.98rem] leading-8 text-foreground/72">

@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-body);
-  --font-heading: var(--font-heading);
+  --font-sans: var(--font-family-body);
+  --font-heading: var(--font-family-heading);
   --font-mono: var(--font-mono);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -34,6 +34,8 @@
 }
 
 :root {
+  --font-family-body: 'proxima-nova', sans-serif;
+  --font-family-heading: 'futura-100', sans-serif;
   --background: #f4f7fd;
   --foreground: #0d1727;
   --card: rgba(255, 255, 255, 0.72);
@@ -66,6 +68,10 @@
   --shadow-strong: 0 24px 120px rgba(37, 41, 73, 0.16);
   --header-bg-from: rgba(255, 255, 255, 0.72);
   --header-bg-to: rgba(255, 255, 255, 0.54);
+  --footer-bg-top: rgba(255, 255, 255, 0.88);
+  --footer-bg-bottom: rgba(231, 238, 252, 0.94);
+  --footer-glow-primary: rgba(67, 45, 215, 0.12);
+  --footer-glow-secondary: rgba(126, 146, 255, 0.14);
 }
 
 .dark {
@@ -100,6 +106,10 @@
   --shadow-strong: 0 24px 120px rgba(0, 0, 0, 0.42);
   --header-bg-from: rgba(10, 16, 30, 0.78);
   --header-bg-to: rgba(7, 12, 22, 0.62);
+  --footer-bg-top: rgba(13, 20, 36, 0.92);
+  --footer-bg-bottom: rgba(7, 12, 22, 0.98);
+  --footer-glow-primary: rgba(79, 57, 236, 0.18);
+  --footer-glow-secondary: rgba(103, 124, 255, 0.14);
 }
 
 @layer base {
@@ -153,9 +163,13 @@
   h1,
   h2,
   h3,
-  h4 {
-    font-family: var(--font-heading);
-    letter-spacing: -0.04em;
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-heading);
+    font-synthesis: none;
+    line-height: 1.16;
+    letter-spacing: -0.032em;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -166,6 +180,10 @@
 }
 
 @layer utilities {
+  .font-heading {
+    font-synthesis: none;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -239,7 +257,7 @@
   }
 
   .hero-title {
-    @apply text-[2.6rem] leading-[0.98] font-semibold text-balance sm:text-[3.45rem] md:text-[4.15rem] lg:text-[4.7rem];
+    @apply text-[2.6rem] leading-[1.24] font-medium tracking-[-0.02em] text-balance sm:text-[3.45rem] sm:leading-[1.19] md:text-[4.15rem] lg:text-[4.7rem] lg:leading-[1.14];
   }
 
   .copy-lg {
@@ -247,7 +265,7 @@
   }
 
   .section-title {
-    @apply text-[2.15rem] leading-[1.04] font-semibold tracking-[-0.035em] text-balance sm:text-[2.45rem] lg:text-[2.8rem];
+    @apply text-[2.15rem] leading-[1.26] font-medium tracking-[-0.018em] text-balance sm:text-[2.45rem] sm:leading-[1.2] lg:text-[2.8rem] lg:leading-[1.15];
   }
 
   .section-copy {
@@ -276,5 +294,21 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.18),
       inset 0 -1px 0 rgba(255, 255, 255, 0.06),
       0 20px 84px rgba(0, 0, 0, 0.42);
+  }
+
+  .footer-shell {
+    background:
+      radial-gradient(circle at top left, var(--footer-glow-primary), transparent 42%),
+      radial-gradient(circle at top right, var(--footer-glow-secondary), transparent 38%),
+      linear-gradient(180deg, var(--footer-bg-top), var(--footer-bg-bottom));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 36%, transparent),
+      0 -24px 70px color-mix(in srgb, var(--footer-glow-primary) 22%, transparent);
+  }
+
+  .dark .footer-shell {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 -28px 80px rgba(0, 0, 0, 0.3);
   }
 }

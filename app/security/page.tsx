@@ -76,7 +76,7 @@ export default function SecurityPage() {
             <div className="grid gap-4 md:grid-cols-[0.34fr_1fr] md:items-start md:gap-8">
               <div className="space-y-2">
                 <p className="eyebrow">Before you send</p>
-                <h2 className="text-[1.35rem] leading-[1.08] font-medium tracking-[-0.03em] text-foreground">
+                <h2 className="text-[1.35rem] leading-[1.18] font-medium tracking-[-0.03em] text-foreground">
                   A few practical guardrails.
                 </h2>
               </div>
