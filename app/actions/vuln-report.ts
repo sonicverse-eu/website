@@ -149,7 +149,7 @@ export async function submitVulnReport(
   }
 
   const senderAddress = process.env.EMAIL_SENDER ?? 'noreply@mail.sonicverse.eu'
-  const recipientAddress = 'support@sonicverse.eu'
+  const recipientAddress = 'security@sonicverse.eu'
   const resendApiKey = process.env.RESEND_API_KEY
 
   const submittedAt = new Date().toLocaleString('en-GB', {
