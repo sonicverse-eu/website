@@ -37,6 +37,7 @@ export default async function BlogPage() {
         eyebrow="Blog"
         title="Technical perspective, product systems, and quiet software ambition."
         description="Long-form notes from Sonicverse on software architecture, communication systems, design-aware implementation, and open-source-native delivery."
+        showGridPattern
         kicker={
           <Card>
             <CardHeader>
