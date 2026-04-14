@@ -18,7 +18,7 @@ const reportingGuidance = [
   {
     title: 'Report privately',
     description:
-      'Use the form below or email support@sonicverse.eu. Include which Sonicverse project, deployment, or repository is affected, and avoid public issue trackers for security-sensitive reports.',
+      'Use the form below or email security@sonicverse.eu. Include which Sonicverse project, deployment, or repository is affected, and avoid public issue trackers for security-sensitive reports.',
   },
   {
     title: 'Include the essentials',
@@ -71,8 +71,36 @@ export default function SecurityPage() {
       </section>
 
       <section id="report-a-vulnerability" className="pb-24 scroll-mt-24 sm:pb-28">
-        <Container className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <Reveal className="section-frame px-6 py-8 md:px-8">
+        <Container className="space-y-6">
+          <Reveal className="section-frame px-6 py-6 md:px-8">
+            <div className="grid gap-4 md:grid-cols-[0.34fr_1fr] md:items-start md:gap-8">
+              <div className="space-y-2">
+                <p className="eyebrow">Before you send</p>
+                <h2 className="text-[1.35rem] leading-[1.08] font-medium tracking-[-0.03em] text-foreground">
+                  A few practical guardrails.
+                </h2>
+              </div>
+              <div className="space-y-3 text-sm leading-7 text-foreground/66">
+                <p>
+                  Use the form on this page or email{' '}
+                  <a
+                    href="mailto:security@sonicverse.eu?subject=Security%20Report"
+                    className="text-primary transition hover:text-primary/80"
+                  >
+                    security@sonicverse.eu
+                  </a>
+                  .
+                </p>
+                <p>Avoid accessing, modifying, or retaining other people’s data while testing.</p>
+                <p>
+                  If sensitive data may have been exposed, stop testing and tell us immediately in
+                  your report.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.06} className="section-frame px-6 py-8 md:px-8">
             <SectionHeader
               eyebrow="Report form"
               title="Report a vulnerability."
@@ -80,31 +108,6 @@ export default function SecurityPage() {
             />
             <div className="mt-8">
               <VulnReportForm />
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.06} className="section-frame px-6 py-8 md:px-8">
-            <SectionHeader
-              eyebrow="Before you send"
-              title="A few practical guardrails."
-              description="Keep testing in good faith and stop immediately if you believe sensitive data has been exposed."
-            />
-            <div className="mt-8 space-y-3 text-sm leading-7 text-foreground/66">
-              <p>
-                Use the form on this page or email{' '}
-                <a
-                  href="mailto:support@sonicverse.eu?subject=Security%20Report"
-                  className="text-primary transition hover:text-primary/80"
-                >
-                  support@sonicverse.eu
-                </a>
-                .
-              </p>
-              <p>Avoid accessing, modifying, or retaining other people’s data while testing.</p>
-              <p>
-                If sensitive data may have been exposed, stop testing and tell us immediately in
-                your report.
-              </p>
             </div>
           </Reveal>
         </Container>
