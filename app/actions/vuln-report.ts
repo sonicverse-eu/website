@@ -1,38 +1,8 @@
 'use server'
 
-import { Resend } from 'resend'
-
+import { formatSubmittedAt, getString, isValidEmail } from '@/lib/form-utils'
 import { initialVulnReportFormState, type VulnReportFormState } from '@/lib/vuln-report-form'
-
-function getString(formData: FormData, key: string) {
-  const value = formData.get(key)
-  return typeof value === 'string' ? value.trim() : ''
-}
-
-function isValidEmail(value: string) {
-  if (!value || value.length > 254) return false
-  if (value.includes(' ')) return false
-
-  const atIndex = value.indexOf('@')
-
-  if (atIndex <= 0 || atIndex !== value.lastIndexOf('@') || atIndex === value.length - 1) {
-    return false
-  }
-
-  const localPart = value.slice(0, atIndex)
-  const domain = value.slice(atIndex + 1)
-
-  if (!localPart || !domain) return false
-  if (localPart.startsWith('.') || localPart.endsWith('.')) return false
-  if (domain.startsWith('.') || domain.endsWith('.')) return false
-  if (localPart.includes('..') || domain.includes('..')) return false
-
-  const lastDotIndex = domain.lastIndexOf('.')
-
-  if (lastDotIndex <= 0 || lastDotIndex === domain.length - 1) return false
-
-  return true
-}
+import { createResendClient, sendEmailOrThrow } from '@/lib/resend'
 
 function escapeHtml(value: string) {
   return value
@@ -179,10 +149,7 @@ export async function submitVulnReport(
   const recipientAddress = 'security@sonicverse.eu'
   const resendApiKey = process.env.RESEND_API_KEY
 
-  const submittedAt = new Date().toLocaleString('en-GB', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  })
+  const submittedAt = formatSubmittedAt()
 
   if (!resendApiKey) {
     return {
@@ -195,10 +162,10 @@ export async function submitVulnReport(
   }
 
   try {
-    const resend = new Resend(resendApiKey)
+    const resend = createResendClient(resendApiKey)
     const subject = `Security Report: ${truncateSubject(values.summary)}`
 
-    const response = await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: senderAddress,
       to: [recipientAddress],
       subject,
@@ -217,10 +184,6 @@ export async function submitVulnReport(
       html: buildEmailHtml({ ...values, submittedAt }),
       replyTo: values.email,
     })
-
-    if (response.error) {
-      throw new Error(`Resend API error: ${response.error.message}`)
-    }
   } catch {
     return {
       status: 'error',
