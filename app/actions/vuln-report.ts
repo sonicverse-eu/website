@@ -3,6 +3,16 @@
 import { formatSubmittedAt, getString, isValidEmail } from '@/lib/form-utils'
 import { initialVulnReportFormState, type VulnReportFormState } from '@/lib/vuln-report-form'
 import { createResendClient, sendEmailOrThrow } from '@/lib/resend'
+import { checkSubmissionRateLimit } from '@/lib/submission-guard'
+
+const VULN_REPORT_RATE_LIMIT = {
+  action: 'vuln-report-form',
+  maxRequests: 5,
+  windowMs: 10 * 60 * 1000,
+} as const
+
+const VULN_REPORT_GENERIC_ERROR =
+  'The report could not be delivered right now. Please try again or email us directly.'
 
 function escapeHtml(value: string) {
   return value
@@ -118,6 +128,18 @@ export async function submitVulnReport(
   _previousState: VulnReportFormState,
   formData: FormData,
 ): Promise<VulnReportFormState> {
+  const rateLimit = await checkSubmissionRateLimit(VULN_REPORT_RATE_LIMIT)
+
+  if (!rateLimit.allowed) {
+    return {
+      status: 'error',
+      message:
+        'Too many reports were sent from this connection. Please wait a few minutes and try again.',
+      errors: {},
+      values: initialVulnReportFormState.values,
+    }
+  }
+
   const values = {
     name: getString(formData, 'name'),
     email: getString(formData, 'email'),
@@ -152,10 +174,12 @@ export async function submitVulnReport(
   const submittedAt = formatSubmittedAt()
 
   if (!resendApiKey) {
+    console.error(
+      '[submitVulnReport] Email delivery is unavailable because RESEND_API_KEY is missing.',
+    )
     return {
       status: 'error',
-      message:
-        'Vulnerability report delivery is not configured. Set RESEND_API_KEY in your deployment environment.',
+      message: VULN_REPORT_GENERIC_ERROR,
       errors: {},
       values,
     }
@@ -184,11 +208,11 @@ export async function submitVulnReport(
       html: buildEmailHtml({ ...values, submittedAt }),
       replyTo: values.email,
     })
-  } catch {
+  } catch (error) {
+    console.error('[submitVulnReport] Failed to send vulnerability report email.', error)
     return {
       status: 'error',
-      message:
-        'The report could not be delivered right now. Please try again or email us directly.',
+      message: VULN_REPORT_GENERIC_ERROR,
       errors: {},
       values,
     }

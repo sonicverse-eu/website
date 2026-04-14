@@ -3,6 +3,16 @@
 import { initialContactFormState, type ContactFormState } from '@/lib/contact-form'
 import { formatSubmittedAt, getString, isValidEmail } from '@/lib/form-utils'
 import { createResendClient, sendEmailOrThrow } from '@/lib/resend'
+import { checkSubmissionRateLimit } from '@/lib/submission-guard'
+
+const CONTACT_RATE_LIMIT = {
+  action: 'contact-form',
+  maxRequests: 5,
+  windowMs: 10 * 60 * 1000,
+} as const
+
+const CONTACT_GENERIC_ERROR =
+  'The message could not be delivered right now. Please try again or email us directly.'
 
 function buildEmailHtml(values: {
   name: string
@@ -190,6 +200,18 @@ export async function submitContactForm(
   _previousState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  const rateLimit = await checkSubmissionRateLimit(CONTACT_RATE_LIMIT)
+
+  if (!rateLimit.allowed) {
+    return {
+      status: 'error',
+      message:
+        'Too many messages were sent from this connection. Please wait a few minutes and try again.',
+      errors: {},
+      values: initialContactFormState.values,
+    }
+  }
+
   const values = {
     name: getString(formData, 'name'),
     email: getString(formData, 'email'),
@@ -226,10 +248,12 @@ export async function submitContactForm(
   const submittedAt = formatSubmittedAt()
 
   if (!resendApiKey) {
+    console.error(
+      '[submitContactForm] Email delivery is unavailable because RESEND_API_KEY is missing.',
+    )
     return {
       status: 'error',
-      message:
-        'Contact delivery is not configured. Set RESEND_API_KEY in your deployment environment.',
+      message: CONTACT_GENERIC_ERROR,
       errors: {},
       values,
     }
@@ -261,11 +285,11 @@ export async function submitContactForm(
       }),
       replyTo: confirmationReplyToAddress,
     })
-  } catch {
+  } catch (error) {
+    console.error('[submitContactForm] Failed to send contact email.', error)
     return {
       status: 'error',
-      message:
-        'The message could not be delivered right now. Please try again or email us directly.',
+      message: CONTACT_GENERIC_ERROR,
       errors: {},
       values,
     }
