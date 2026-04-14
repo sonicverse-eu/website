@@ -64,13 +64,13 @@ export function ContactForm() {
         id="brief"
         label="Project brief"
         error={currentState.errors.brief}
-        description="Share the shape of the system, what is changing, and what a good outcome looks like."
+        description="Outline your current setup, what needs to change, and what a successful outcome looks like."
         input={
           <Textarea
             id="brief"
             name="brief"
             defaultValue={currentState.values.brief}
-            placeholder="We need a modern platform foundation with a premium public site and a calmer delivery path for the next release cycle."
+            placeholder="We are rebuilding our platform and need a clear technical foundation, a more maintainable frontend, and support planning the next release."
             disabled={pending}
             aria-invalid={Boolean(currentState.errors.brief)}
           />
@@ -81,8 +81,8 @@ export function ContactForm() {
         pending={pending}
         status={currentState.status}
         message={currentState.message}
-        idleMessage="A thoughtful brief is enough for a strong first conversation."
-        submitLabel="Send inquiry"
+        idleMessage="A concise brief is enough to start a useful conversation."
+        submitLabel="Send message"
         pendingLabel="Sending..."
         highlightError={false}
       />
