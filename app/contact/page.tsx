@@ -12,7 +12,7 @@ import { collaborationPrompts, contactFaq } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
   'Contact',
-  'Start a conversation with Sonicverse about a product, platform, or open-source initiative.',
+  'Get in touch with Sonicverse about a product, platform, or open-source initiative.',
   '/contact',
 )
 
@@ -22,9 +22,9 @@ export default function ContactPage() {
       <PageHero
         layout="single"
         eyebrow="Contact"
-        title="Start with the problem shape."
-        description="A short, thoughtful brief is enough."
-        highlights={['Current state', 'What is changing', 'Where judgment matters most']}
+        title="Tell us what you are working on."
+        description="A concise brief is enough to start the conversation."
+        highlights={['Where things stand today', 'What needs to change', 'What success looks like']}
         compact
       />
 
@@ -33,8 +33,8 @@ export default function ContactPage() {
           <Reveal className="section-frame px-6 py-8 md:px-8">
             <SectionHeader
               eyebrow="Inquiry form"
-              title="A premium handoff, not a generic lead form."
-              description="Validated server-side and posted to a configurable webhook."
+              title="Share the context we need to help."
+              description="Use the form to outline your goals, current situation, and the kind of support you need."
             />
             <div className="mt-8">
               <ContactForm />
@@ -45,8 +45,8 @@ export default function ContactPage() {
             <Reveal className="section-frame px-6 py-8 md:px-8">
               <SectionHeader
                 eyebrow="What to include"
-                title="Helpful prompts"
-                description="Any of these is enough to start a practical conversation."
+                title="Helpful starting points"
+                description="Any of these gives us enough context for a productive first conversation."
               />
               <div className="mt-8 grid gap-3">
                 {collaborationPrompts.map((prompt) => (
@@ -64,7 +64,7 @@ export default function ContactPage() {
               <Badge>Direct contact</Badge>
               <div className="mt-5 space-y-3 text-sm leading-7 text-foreground/66">
                 <p>hello@sonicverse.eu</p>
-                <p>Open-source-first product engineering and software systems.</p>
+                <p>Product engineering, platform work, and open-source systems.</p>
               </div>
             </Reveal>
           </div>
@@ -76,8 +76,8 @@ export default function ContactPage() {
           <Reveal>
             <SectionHeader
               eyebrow="FAQ"
-              title="A few expectations, upfront."
-              description="Enough context to make the first conversation more useful."
+              title="Common questions"
+              description="A little context before we speak."
             />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-3">
