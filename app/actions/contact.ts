@@ -7,6 +7,31 @@ function getString(formData: FormData, key: string) {
   return typeof value === 'string' ? value.trim() : ''
 }
 
+function isValidEmail(value: string) {
+  if (!value || value.length > 254) return false
+  if (value.includes(' ')) return false
+
+  const atIndex = value.indexOf('@')
+
+  if (atIndex <= 0 || atIndex !== value.lastIndexOf('@') || atIndex === value.length - 1) {
+    return false
+  }
+
+  const localPart = value.slice(0, atIndex)
+  const domain = value.slice(atIndex + 1)
+
+  if (!localPart || !domain) return false
+  if (localPart.startsWith('.') || localPart.endsWith('.')) return false
+  if (domain.startsWith('.') || domain.endsWith('.')) return false
+  if (localPart.includes('..') || domain.includes('..')) return false
+
+  const lastDotIndex = domain.lastIndexOf('.')
+
+  if (lastDotIndex <= 0 || lastDotIndex === domain.length - 1) return false
+
+  return true
+}
+
 function buildEmailHtml(values: {
   name: string
   email: string
@@ -207,7 +232,7 @@ export async function submitContactForm(
 
   if (!values.email) {
     errors.email = 'Please share an email address.'
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+  } else if (!isValidEmail(values.email)) {
     errors.email = 'Please enter a valid email address.'
   }
 
