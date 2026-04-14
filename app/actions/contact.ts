@@ -1,38 +1,8 @@
 'use server'
 
-import { Resend } from 'resend'
-
 import { initialContactFormState, type ContactFormState } from '@/lib/contact-form'
-
-function getString(formData: FormData, key: string) {
-  const value = formData.get(key)
-  return typeof value === 'string' ? value.trim() : ''
-}
-
-function isValidEmail(value: string) {
-  if (!value || value.length > 254) return false
-  if (value.includes(' ')) return false
-
-  const atIndex = value.indexOf('@')
-
-  if (atIndex <= 0 || atIndex !== value.lastIndexOf('@') || atIndex === value.length - 1) {
-    return false
-  }
-
-  const localPart = value.slice(0, atIndex)
-  const domain = value.slice(atIndex + 1)
-
-  if (!localPart || !domain) return false
-  if (localPart.startsWith('.') || localPart.endsWith('.')) return false
-  if (domain.startsWith('.') || domain.endsWith('.')) return false
-  if (localPart.includes('..') || domain.includes('..')) return false
-
-  const lastDotIndex = domain.lastIndexOf('.')
-
-  if (lastDotIndex <= 0 || lastDotIndex === domain.length - 1) return false
-
-  return true
-}
+import { formatSubmittedAt, getString, isValidEmail } from '@/lib/form-utils'
+import { createResendClient, sendEmailOrThrow } from '@/lib/resend'
 
 function buildEmailHtml(values: {
   name: string
@@ -253,10 +223,7 @@ export async function submitContactForm(
   const confirmationReplyToAddress = 'hello@sonicverse.eu'
   const resendApiKey = process.env.RESEND_API_KEY
 
-  const submittedAt = new Date().toLocaleString('en-GB', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  })
+  const submittedAt = formatSubmittedAt()
 
   if (!resendApiKey) {
     return {
@@ -269,11 +236,11 @@ export async function submitContactForm(
   }
 
   try {
-    const resend = new Resend(resendApiKey)
+    const resend = createResendClient(resendApiKey)
     const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ''}`
     const confirmationSubject = 'We received your message'
 
-    const response = await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: senderAddress,
       to: [recipientAddress],
       subject,
@@ -282,11 +249,7 @@ export async function submitContactForm(
       replyTo: values.email,
     })
 
-    if (response.error) {
-      throw new Error(`Resend API error: ${response.error.message}`)
-    }
-
-    const confirmationResponse = await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: senderAddress,
       to: [values.email],
       subject: confirmationSubject,
@@ -298,10 +261,6 @@ export async function submitContactForm(
       }),
       replyTo: confirmationReplyToAddress,
     })
-
-    if (confirmationResponse.error) {
-      throw new Error(`Resend API error: ${confirmationResponse.error.message}`)
-    }
   } catch {
     return {
       status: 'error',
