@@ -14,6 +14,12 @@ const VULN_REPORT_RATE_LIMIT = {
 const VULN_REPORT_GENERIC_ERROR =
   'The report could not be delivered right now. Please try again or email us directly.'
 
+const EMAIL_FONT_IMPORT = "@import url('https://use.typekit.net/ofv2hls.css');"
+
+const EMAIL_BODY_FONT = "'proxima-nova', 'Avenir Next', Avenir, 'Segoe UI', sans-serif"
+const EMAIL_HEADING_FONT = "'futura-100', Futura, 'Avenir Next', sans-serif"
+const EMAIL_BOOK_HEADING_FONT = "'futura-100-book', Futura, 'Avenir Next', sans-serif"
+
 function escapeHtml(value: string) {
   return value
     .replaceAll('&', '&amp;')
@@ -47,16 +53,19 @@ function buildEmailHtml(values: {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Security Report</title>
+  <style>
+    ${EMAIL_FONT_IMPORT}
+  </style>
 </head>
-<body style="margin:0;padding:0;background:#f4f7fd;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<body style="margin:0;padding:0;background:#f4f7fd;font-family:${EMAIL_BODY_FONT};">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;">
     <tr>
       <td align="center">
         <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:24px;border:1px solid rgba(15,23,42,0.08);overflow:hidden;">
           <tr>
             <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
-              <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
-              <h1 style="margin:8px 0 0;font-size:22px;font-weight:600;color:#ffffff;letter-spacing:-0.03em;">New Security Report</h1>
+              <p style="margin:0;font-family:${EMAIL_HEADING_FONT};font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
+              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.03em;">New Security Report</h1>
             </td>
           </tr>
           <tr>
@@ -64,11 +73,11 @@ function buildEmailHtml(values: {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 <tr>
                   <td width="50%" style="padding-right:12px;vertical-align:top;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Reporter</p>
+                    <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Reporter</p>
                     <p style="margin:0;font-size:15px;color:#0d1727;font-weight:500;">${escapeHtml(values.name)}</p>
                   </td>
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Email</p>
+                    <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Email</p>
                     <p style="margin:0;font-size:15px;color:#432dd7;font-weight:500;">
                       <a href="mailto:${escapeHtml(values.email)}" style="color:#432dd7;text-decoration:none;">${escapeHtml(values.email)}</a>
                     </p>
@@ -79,32 +88,32 @@ function buildEmailHtml(values: {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 <tr>
                   <td width="50%" style="padding-right:12px;vertical-align:top;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Affected version</p>
+                    <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Affected version</p>
                     <p style="margin:0;font-size:15px;color:#0d1727;">${escapeHtml(values.version || 'Not provided')}</p>
                   </td>
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Submitted</p>
+                    <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Submitted</p>
                     <p style="margin:0;font-size:15px;color:#0d1727;">${escapeHtml(values.submittedAt)}</p>
                   </td>
                 </tr>
               </table>
 
               <div style="margin-bottom:20px;">
-                <p style="margin:0 0 8px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Summary</p>
+                <p style="margin:0 0 8px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Summary</p>
                 <div style="background:#f4f7fd;border-radius:16px;padding:20px 24px;border:1px solid rgba(15,23,42,0.06);">
                   <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">${formatMultiline(values.summary)}</p>
                 </div>
               </div>
 
               <div style="margin-bottom:20px;">
-                <p style="margin:0 0 8px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Reproduction steps</p>
+                <p style="margin:0 0 8px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Reproduction steps</p>
                 <div style="background:#f4f7fd;border-radius:16px;padding:20px 24px;border:1px solid rgba(15,23,42,0.06);">
                   <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">${formatMultiline(values.steps)}</p>
                 </div>
               </div>
 
               <div>
-                <p style="margin:0 0 8px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Impact</p>
+                <p style="margin:0 0 8px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Impact</p>
                 <div style="background:#f4f7fd;border-radius:16px;padding:20px 24px;border:1px solid rgba(15,23,42,0.06);">
                   <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">${formatMultiline(values.impact)}</p>
                 </div>
