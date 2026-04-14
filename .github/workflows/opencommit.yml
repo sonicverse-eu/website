@@ -43,6 +43,12 @@ jobs:
           ref: 695edf7ed93fe2d48a723897bc71f3750214ccee
           path: .opencommit-upstream
 
+      - name: Install and build OpenCommit upstream
+        working-directory: .opencommit-upstream
+        run: |
+          npm ci
+          npm run build
+
       - name: Rewrite pushed commit messages
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
