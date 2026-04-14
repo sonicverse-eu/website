@@ -168,8 +168,8 @@
   h6 {
     font-family: var(--font-family-heading);
     font-synthesis: none;
-    line-height: 1.12;
-    letter-spacing: -0.04em;
+    line-height: 1.16;
+    letter-spacing: -0.032em;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -257,7 +257,7 @@
   }
 
   .hero-title {
-    @apply text-[2.6rem] leading-[1.2] font-semibold tracking-[-0.025em] text-balance sm:text-[3.45rem] sm:leading-[1.16] md:text-[4.15rem] lg:text-[4.7rem] lg:leading-[1.12];
+    @apply text-[2.6rem] leading-[1.24] font-medium tracking-[-0.02em] text-balance sm:text-[3.45rem] sm:leading-[1.19] md:text-[4.15rem] lg:text-[4.7rem] lg:leading-[1.14];
   }
 
   .copy-lg {
@@ -265,7 +265,7 @@
   }
 
   .section-title {
-    @apply text-[2.15rem] leading-[1.22] font-semibold tracking-[-0.02em] text-balance sm:text-[2.45rem] sm:leading-[1.17] lg:text-[2.8rem] lg:leading-[1.12];
+    @apply text-[2.15rem] leading-[1.26] font-medium tracking-[-0.018em] text-balance sm:text-[2.45rem] sm:leading-[1.2] lg:text-[2.8rem] lg:leading-[1.15];
   }
 
   .section-copy {

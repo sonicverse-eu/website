@@ -103,7 +103,7 @@ export const mdxComponents = {
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        'text-[2.4rem] leading-[1.14] font-semibold tracking-[-0.06em] text-foreground sm:text-[2.9rem] sm:leading-[1.1]',
+        'text-[2.4rem] leading-[1.2] font-medium tracking-[-0.04em] text-foreground sm:text-[2.9rem] sm:leading-[1.14]',
         className,
       )}
       {...props}
@@ -112,7 +112,7 @@ export const mdxComponents = {
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        'pt-6 text-[1.65rem] leading-[1.15] font-semibold tracking-[-0.06em] text-foreground sm:text-[1.95rem] sm:leading-[1.1]',
+        'pt-7 text-[1.65rem] leading-[1.22] font-medium tracking-[-0.04em] text-foreground sm:text-[1.95rem] sm:leading-[1.15]',
         className,
       )}
       {...props}
@@ -121,7 +121,7 @@ export const mdxComponents = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        'pt-3 text-[1.22rem] leading-[1.17] font-medium tracking-[-0.05em] text-foreground sm:text-[1.35rem]',
+        'pt-4 text-[1.22rem] leading-[1.22] font-medium tracking-[-0.035em] text-foreground sm:text-[1.35rem]',
         className,
       )}
       {...props}
@@ -130,7 +130,7 @@ export const mdxComponents = {
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
-        'text-lg leading-[1.18] font-medium tracking-[-0.04em] text-foreground',
+        'text-lg leading-[1.24] font-medium tracking-[-0.03em] text-foreground',
         className,
       )}
       {...props}

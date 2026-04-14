@@ -18,10 +18,10 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div
-      className={cn('max-w-3xl space-y-5', align === 'center' && 'mx-auto text-center', className)}
+      className={cn('max-w-3xl space-y-6', align === 'center' && 'mx-auto text-center', className)}
     >
       {eyebrow ? <Badge variant="muted">{eyebrow}</Badge> : null}
-      <div className="space-y-4">
+      <div className="space-y-5">
         <h2 className="section-title">{title}</h2>
         {description ? <p className="section-copy">{description}</p> : null}
       </div>
