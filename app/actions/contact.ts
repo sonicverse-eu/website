@@ -1,5 +1,7 @@
 'use server'
 
+import { Resend } from 'resend'
+
 import { initialContactFormState, type ContactFormState } from '@/lib/contact-form'
 
 function getString(formData: FormData, key: string) {
@@ -267,51 +269,38 @@ export async function submitContactForm(
   }
 
   try {
+    const resend = new Resend(resendApiKey)
     const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ''}`
     const confirmationSubject = 'We received your message'
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: senderAddress,
-        to: [recipientAddress],
-        subject,
-        text: `${values.name} <${values.email}>\n\n${values.brief}`,
-        html: buildEmailHtml({ ...values, submittedAt }),
-        reply_to: values.email,
-      }),
+    const response = await resend.emails.send({
+      from: senderAddress,
+      to: [recipientAddress],
+      subject,
+      text: `${values.name} <${values.email}>\n\n${values.brief}`,
+      html: buildEmailHtml({ ...values, submittedAt }),
+      replyTo: values.email,
     })
 
-    if (!response.ok) {
-      throw new Error(`Resend API error: ${response.status}`)
+    if (response.error) {
+      throw new Error(`Resend API error: ${response.error.message}`)
     }
 
-    const confirmationResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: senderAddress,
-        to: [values.email],
-        subject: confirmationSubject,
-        text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
-        html: buildConfirmationEmailHtml({
-          name: values.name,
-          submittedAt,
-          replyToAddress: confirmationReplyToAddress,
-        }),
-        reply_to: confirmationReplyToAddress,
+    const confirmationResponse = await resend.emails.send({
+      from: senderAddress,
+      to: [values.email],
+      subject: confirmationSubject,
+      text: `Hi ${values.name},\n\nThanks for reaching out. Your note reached us successfully and we’ll review it carefully before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
+      html: buildConfirmationEmailHtml({
+        name: values.name,
+        submittedAt,
+        replyToAddress: confirmationReplyToAddress,
       }),
+      replyTo: confirmationReplyToAddress,
     })
 
-    if (!confirmationResponse.ok) {
-      throw new Error(`Resend API error: ${confirmationResponse.status}`)
+    if (confirmationResponse.error) {
+      throw new Error(`Resend API error: ${confirmationResponse.error.message}`)
     }
   } catch {
     return {
