@@ -4,8 +4,8 @@
 
 Use this intake order for all security reports:
 
-- Primary: GitHub Private Vulnerability Reporting for this repository
-- Fallback: [support@sonicverse.eu](mailto:support@sonicverse.eu) with the subject line `Security Report`
+- GitHub Private Vulnerability Reporting for this repository
+- Report at [Sonicverse Security](https://sonicverse.eu/security#report-a-vulnerability)
 - Do not use public GitHub issues for security-sensitive reports
 
 Public GitHub issues can expose users, deployments, or maintainers before a fix is available, so please use a private reporting channel.

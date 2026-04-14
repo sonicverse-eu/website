@@ -1,11 +1,18 @@
 'use server'
 
 import { initialContactFormState, type ContactFormState } from '@/lib/contact-form'
+import { formatSubmittedAt, getString, isValidEmail } from '@/lib/form-utils'
+import { createResendClient, sendEmailOrThrow } from '@/lib/resend'
+import { checkSubmissionRateLimit } from '@/lib/submission-guard'
 
-function getString(formData: FormData, key: string) {
-  const value = formData.get(key)
-  return typeof value === 'string' ? value.trim() : ''
-}
+const CONTACT_RATE_LIMIT = {
+  action: 'contact-form',
+  maxRequests: 5,
+  windowMs: 10 * 60 * 1000,
+} as const
+
+const CONTACT_GENERIC_ERROR =
+  'The message could not be delivered right now. Please try again or email us directly.'
 
 function buildEmailHtml(values: {
   name: string
@@ -193,6 +200,18 @@ export async function submitContactForm(
   _previousState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  const rateLimit = await checkSubmissionRateLimit(CONTACT_RATE_LIMIT)
+
+  if (!rateLimit.allowed) {
+    return {
+      status: 'error',
+      message:
+        'Too many messages were sent from this connection. Please wait a few minutes and try again.',
+      errors: {},
+      values: initialContactFormState.values,
+    }
+  }
+
   const values = {
     name: getString(formData, 'name'),
     email: getString(formData, 'email'),
@@ -207,7 +226,7 @@ export async function submitContactForm(
 
   if (!values.email) {
     errors.email = 'Please share an email address.'
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+  } else if (!isValidEmail(values.email)) {
     errors.email = 'Please enter a valid email address.'
   }
 
@@ -226,73 +245,51 @@ export async function submitContactForm(
   const confirmationReplyToAddress = 'hello@sonicverse.eu'
   const resendApiKey = process.env.RESEND_API_KEY
 
-  const submittedAt = new Date().toLocaleString('en-GB', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  })
+  const submittedAt = formatSubmittedAt()
 
   if (!resendApiKey) {
+    console.error(
+      '[submitContactForm] Email delivery is unavailable because RESEND_API_KEY is missing.',
+    )
     return {
       status: 'error',
-      message:
-        'Contact delivery is not configured. Set RESEND_API_KEY in your deployment environment.',
+      message: CONTACT_GENERIC_ERROR,
       errors: {},
       values,
     }
   }
 
   try {
+    const resend = createResendClient(resendApiKey)
     const subject = `New inquiry from ${values.name}${values.company ? ` · ${values.company}` : ''}`
     const confirmationSubject = 'We received your message'
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: senderAddress,
-        to: [recipientAddress],
-        subject,
-        text: `${values.name} <${values.email}>\n\n${values.brief}`,
-        html: buildEmailHtml({ ...values, submittedAt }),
-        reply_to: values.email,
-      }),
+    await sendEmailOrThrow(resend, {
+      from: senderAddress,
+      to: [recipientAddress],
+      subject,
+      text: `${values.name} <${values.email}>\n\n${values.brief}`,
+      html: buildEmailHtml({ ...values, submittedAt }),
+      replyTo: values.email,
     })
 
-    if (!response.ok) {
-      throw new Error(`Resend API error: ${response.status}`)
-    }
-
-    const confirmationResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: senderAddress,
-        to: [values.email],
-        subject: confirmationSubject,
-        text: `Hi ${values.name},\n\nThank you for getting in touch. We have received your message and will review it before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
-        html: buildConfirmationEmailHtml({
-          name: values.name,
-          submittedAt,
-          replyToAddress: confirmationReplyToAddress,
-        }),
-        reply_to: confirmationReplyToAddress,
+    await sendEmailOrThrow(resend, {
+      from: senderAddress,
+      to: [values.email],
+      subject: confirmationSubject,
+      text: `Hi ${values.name},\n\nThank you for getting in touch. We have received your message and will review it before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
+      html: buildConfirmationEmailHtml({
+        name: values.name,
+        submittedAt,
+        replyToAddress: confirmationReplyToAddress,
       }),
+      replyTo: confirmationReplyToAddress,
     })
-
-    if (!confirmationResponse.ok) {
-      throw new Error(`Resend API error: ${confirmationResponse.status}`)
-    }
-  } catch {
+  } catch (error) {
+    console.error('[submitContactForm] Failed to send contact email.', error)
     return {
       status: 'error',
-      message:
-        'The message could not be delivered right now. Please try again or email us directly.',
+      message: CONTACT_GENERIC_ERROR,
       errors: {},
       values,
     }

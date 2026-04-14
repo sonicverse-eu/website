@@ -1,15 +1,14 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import { useActionState } from 'react'
 
 import { submitContactForm } from '@/app/actions/contact'
-import { Button } from '@/components/ui/button'
+import { FormField } from '@/components/forms/form-field'
+import { FormSubmitRow } from '@/components/forms/form-submit-row'
+import { NameEmailFields } from '@/components/forms/name-email-fields'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { initialContactFormState } from '@/lib/contact-form'
-import { cn } from '@/lib/utils'
 
 export function ContactForm() {
   const [state, action, pending] = useActionState(submitContactForm, initialContactFormState)
@@ -18,42 +17,15 @@ export function ContactForm() {
   return (
     <form action={action} className="space-y-5">
       <input type="hidden" name="source" value="/contact" />
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          id="name"
-          label="Name"
-          error={currentState.errors.name}
-          input={
-            <Input
-              id="name"
-              name="name"
-              defaultValue={currentState.values.name}
-              placeholder="Alicia Chen"
-              disabled={pending}
-              aria-invalid={Boolean(currentState.errors.name)}
-            />
-          }
-        />
-        <Field
-          id="email"
-          label="Email"
-          error={currentState.errors.email}
-          input={
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              defaultValue={currentState.values.email}
-              placeholder="alicia@company.com"
-              disabled={pending}
-              aria-invalid={Boolean(currentState.errors.email)}
-            />
-          }
-        />
-      </div>
+      <NameEmailFields
+        values={currentState.values}
+        errors={currentState.errors}
+        pending={pending}
+        emailPlaceholder="alicia@company.com"
+      />
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field
+        <FormField
           id="company"
           label="Company or team"
           input={
@@ -66,7 +38,7 @@ export function ContactForm() {
             />
           }
         />
-        <Field
+        <FormField
           id="projectType"
           label="Project type"
           input={
@@ -88,7 +60,7 @@ export function ContactForm() {
         />
       </div>
 
-      <Field
+      <FormField
         id="brief"
         label="Project brief"
         error={currentState.errors.brief}
@@ -105,38 +77,15 @@ export function ContactForm() {
         }
       />
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div
-          className={cn(
-            'text-sm leading-6',
-            currentState.status === 'success' ? 'text-primary' : 'text-foreground/56',
-          )}
-        >
-          {currentState.message ?? 'A concise brief is enough to start a useful conversation.'}
-        </div>
-        <Button type="submit" size="lg" disabled={pending}>
-          {pending ? 'Sending...' : 'Send message'}
-        </Button>
-      </div>
+      <FormSubmitRow
+        pending={pending}
+        status={currentState.status}
+        message={currentState.message}
+        idleMessage="A concise brief is enough to start a useful conversation."
+        submitLabel="Send message"
+        pendingLabel="Sending..."
+        highlightError={false}
+      />
     </form>
-  )
-}
-
-type FieldProps = {
-  id: string
-  label: string
-  input: ReactNode
-  description?: string
-  error?: string
-}
-
-function Field({ id, label, input, description, error }: FieldProps) {
-  return (
-    <div className="space-y-2.5">
-      <Label htmlFor={id}>{label}</Label>
-      {input}
-      {description ? <p className="text-sm leading-6 text-foreground/52">{description}</p> : null}
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
-    </div>
   )
 }
