@@ -37,6 +37,7 @@ Production deployments and pull request previews are handled by Cloudflare Worke
 
 - `main` deploys through the connected Workers Builds integration.
 - Pull requests rely on Cloudflare's native preview flow rather than a separate GitHub Actions workflow.
+- GitHub Actions is used for commit-message hygiene via the `OpenCommit` workflow on non-protected branches.
 - `wrangler.jsonc` enables `preview_urls` so version uploads can surface preview URLs.
 - Non-production Workers Builds should upload preview versions with `npm run deploy:preview` rather than promote a full deployment with `npm run deploy`.
 
@@ -55,28 +56,30 @@ EMAIL_RECIPIENT = "hello@sonicverse.eu"
 
 ## Common Commands
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Starts the Next.js development server. |
-| `npm run lint` | Runs ESLint across the project. |
-| `npm run typecheck` | Runs TypeScript in no-emit mode. |
-| `npm run build` | Builds the Next.js app. |
+| Command                | What it does                                  |
+| ---------------------- | --------------------------------------------- |
+| `npm run dev`          | Starts the Next.js development server.        |
+| `npm run lint`         | Runs ESLint across the project.               |
+| `npm run typecheck`    | Runs TypeScript in no-emit mode.              |
+| `npm run build`        | Builds the Next.js app.                       |
 | `npm run build:worker` | Builds the OpenNext Cloudflare Worker output. |
-| `npm run preview` | Builds and previews the Worker locally. |
-| `npm run deploy` | Builds and deploys the Worker to Cloudflare. |
-| `npm run cf-typegen` | Regenerates Cloudflare environment types. |
-| `npm run clean` | Removes local build artifacts. |
+| `npm run preview`      | Builds and previews the Worker locally.       |
+| `npm run deploy`       | Builds and deploys the Worker to Cloudflare.  |
+| `npm run cf-typegen`   | Regenerates Cloudflare environment types.     |
+| `npm run clean`        | Removes local build artifacts.                |
 
 ## Contributing
 
 Contributions are welcome through GitHub Issues and Pull Requests. If you want to propose a bug fix, content change, or improvement to the site experience, start by checking the open issues or opening a new one with the context needed to reproduce the problem or explain the idea.
 
-This repository does not currently ship a dedicated `CONTRIBUTING.md`, so the working expectation is:
+Contributor setup and workflow details live in [CONTRIBUTING.md](CONTRIBUTING.md). The short version is:
 
 - keep changes focused and readable;
 - run `npm run lint`, `npm run typecheck`, and `npm run build` before opening a PR;
 - include screenshots or preview details when a change affects the UI or content presentation;
 - use the existing Cloudflare preview workflow on pull requests as an extra validation step.
+
+The repository also includes an `OpenCommit` GitHub Actions workflow that rewrites commit messages on push for non-protected branches. Protected branches such as `main`, `master`, `dev`, `development`, and `release` are excluded. Because the workflow rebases and force-pushes branch commits, commit SHAs can change after push. Repository maintainers must set the `MISTRAL_API_KEY` GitHub Actions secret for that automation to run successfully.
 
 ## Links
 

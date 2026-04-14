@@ -111,6 +111,12 @@ This repository already uses Conventional Commit-style prefixes in its history. 
 
 Clear, scoped commit messages make review and release tracking easier.
 
+The repository also runs an `OpenCommit` GitHub Actions workflow on pushes to non-protected branches. That workflow uses Mistral to rewrite newly pushed commit messages into clearer Conventional Commit-style messages when needed.
+
+- Excluded branches: `main`, `master`, `dev`, `development`, and `release`
+- Required repository secret: `MISTRAL_API_KEY`
+- Important behavior: the workflow rebases and force-pushes updated commit messages, so commit SHAs on your branch can change after push
+
 ## Code of Conduct
 
 Until a repository-local code of conduct is added, contributors are expected to follow the spirit of the [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
