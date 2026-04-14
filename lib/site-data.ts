@@ -139,20 +139,23 @@ export const repositorySignals = [
 export const contactFaq = [
   {
     question: 'What kinds of teams do you work with?',
-    answer: 'Teams where product quality and engineering quality need to move together.',
+    answer:
+      'We work with teams that want product quality and engineering quality to move forward together.',
   },
   {
     question: 'Do you only work on open-source projects?',
-    answer: 'No. Open source is part of the approach, not a limit on the work.',
+    answer:
+      'No. We work on both proprietary and open-source projects. Open source informs our approach to clarity, maintainability, and collaboration.',
   },
   {
     question: 'What helps a first conversation go well?',
-    answer: 'A short brief: current state, pressure points, and what success looks like next.',
+    answer:
+      'A short brief is enough: your current setup, the main challenge, and the outcome you want to achieve next.',
   },
 ]
 
 export const collaborationPrompts = [
-  'A new product needs a sober technical foundation.',
-  'An existing platform is carrying too much accidental complexity.',
-  'A team wants to turn internal patterns into stable reusable systems.',
+  'You are starting a new product and need a strong technical foundation.',
+  'An existing platform has become harder to maintain, extend, or scale.',
+  'Your team wants to turn internal patterns into stable, reusable systems.',
 ]
