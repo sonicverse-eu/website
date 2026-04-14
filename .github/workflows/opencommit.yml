@@ -1,0 +1,56 @@
+name: OpenCommit
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+      - dev
+      - development
+      - release
+    tags-ignore:
+      - '*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opencommit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  opencommit:
+    name: Rewrite Commit Messages
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check out OpenCommit upstream
+        uses: actions/checkout@v4
+        with:
+          repository: di-sukharev/opencommit
+          ref: 695edf7ed93fe2d48a723897bc71f3750214ccee
+          path: .opencommit-upstream
+
+      - name: Rewrite pushed commit messages
+        env:
+          INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OCO_AI_PROVIDER: mistral
+          OCO_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          OCO_MODEL: mistral-small-latest
+          OCO_PROMPT_MODULE: conventional-commit
+          OCO_DESCRIPTION: 'false'
+          OCO_EMOJI: 'false'
+          OCO_LANGUAGE: en
+        run: node .opencommit-upstream/out/github-action.cjs
