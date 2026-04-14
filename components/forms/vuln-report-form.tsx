@@ -1,15 +1,14 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import { useActionState } from 'react'
 
 import { submitVulnReport } from '@/app/actions/vuln-report'
-import { Button } from '@/components/ui/button'
+import { FormField } from '@/components/forms/form-field'
+import { FormSubmitRow } from '@/components/forms/form-submit-row'
+import { NameEmailFields } from '@/components/forms/name-email-fields'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { initialVulnReportFormState } from '@/lib/vuln-report-form'
-import { cn } from '@/lib/utils'
 
 export function VulnReportForm() {
   const [state, action, pending] = useActionState(submitVulnReport, initialVulnReportFormState)
@@ -22,41 +21,14 @@ export function VulnReportForm() {
         detail for us to reproduce and verify the problem safely.
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          id="name"
-          label="Name"
-          error={currentState.errors.name}
-          input={
-            <Input
-              id="name"
-              name="name"
-              defaultValue={currentState.values.name}
-              placeholder="Alicia Chen"
-              disabled={pending}
-              aria-invalid={Boolean(currentState.errors.name)}
-            />
-          }
-        />
-        <Field
-          id="email"
-          label="Email"
-          error={currentState.errors.email}
-          input={
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              defaultValue={currentState.values.email}
-              placeholder="researcher@example.com"
-              disabled={pending}
-              aria-invalid={Boolean(currentState.errors.email)}
-            />
-          }
-        />
-      </div>
+      <NameEmailFields
+        values={currentState.values}
+        errors={currentState.errors}
+        pending={pending}
+        emailPlaceholder="researcher@example.com"
+      />
 
-      <Field
+      <FormField
         id="summary"
         label="Summary"
         error={currentState.errors.summary}
@@ -72,7 +44,7 @@ export function VulnReportForm() {
         }
       />
 
-      <Field
+      <FormField
         id="steps"
         label="Reproduction steps"
         error={currentState.errors.steps}
@@ -93,7 +65,7 @@ export function VulnReportForm() {
       />
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field
+        <FormField
           id="impact"
           label="Impact"
           error={currentState.errors.impact}
@@ -110,7 +82,7 @@ export function VulnReportForm() {
             />
           }
         />
-        <Field
+        <FormField
           id="version"
           label="Affected version"
           description="Optional. Include a release number, commit SHA, environment, or URL if known."
@@ -126,43 +98,14 @@ export function VulnReportForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div
-          className={cn(
-            'text-sm leading-6',
-            currentState.status === 'success'
-              ? 'text-primary'
-              : currentState.status === 'error'
-                ? 'text-destructive'
-                : 'text-foreground/56',
-          )}
-        >
-          {currentState.message ??
-            'We review responsible disclosures carefully and use the details here to reproduce the issue.'}
-        </div>
-        <Button type="submit" size="lg" disabled={pending}>
-          {pending ? 'Sending...' : 'Send report'}
-        </Button>
-      </div>
+      <FormSubmitRow
+        pending={pending}
+        status={currentState.status}
+        message={currentState.message}
+        idleMessage="We review responsible disclosures carefully and use the details here to reproduce the issue."
+        submitLabel="Send report"
+        pendingLabel="Sending..."
+      />
     </form>
-  )
-}
-
-type FieldProps = {
-  id: string
-  label: string
-  input: ReactNode
-  description?: string
-  error?: string
-}
-
-function Field({ id, label, input, description, error }: FieldProps) {
-  return (
-    <div className="space-y-2.5">
-      <Label htmlFor={id}>{label}</Label>
-      {input}
-      {description ? <p className="text-sm leading-6 text-foreground/52">{description}</p> : null}
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
-    </div>
   )
 }
