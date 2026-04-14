@@ -1,5 +1,7 @@
 'use server'
 
+import { Resend } from 'resend'
+
 import { initialVulnReportFormState, type VulnReportFormState } from '@/lib/vuln-report-form'
 
 function getString(formData: FormData, key: string) {
@@ -193,37 +195,31 @@ export async function submitVulnReport(
   }
 
   try {
+    const resend = new Resend(resendApiKey)
     const subject = `Security Report: ${truncateSubject(values.summary)}`
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: senderAddress,
-        to: [recipientAddress],
-        subject,
-        text: [
-          `Reporter: ${values.name}`,
-          `Email: ${values.email}`,
-          `Affected version: ${values.version || 'Not provided'}`,
-          `Submitted: ${submittedAt}`,
-          '',
-          `Summary:\n${values.summary}`,
-          '',
-          `Reproduction steps:\n${values.steps}`,
-          '',
-          `Impact:\n${values.impact}`,
-        ].join('\n'),
-        html: buildEmailHtml({ ...values, submittedAt }),
-        reply_to: values.email,
-      }),
+    const response = await resend.emails.send({
+      from: senderAddress,
+      to: [recipientAddress],
+      subject,
+      text: [
+        `Reporter: ${values.name}`,
+        `Email: ${values.email}`,
+        `Affected version: ${values.version || 'Not provided'}`,
+        `Submitted: ${submittedAt}`,
+        '',
+        `Summary:\n${values.summary}`,
+        '',
+        `Reproduction steps:\n${values.steps}`,
+        '',
+        `Impact:\n${values.impact}`,
+      ].join('\n'),
+      html: buildEmailHtml({ ...values, submittedAt }),
+      replyTo: values.email,
     })
 
-    if (!response.ok) {
-      throw new Error(`Resend API error: ${response.status}`)
+    if (response.error) {
+      throw new Error(`Resend API error: ${response.error.message}`)
     }
   } catch {
     return {
