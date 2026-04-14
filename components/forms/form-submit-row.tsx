@@ -20,14 +20,19 @@ export function FormSubmitRow({
   pendingLabel,
   highlightError = true,
 }: FormSubmitRowProps) {
+  const isError = status === 'error' && highlightError
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div
+        aria-live={isError ? 'assertive' : 'polite'}
+        aria-atomic="true"
+        role={isError ? 'alert' : 'status'}
         className={cn(
           'text-sm leading-6',
           status === 'success'
             ? 'text-primary'
-            : status === 'error' && highlightError
+            : isError
               ? 'text-destructive'
               : 'text-foreground/56',
         )}
