@@ -162,9 +162,14 @@ export function ContentPageHeader({
             maxOpacity={0.14}
             duration={5.5}
             repeatDelay={1}
-            className="hero-grid-mask absolute inset-0 text-foreground/10"
+            className="hero-grid-mask absolute inset-0 text-foreground/10 pointer-events-none"
+            aria-hidden="true"
+            focusable="false"
           />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
+          <div
+            className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background pointer-events-none"
+            aria-hidden="true"
+          />
         </>
       ) : null}
       <Container className="relative space-y-8">
