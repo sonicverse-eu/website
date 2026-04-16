@@ -9,8 +9,6 @@ export function workerImageLoader({ src, width, quality }: ImageLoaderProps) {
   // Normalize the src path to ensure it starts with a slash
   const normalizedSrc = src.startsWith('/') ? src : `/${src}`
 
-  console.log(`workerImageLoader: src=${src}, normalized=${normalizedSrc}, base=${base}`)
-
   try {
     const url = new URL(
       base,
@@ -19,11 +17,8 @@ export function workerImageLoader({ src, width, quality }: ImageLoaderProps) {
     url.searchParams.set('src', normalizedSrc)
     if (width) url.searchParams.set('w', String(width))
     if (quality) url.searchParams.set('q', String(quality))
-    const result = url.toString()
-    console.log(`workerImageLoader result: ${result}`)
-    return result
-  } catch (e) {
-    console.error('workerImageLoader error:', e)
+    return url.toString()
+  } catch {
     // Fallback: append query params manually
     const sep = base.includes('?') ? '&' : '?'
     return `${base}${sep}src=${encodeURIComponent(normalizedSrc)}${width ? `&w=${width}` : ''}${quality ? `&q=${quality}` : ''}`
