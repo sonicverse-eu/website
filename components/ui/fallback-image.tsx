@@ -17,7 +17,6 @@ export default function FallbackImage(props: ImageProps) {
     <Image
       {...props}
       onError={() => {
-        console.error(`Failed to load image: ${props.src}`)
         setError(true)
       }}
     />

@@ -21,7 +21,6 @@ export default function WorkerImage(props: ImageProps) {
       {...props}
       loader={workerImageLoader}
       onError={() => {
-        console.error(`Failed to load worker image: ${props.src}`)
         setError(true)
       }}
     />

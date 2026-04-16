@@ -173,7 +173,7 @@ export function Header() {
             <div className="hidden items-center gap-3 lg:flex">
               <ThemeToggle className="hidden lg:flex" />
               <Button asChild size="sm" className="h-10 px-4">
-                <Link href="/contact">Contact Us</Link>
+                <Link href="https://docs.sonicverse.eu">Documentation</Link>
               </Button>
             </div>
 
@@ -228,7 +228,7 @@ export function Header() {
                     <ThemeToggle />
                     <Button asChild className="flex-1">
                       <SheetClose asChild>
-                        <Link href="/contact">Start a project</Link>
+                        <Link href="https://docs.sonicverse.eu">Documentation</Link>
                       </SheetClose>
                     </Button>
                   </div>

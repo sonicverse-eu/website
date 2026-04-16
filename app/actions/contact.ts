@@ -20,6 +20,19 @@ const EMAIL_BODY_FONT = "'proxima-nova', 'Avenir Next', Avenir, 'Segoe UI', sans
 const EMAIL_HEADING_FONT = "'futura-100', Futura, 'Avenir Next', sans-serif"
 const EMAIL_BOOK_HEADING_FONT = "'futura-100-book', Futura, 'Avenir Next', sans-serif"
 
+function escapeHtml(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;')
+}
+
+function formatMultiline(value: string) {
+  return escapeHtml(value).replace(/\n/g, '<br/>')
+}
+
 function buildEmailHtml(values: {
   name: string
   email: string
@@ -61,12 +74,12 @@ function buildEmailHtml(values: {
                 <tr>
                   <td width="50%" style="padding-right:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Name</p>
-                    <p style="margin:0;font-size:15px;color:#0d1727;font-weight:500;">${values.name}</p>
+                    <p style="margin:0;font-size:15px;color:#0d1727;font-weight:500;">${escapeHtml(values.name)}</p>
                   </td>
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Email</p>
                     <p style="margin:0;font-size:15px;color:#432dd7;font-weight:500;">
-                      <a href="mailto:${values.email}" style="color:#432dd7;text-decoration:none;">${values.email}</a>
+                      <a href="mailto:${escapeHtml(values.email)}" style="color:#432dd7;text-decoration:none;">${escapeHtml(values.email)}</a>
                     </p>
                   </td>
                 </tr>
@@ -83,7 +96,7 @@ function buildEmailHtml(values: {
                       ? `
                   <td width="50%" style="padding-right:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Company</p>
-                    <p style="margin:0;font-size:15px;color:#0d1727;">${values.company}</p>
+                    <p style="margin:0;font-size:15px;color:#0d1727;">${escapeHtml(values.company)}</p>
                   </td>`
                       : '<td></td>'
                   }
@@ -92,7 +105,7 @@ function buildEmailHtml(values: {
                       ? `
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Project type</p>
-                    <p style="margin:0;font-size:15px;color:#0d1727;">${values.projectType}</p>
+                    <p style="margin:0;font-size:15px;color:#0d1727;">${escapeHtml(values.projectType)}</p>
                   </td>`
                       : '<td></td>'
                   }
@@ -107,7 +120,7 @@ function buildEmailHtml(values: {
               <!-- Brief -->
               <p style="margin:0 0 8px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Project brief</p>
               <div style="background:#f4f7fd;border-radius:16px;padding:20px 24px;border:1px solid rgba(15,23,42,0.06);">
-                <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">${values.brief.replace(/\n/g, '<br/>')}</p>
+                <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">${formatMultiline(values.brief)}</p>
               </div>
 
             </td>
@@ -116,7 +129,7 @@ function buildEmailHtml(values: {
           <!-- Footer -->
           <tr>
             <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
-              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
               <div style="display:flex;gap:16px;">
                 <a href="https://github.com/sonicverse-eu" style="color:#432dd7;font-size:12px;text-decoration:none;">GitHub</a>
               </div>
@@ -163,9 +176,9 @@ function buildConfirmationEmailHtml(values: {
           <!-- Body -->
           <tr>
             <td style="padding:36px 40px;">
-              <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Hi ${values.name},</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Hi ${escapeHtml(values.name)},</p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Thank you for getting in touch. We have received your message and will review it before replying.</p>
-              <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
 
               <!-- Call to Action -->
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
@@ -186,14 +199,14 @@ function buildConfirmationEmailHtml(values: {
 
               <!-- Contact Info -->
               <p style="margin:0 0 4px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Need immediate assistance?</p>
-              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:${values.replyToAddress}" style="color:#432dd7;text-decoration:none;">${values.replyToAddress}</a></p>
+              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:${escapeHtml(values.replyToAddress)}" style="color:#432dd7;text-decoration:none;">${escapeHtml(values.replyToAddress)}</a></p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
             <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
-              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${values.submittedAt} · sonicverse.eu</p>
+              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
               <div style="display:flex;gap:16px;">
                 <a href="https://github.com/sonicverse-eu" style="color:#432dd7;font-size:12px;text-decoration:none;">GitHub</a>
               </div>
