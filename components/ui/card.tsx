@@ -6,7 +6,7 @@ export function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'rounded-[1.9rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]',
+        'surface-panel rounded-[1.7rem] transition-[border-color,transform,background-color,box-shadow] duration-200',
         className,
       )}
       {...props}
@@ -15,14 +15,14 @@ export function Card({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 export function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('flex flex-col gap-3 p-6 sm:p-8', className)} {...props} />
+  return <div className={cn('flex flex-col gap-3 p-6 sm:p-7', className)} {...props} />
 }
 
 export function CardTitle({ className, ...props }: React.ComponentProps<'h3'>) {
   return (
     <h3
       className={cn(
-        'text-[1.75rem] leading-[1.18] font-medium tracking-[-0.025em] text-foreground',
+        'text-[1.4rem] leading-[1.08] font-semibold tracking-[-0.04em] text-foreground',
         className,
       )}
       {...props}
@@ -31,9 +31,9 @@ export function CardTitle({ className, ...props }: React.ComponentProps<'h3'>) {
 }
 
 export function CardDescription({ className, ...props }: React.ComponentProps<'p'>) {
-  return <p className={cn('text-sm leading-7 text-foreground/68', className)} {...props} />
+  return <p className={cn('text-sm leading-7 text-muted-foreground', className)} {...props} />
 }
 
 export function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('p-6 pt-0 sm:px-8 sm:pb-8', className)} {...props} />
+  return <div className={cn('px-6 pb-6 sm:px-7 sm:pb-7', className)} {...props} />
 }

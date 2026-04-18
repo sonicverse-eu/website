@@ -1,214 +1,88 @@
-export type NavItem = {
-  href: string
-  label: string
+import {
+  docsHref,
+  footerNavGroups,
+  mainNavItems,
+  siteName,
+  siteTagline,
+  type FooterNavGroup,
+  type NavItem,
+} from './site-data/navigation'
+import {
+  collaborationPrompts,
+  commercialTracks,
+  companyPrinciples,
+  contactFaq,
+  technicalStandards,
+} from './site-data/marketing'
+import { openSourceLibraries, openSourcePrinciples } from './site-data/open-source'
+import { featuredProducts, productSignals } from './site-data/products'
+import { featuredProjects, projectFitSignals } from './site-data/projects'
+import { trustSignals, trustStatements } from './site-data/trust'
+
+export {
+  collaborationPrompts,
+  commercialTracks,
+  contactFaq,
+  docsHref,
+  featuredProducts,
+  footerNavGroups,
+  mainNavItems,
+  openSourcePrinciples,
+  productSignals,
+  projectFitSignals,
+  siteName,
+  siteTagline,
+  technicalStandards,
+  trustSignals,
+  trustStatements,
+  type FooterNavGroup,
+  type NavItem,
 }
 
-export type FooterNavGroup = {
-  title: string
-  links: Array<{
-    href: string
-    label: string
-    description: string
-  }>
-}
-
-export const siteName = 'Sonicverse'
-
-export const navItems: NavItem[] = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
-]
-
-export const footerNavGroups: FooterNavGroup[] = [
-  {
-    title: 'Explore',
-    links: [
-      {
-        href: '/about',
-        label: 'About',
-        description: 'How Sonicverse works, what it values, and the shape of the collaboration.',
-      },
-      {
-        href: '/services',
-        label: 'Services',
-        description: 'Engineering, platform, and systems work for high-trust digital products.',
-      },
-      {
-        href: '/contact',
-        label: 'Contact',
-        description: 'Start a conversation with a brief, an idea, or a messy problem statement.',
-      },
-    ],
-  },
-  {
-    title: 'Work',
-    links: [
-      {
-        href: '/projects',
-        label: 'Projects',
-        description: 'Selected work spanning product systems, platforms, and implementation.',
-      },
-      {
-        href: '/open-source',
-        label: 'Open Source',
-        description: 'Public packages, starters, and building blocks meant to compound.',
-      },
-      {
-        href: '/roadmap',
-        label: 'Roadmap',
-        description:
-          'A transparent view of the open-source work planned for the next year and beyond.',
-      },
-    ],
-  },
-]
-
-export const principles = [
-  'Open source by default',
-  'Systems designed for change',
-  'Calm collaboration',
-  'Performance with intent',
-]
-
-export const capabilities = [
-  {
-    title: 'Product engineering',
-    description: 'Modern product systems with clear architecture and long-term composure.',
-  },
-  {
-    title: 'Platform foundations',
-    description: 'Web platforms, shared tooling, and foundations that reduce drag for teams.',
-  },
-  {
-    title: 'Open-source tooling',
-    description: 'Public packages and reusable building blocks that compound over time.',
-  },
-]
+export const navItems = mainNavItems
+export const principles = companyPrinciples
+export const openSourceProjects = openSourceLibraries
 
 export const serviceAreas = [
   {
-    title: 'Custom software development',
-    description: 'Purpose-built systems with sober choices and clear boundaries.',
-    bullets: ['App Router and modern web stacks', 'Type-safe APIs', 'Incremental delivery'],
+    title: 'Commercial hosting',
+    description: 'Managed operations, performance stewardship, and support for production systems.',
+    bullets: ['Managed deployments', 'Operational oversight', 'Performance tuning'],
   },
   {
-    title: 'Web platforms',
-    description: 'Marketing sites and application shells aligned with product goals.',
-    bullets: ['Design-aware implementation', 'Performance budgets', 'Accessibility by default'],
+    title: 'Technical consulting',
+    description:
+      'Architecture, implementation, and redesign work for teams shaping high-trust software.',
+    bullets: ['Architecture reviews', 'Implementation support', 'System redesign'],
   },
   {
-    title: 'Design systems',
-    description: 'Reusable UI systems with careful tokens and operational clarity.',
-    bullets: ['Token strategy', 'Composable primitives', 'Visual consistency'],
+    title: 'Product surfaces',
+    description: 'Marketing and application layers that need design-aware engineering quality.',
+    bullets: ['Design systems', 'App Router builds', 'Accessible UI'],
   },
   {
-    title: 'Technical architecture',
-    description: 'Rendering, runtime, and delivery decisions that keep systems coherent.',
-    bullets: ['Cloudflare-ready deployments', 'Boundary setting', 'Runtime pragmatism'],
-  },
-  {
-    title: 'Performance optimization',
-    description: 'Measured improvements to loading, rendering, and interaction quality.',
-    bullets: ['Core Web Vitals', 'Network efficiency', 'Asset strategy'],
-  },
-  {
-    title: 'Developer experience',
-    description: 'Tooling and workflows that reduce rework and keep codebases easier to operate.',
-    bullets: ['Linting and standards', 'Build and preview flows', 'Sensible automation'],
+    title: 'Platform foundations',
+    description: 'Runtime, deployment, and system boundaries that keep software easier to evolve.',
+    bullets: ['Edge-native deployments', 'Type-safe contracts', 'Performance budgets'],
   },
 ]
 
 export const operatingModel = [
   {
     title: 'Direct collaboration',
-    description: 'The people shaping the system stay close to the decisions that matter.',
+    description: 'The people shaping the system stay close to the product and technical decisions.',
   },
   {
-    title: 'Transparent tradeoffs',
-    description: 'Constraints are named early and tradeoffs stay visible.',
+    title: 'Visible tradeoffs',
+    description:
+      'Important constraints and decisions are made explicit instead of hidden in process.',
   },
   {
     title: 'Long-term structure',
-    description: 'Architecture and handoff quality are treated as part of the product.',
-  },
-]
-
-export const technicalStandards = [
-  'Semantic HTML and accessible interaction patterns',
-  'Type safety and explicit contracts at boundaries',
-  'Measured performance, not ornamental complexity',
-  'Documentation and structure that help future contributors',
-]
-
-export const projectArchetypes = [
-  {
-    title: 'Operational platforms',
     description:
-      'Internal systems, dashboards, and shared platforms that support ongoing product or business operations.',
-  },
-  {
-    title: 'Developer-facing products',
-    description:
-      'APIs, tooling surfaces, documentation systems, and product experiences built for technical audiences.',
-  },
-  {
-    title: 'Open-source ecosystems',
-    description:
-      'Public packages, templates, starter kits, and integration layers designed to invite contribution.',
-  },
-  {
-    title: 'High-trust web experiences',
-    description:
-      'Marketing and product surfaces where clarity, credibility, and technical taste matter as much as polish.',
+      'Architecture, release hygiene, and maintainability are treated as part of the product.',
   },
 ]
 
-export const openSourceProjects = [
-  {
-    name: 'System primitives',
-    summary: 'Reusable UI and layout patterns extracted from real delivery work.',
-    tags: ['UI foundations', 'Accessibility', 'Design tokens'],
-  },
-  {
-    name: 'Workflow utilities',
-    summary: 'Checks, generators, and environment helpers that make workflows easier to read.',
-    tags: ['DX', 'Automation', 'Release hygiene'],
-  },
-  {
-    name: 'Cloud-native starters',
-    summary: 'Composable starters for teams shipping on modern edge runtimes.',
-    tags: ['Cloudflare', 'Deployment', 'Architecture'],
-  },
-]
-
-export const repositorySignals = [
-  'Public decisions instead of hidden tribal knowledge',
-  'Issues and contribution paths that are approachable',
-  'Tooling that works for maintainers as well as adopters',
-]
-
-export const contactFaq = [
-  {
-    question: 'What kinds of teams do you work with?',
-    answer:
-      'We work with teams that want product quality and engineering quality to move forward together.',
-  },
-  {
-    question: 'Do you only work on open-source projects?',
-    answer:
-      'No. We work on both proprietary and open-source projects. Open source informs our approach to clarity, maintainability, and collaboration.',
-  },
-  {
-    question: 'What helps a first conversation go well?',
-    answer:
-      'A short brief is enough: your current setup, the main challenge, and the outcome you want to achieve next.',
-  },
-]
-
-export const collaborationPrompts = [
-  'You are starting a new product and need a strong technical foundation.',
-  'An existing platform has become harder to maintain, extend, or scale.',
-  'Your team wants to turn internal patterns into stable, reusable systems.',
-]
+export const projectArchetypes = featuredProjects
+export const repositorySignals = trustStatements

@@ -2,6 +2,7 @@ import Image, { ImageProps } from 'next/image'
 import { useState } from 'react'
 
 export default function FallbackImage(props: ImageProps) {
+  const { alt, ...imageProps } = props
   const [error, setError] = useState(false)
 
   if (error) {
@@ -15,7 +16,8 @@ export default function FallbackImage(props: ImageProps) {
 
   return (
     <Image
-      {...props}
+      {...imageProps}
+      alt={alt}
       onError={() => {
         setError(true)
       }}

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 type BrandMarkProps = {
   className?: string
   decorative?: boolean
@@ -12,14 +14,15 @@ export function BrandMark({
   const source = '/icon-purple.svg'
 
   return (
-    <img
+    <Image
       src={source}
+      width={120}
+      height={120}
       className={className}
       alt={decorative ? '' : title}
       aria-hidden={decorative}
       role={decorative ? undefined : 'img'}
       loading="eager"
-      decoding="async"
     />
   )
 }

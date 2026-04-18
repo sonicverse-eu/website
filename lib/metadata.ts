@@ -10,7 +10,7 @@ const siteUrl =
 export const baseMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} - OSS for Independent Media`,
+    default: `${siteName} - Open-source Products, Hosting, and Consulting`,
     template: `%s - ${siteName}`,
   },
   icons: {
@@ -24,20 +24,20 @@ export const baseMetadata: Metadata = {
   },
   manifest: '/site.webmanifest',
   description:
-    'Sonicverse builds innovative software for independent media. Always open-source, thoughtfully designed, and engineered with care.',
+    'Sonicverse builds open-source products, supports them in production, and helps teams shape stronger software systems.',
   openGraph: {
-    title: `${siteName} - OSS for Independent Media`,
+    title: `${siteName} - Open-source Products, Hosting, and Consulting`,
     description:
-      'Sonicverse builds innovative software for independent media. Always open-source, thoughtfully designed, and engineered with care.',
+      'Sonicverse builds open-source products, supports them in production, and helps teams shape stronger software systems.',
     url: siteUrl,
     siteName,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteName} - OSS for Independent Media`,
+    title: `${siteName} - Open-source Products, Hosting, and Consulting`,
     description:
-      'Sonicverse builds innovative software for independent media. Always open-source, thoughtfully designed, and engineered with care.',
+      'Sonicverse builds open-source products, supports them in production, and helps teams shape stronger software systems.',
   },
 }
 

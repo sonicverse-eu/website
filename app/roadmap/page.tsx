@@ -1,12 +1,7 @@
 import type { Metadata } from 'next'
 
-import {
-  ContentLinkCard,
-  ContentPageHeader,
-  MetaInline,
-  StatusBadge,
-  TagList,
-} from '@/components/content/content-ui'
+import { ContentLinkCard, StatusBadge, TagList } from '@/components/content/content-ui'
+import { PageHero } from '@/components/site/page-hero'
 import { Reveal } from '@/components/site/reveal'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -25,38 +20,49 @@ export default async function RoadmapPage() {
 
   return (
     <>
-      <ContentPageHeader
+      <PageHero
         eyebrow="Roadmap"
         title="Structured direction for what Sonicverse is shaping next."
-        description="Roadmap initiatives are grouped by status so the direction of travel is easy to inspect without collapsing into vague future promises."
+        description="The roadmap should communicate concrete movement without collapsing into vague future promises. Grouping by status keeps the direction readable."
+        highlights={[
+          'Exploring, planned, in progress, and shipped',
+          'Each initiative has its own detail page',
+          'A public signal for both product users and commercial partners',
+        ]}
         kicker={
-          <Card>
-            <CardHeader className="space-y-4">
-              <Badge variant="muted">Status model</Badge>
-              <CardTitle className="text-[1.3rem]">
-                Exploring, Planned, In Progress, Shipped.
-              </CardTitle>
-              <CardDescription>
-                Each initiative is a concrete page with context, not a loose bullet in a backlog.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <div className="space-y-4">
+            <p className="panel-label">Status model</p>
+            <Card className="bg-card/78">
+              <CardHeader>
+                <CardTitle className="text-[1.25rem]">
+                  Exploring, Planned, In Progress, Shipped
+                </CardTitle>
+                <CardDescription>
+                  The roadmap should feel like real software planning, not decorative future-state
+                  marketing.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
         }
       />
 
-      <section className="pb-24 sm:pb-28">
+      <section className="section-space pt-0">
         <Container className="space-y-6">
           {groups.map((group, groupIndex) => (
             <Reveal key={group.status} delay={groupIndex * 0.04}>
-              <div className="section-frame space-y-6 p-6 backdrop-blur-xl backdrop-saturate-[1.5] sm:p-8">
+              <div className="section-shell space-y-6">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-2">
-                    <StatusBadge status={group.status} />
-                    <h2 className="section-title text-[1.6rem] sm:text-[1.9rem] lg:text-[2.1rem]">
-                      {group.status}
-                    </h2>
+                    <Badge variant="muted">Status group</Badge>
+                    <div className="flex items-center gap-3">
+                      <h2 className="text-[1.9rem] leading-[1.08] font-semibold tracking-[-0.05em]">
+                        {group.status}
+                      </h2>
+                      <StatusBadge status={group.status} />
+                    </div>
                   </div>
-                  <p className="text-sm text-foreground/54">
+                  <p className="text-sm text-muted-foreground">
                     {group.items.length} initiative{group.items.length === 1 ? '' : 's'}
                   </p>
                 </div>
@@ -71,11 +77,9 @@ export default async function RoadmapPage() {
                       badges={<StatusBadge status={entry.frontmatter.status} />}
                       meta={
                         <>
-                          <MetaInline>
-                            {formatContentDate(
-                              entry.frontmatter.updatedAt ?? entry.frontmatter.publishedAt,
-                            )}
-                          </MetaInline>
+                          {formatContentDate(
+                            entry.frontmatter.updatedAt ?? entry.frontmatter.publishedAt,
+                          )}
                           <TagList tags={entry.frontmatter.tags?.slice(0, 2)} />
                         </>
                       }

@@ -5,6 +5,7 @@ import { workerImageLoader } from '@/lib/worker-image-loader'
 import { useState } from 'react'
 
 export default function WorkerImage(props: ImageProps) {
+  const { alt, ...imageProps } = props
   const [error, setError] = useState(false)
 
   if (error) {
@@ -18,7 +19,8 @@ export default function WorkerImage(props: ImageProps) {
 
   return (
     <Image
-      {...props}
+      {...imageProps}
+      alt={alt}
       loader={workerImageLoader}
       onError={() => {
         setError(true)

@@ -57,12 +57,7 @@ type MetaItem = {
 
 export function MetaRail({ items, className }: { items: MetaItem[]; className?: string }) {
   return (
-    <div
-      className={cn(
-        'rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]',
-        className,
-      )}
-    >
+    <div className={cn('surface-panel rounded-[1.5rem] p-5', className)}>
       <div className="space-y-4">
         {items.map((item, index) => (
           <div key={`${item.label}-${item.value}`} className="space-y-3">
@@ -154,7 +149,7 @@ export function ContentPageHeader({
   showGridPattern = false,
 }: ContentPageHeaderProps) {
   return (
-    <section className="relative overflow-hidden pt-36 pb-12 sm:pt-40 sm:pb-16">
+    <section className="relative overflow-hidden pt-18 pb-8 sm:pt-24 sm:pb-12 lg:pt-28">
       {showGridPattern ? (
         <>
           <AnimatedGridPattern
@@ -177,12 +172,10 @@ export function ContentPageHeader({
           <Badge>{eyebrow}</Badge>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
             <div className="space-y-5">
-              <h1 className="hero-title max-w-5xl text-[2.6rem] sm:text-[3.8rem] lg:text-[4.45rem]">
-                {title}
-              </h1>
+              <h1 className="page-title max-w-5xl">{title}</h1>
               <p className="copy-lg max-w-2xl">{description}</p>
             </div>
-            {kicker ? <div>{kicker}</div> : null}
+            {kicker ? <div className="hero-kicker">{kicker}</div> : null}
           </div>
         </Reveal>
       </Container>
@@ -230,7 +223,7 @@ export function ContentArticleShell({
       <section className="pb-24 sm:pb-28">
         <Container className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
           <Reveal>
-            <article className="rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-6 py-7 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6] sm:px-8 sm:py-9">
+            <article className="surface-panel rounded-[1.8rem] px-6 py-7 sm:px-8 sm:py-9">
               <div className="space-y-6">{children}</div>
             </article>
           </Reveal>
@@ -464,7 +457,7 @@ function SignalLink({
   return (
     <Link
       href={href}
-      className="flex items-start justify-between gap-4 rounded-[1.35rem] border border-border/60 bg-background/58 px-4 py-4 backdrop-blur-sm backdrop-saturate-[1.4] transition hover:border-primary/18 hover:bg-primary/[0.06]"
+      className="flex items-start justify-between gap-4 rounded-[1.15rem] border border-border/80 bg-card/78 px-4 py-4 transition hover:border-primary/20 hover:bg-primary/[0.05]"
     >
       <div className="space-y-1.5">
         <p className="text-[1rem] leading-7 font-medium tracking-[-0.03em] text-foreground">

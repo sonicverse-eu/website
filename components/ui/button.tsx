@@ -5,18 +5,18 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-sm font-medium whitespace-nowrap transition-all duration-200 outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4',
+  'inline-flex shrink-0 items-center justify-center gap-2 rounded-full text-sm font-medium whitespace-nowrap transition-[transform,background-color,border-color,color,box-shadow] duration-200 outline-none select-none focus-visible:ring-4 focus-visible:ring-ring/60 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4',
   {
     variants: {
       variant: {
         default:
-          'border-transparent bg-[linear-gradient(135deg,#4d35ef_0%,#432dd7_100%)] text-white shadow-[0_14px_40px_rgba(67,45,215,0.28)] hover:-translate-y-0.5 hover:shadow-[0_20px_54px_rgba(67,45,215,0.36)]',
+          'border border-transparent bg-primary text-primary-foreground shadow-[0_16px_44px_rgba(37,99,235,0.22)] hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--primary)_88%,black)]',
         outline:
-          'border-border/80 bg-background/52 text-foreground/84 backdrop-blur-md backdrop-saturate-[1.4] hover:border-primary/30 hover:bg-primary/8 hover:text-foreground',
+          'border-border/90 bg-card/78 text-foreground hover:-translate-y-0.5 hover:border-primary/22 hover:bg-primary/6',
         ghost:
-          'border-transparent bg-transparent text-foreground/68 hover:bg-background/52 hover:text-foreground hover:backdrop-blur-sm',
+          'border border-transparent bg-transparent text-muted-foreground hover:bg-secondary hover:text-foreground',
         secondary:
-          'border-border/80 bg-secondary/70 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-sm backdrop-saturate-[1.3] hover:-translate-y-0.5 hover:border-primary/20 hover:bg-secondary',
+          'border-border/90 bg-secondary text-foreground hover:-translate-y-0.5 hover:border-primary/18 hover:bg-card',
       },
       size: {
         default: 'h-11 px-5',

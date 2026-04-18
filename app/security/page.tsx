@@ -8,39 +8,42 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { Container } from '@/components/ui/container'
 import { pageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = pageMetadata(
-  'Security',
-  'Report vulnerabilities privately, understand Sonicverse security expectations, and follow a coordinated disclosure process.',
-  '/security',
-)
-
 const reportingGuidance = [
   {
     title: 'Report privately',
     description:
-      'Use the form below or email security@sonicverse.eu. Include which Sonicverse project, deployment, or repository is affected, and avoid public issue trackers for security-sensitive reports.',
+      'Use the form on this page or email security@sonicverse.eu. Avoid public issue trackers for security-sensitive reports.',
   },
   {
-    title: 'Include the essentials',
+    title: 'Include what matters',
     description:
-      'A strong report covers the issue summary, reproduction steps, impact, and any version, environment, URL, project name, or commit details that help us verify it quickly.',
+      'Tell us which product, repository, deployment, or runtime is affected, how to reproduce the issue, and what the impact looks like.',
   },
   {
-    title: 'Expect coordinated disclosure',
+    title: 'Coordinate disclosure',
     description:
-      'We aim to acknowledge reports within 3 business days, complete initial triage within 7, and share follow-up updates as work progresses. Please do not disclose the issue publicly before coordination.',
+      'We aim to acknowledge reports quickly, triage clearly, and work toward a coordinated disclosure path.',
   },
-] as const
+]
+
+export const metadata: Metadata = pageMetadata(
+  'Security',
+  'Sonicverse security reporting path, disclosure expectations, and vulnerability intake form.',
+  '/security',
+)
 
 export default function SecurityPage() {
   return (
     <>
       <PageHero
-        layout="single"
         eyebrow="Security"
-        title="Report vulnerabilities through one clear private path."
-        description="Use the form below to share the issue, how to reproduce it, and which Sonicverse project is affected."
-        highlights={['Private reporting', 'Reproduction details', 'Coordinated disclosure']}
+        title="A clear private path for reporting vulnerabilities."
+        description="Security should be easy to report, easy to route, and framed with enough clarity that researchers and operators know what to expect."
+        highlights={[
+          'Private disclosure first',
+          'Concrete reproduction details help most',
+          'Coordinated follow-up instead of ambiguous silence',
+        ]}
         primaryAction={{ href: '#report-a-vulnerability', label: 'Report a vulnerability' }}
         compact
       />
@@ -50,12 +53,11 @@ export default function SecurityPage() {
           <Reveal>
             <SectionHeader
               eyebrow="Policy"
-              title="A simpler security reporting policy."
-              description="Everything needed to report responsibly, without making the page harder to scan."
+              title="Short, direct guidance is better than a dense trust page."
+              description="This page should tell people how to report, what to include, and how Sonicverse handles the path after that."
             />
           </Reveal>
-
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {reportingGuidance.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
                 <Card className="h-full">
@@ -70,41 +72,13 @@ export default function SecurityPage() {
         </Container>
       </section>
 
-      <section id="report-a-vulnerability" className="pb-24 scroll-mt-24 sm:pb-28">
-        <Container className="space-y-6">
-          <Reveal className="section-frame px-6 py-6 md:px-8">
-            <div className="grid gap-4 md:grid-cols-[0.34fr_1fr] md:items-start md:gap-8">
-              <div className="space-y-2">
-                <p className="eyebrow">Before you send</p>
-                <h2 className="text-[1.35rem] leading-[1.18] font-medium tracking-[-0.03em] text-foreground">
-                  A few practical guardrails.
-                </h2>
-              </div>
-              <div className="space-y-3 text-sm leading-7 text-foreground/66">
-                <p>
-                  Use the form on this page or email{' '}
-                  <a
-                    href="mailto:security@sonicverse.eu?subject=Security%20Report"
-                    className="text-primary transition hover:text-primary/80"
-                  >
-                    security@sonicverse.eu
-                  </a>
-                  .
-                </p>
-                <p>Avoid accessing, modifying, or retaining other people’s data while testing.</p>
-                <p>
-                  If sensitive data may have been exposed, stop testing and tell us immediately in
-                  your report.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.06} className="section-frame px-6 py-8 md:px-8">
+      <section id="report-a-vulnerability" className="section-space scroll-mt-28 pt-0">
+        <Container>
+          <Reveal className="section-shell">
             <SectionHeader
               eyebrow="Report form"
-              title="Report a vulnerability."
-              description="Tell us what happened, how to reproduce it, and what the impact looks like."
+              title="Report a vulnerability"
+              description="Share the issue, how to reproduce it, and the context we need to verify it quickly."
             />
             <div className="mt-8">
               <VulnReportForm />
