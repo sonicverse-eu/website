@@ -61,8 +61,8 @@ The repository also includes an `OpenCommit` GitHub Actions workflow that rewrit
 
 ## Links
 
-- Live site: [sonicverse.eu](https://sonicverse.eu)
+- Live site: [sonicverse.tech](https://sonicverse.tech)
 - Repository: [github.com/sonicverse-eu/website](https://github.com/sonicverse-eu/website)
 - GitHub organization: [github.com/sonicverse-eu](https://github.com/sonicverse-eu)
 - Issues: [github.com/sonicverse-eu/website/issues](https://github.com/sonicverse-eu/website/issues)
-- Contact: [hello@sonicverse.eu](mailto:hello@sonicverse.eu)
+- Contact: [hello@sonicverse.tech](mailto:hello@sonicverse.tech)

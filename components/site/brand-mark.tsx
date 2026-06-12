@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 type BrandMarkProps = {
   className?: string
   decorative?: boolean
@@ -9,11 +11,13 @@ export function BrandMark({
   decorative = true,
   title = 'Sonicverse logo',
 }: BrandMarkProps) {
-  const source = '/icon-purple.svg'
+  const source = '/brand/signal-aperture-mark.svg'
 
   return (
-    <img
+    <Image
       src={source}
+      width={128}
+      height={128}
       className={className}
       alt={decorative ? '' : title}
       aria-hidden={decorative}

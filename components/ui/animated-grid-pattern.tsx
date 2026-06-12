@@ -10,6 +10,7 @@ import {
 } from 'react'
 import { motion } from 'motion/react'
 
+import { useStableReducedMotion } from '@/lib/use-stable-reduced-motion'
 import { cn } from '@/lib/utils'
 
 type Square = {
@@ -43,6 +44,7 @@ export function AnimatedGridPattern({
   repeatDelay = 0.8,
   ...props
 }: AnimatedGridPatternProps) {
+  const reduceMotion = useStableReducedMotion()
   const id = useId()
   const containerRef = useRef<SVGSVGElement | null>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -136,27 +138,28 @@ export function AnimatedGridPattern({
       </defs>
       <rect width="100%" height="100%" fill={`url(#${id})`} />
       <svg x={x} y={y} className="overflow-visible">
-        {squares.map(({ pos: [squareX, squareY], id, iteration }, index) => (
-          <motion.rect
-            key={`${id}-${iteration}`}
-            width={width - 1}
-            height={height - 1}
-            x={squareX * width + 1}
-            y={squareY * height + 1}
-            fill="currentColor"
-            strokeWidth="0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: maxOpacity }}
-            transition={{
-              duration,
-              repeat: 1,
-              delay: index * 0.12,
-              repeatType: 'reverse',
-              repeatDelay,
-            }}
-            onAnimationComplete={() => updateSquarePosition(id)}
-          />
-        ))}
+        {!reduceMotion &&
+          squares.map(({ pos: [squareX, squareY], id, iteration }, index) => (
+            <motion.rect
+              key={`${id}-${iteration}`}
+              width={width - 1}
+              height={height - 1}
+              x={squareX * width + 1}
+              y={squareY * height + 1}
+              fill="currentColor"
+              strokeWidth="0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: maxOpacity }}
+              transition={{
+                duration,
+                repeat: 1,
+                delay: index * 0.12,
+                repeatType: 'reverse',
+                repeatDelay,
+              }}
+              onAnimationComplete={() => updateSquarePosition(id)}
+            />
+          ))}
       </svg>
     </svg>
   )

@@ -63,9 +63,9 @@ function buildEmailHtml(values: {
       <td align="center">
         <table width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:24px;border:1px solid rgba(15,23,42,0.08);overflow:hidden;">
           <tr>
-            <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
+            <td style="background:linear-gradient(135deg,#090a0c,#15171c);border-bottom:3px solid #b51f2e;padding:32px 40px;">
               <p style="margin:0;font-family:${EMAIL_HEADING_FONT};font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
-              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:400;color:#ffffff;letter-spacing:-0.03em;">New Security Report</h1>
+              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:600;color:#ffffff;letter-spacing:0;">New Security Report</h1>
             </td>
           </tr>
           <tr>
@@ -78,8 +78,8 @@ function buildEmailHtml(values: {
                   </td>
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Email</p>
-                    <p style="margin:0;font-size:15px;color:#432dd7;font-weight:500;">
-                      <a href="mailto:${escapeHtml(values.email)}" style="color:#432dd7;text-decoration:none;">${escapeHtml(values.email)}</a>
+                    <p style="margin:0;font-size:15px;color:#b51f2e;font-weight:500;">
+                      <a href="mailto:${escapeHtml(values.email)}" style="color:#b51f2e;text-decoration:none;">${escapeHtml(values.email)}</a>
                     </p>
                   </td>
                 </tr>
@@ -122,7 +122,7 @@ function buildEmailHtml(values: {
           </tr>
           <tr>
             <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
-              <p style="margin:0;font-size:12px;color:rgba(13,23,39,0.38);">Security report submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
+              <p style="margin:0;font-size:12px;color:rgba(13,23,39,0.38);">Security report submitted ${escapeHtml(values.submittedAt)} · sonicverse.tech</p>
             </td>
           </tr>
         </table>
@@ -176,8 +176,8 @@ export async function submitVulnReport(
     return { status: 'error', message: 'Please review the highlighted fields.', errors, values }
   }
 
-  const senderAddress = process.env.EMAIL_SENDER ?? 'noreply@mail.sonicverse.eu'
-  const recipientAddress = 'security@sonicverse.eu'
+  const senderAddress = process.env.EMAIL_SENDER ?? 'noreply@mail.sonicverse.tech'
+  const recipientAddress = 'security@sonicverse.tech'
   const resendApiKey = process.env.RESEND_API_KEY
 
   const submittedAt = formatSubmittedAt()

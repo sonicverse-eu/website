@@ -59,9 +59,9 @@ function buildEmailHtml(values: {
 
           <!-- Header -->
           <tr>
-            <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
+            <td style="background:linear-gradient(135deg,#090a0c,#15171c);border-bottom:3px solid #b51f2e;padding:32px 40px;">
               <p style="margin:0;font-family:${EMAIL_HEADING_FONT};font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
-              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:400;color:#ffffff;letter-spacing:-0.03em;">New Contact Inquiry</h1>
+              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:600;color:#ffffff;letter-spacing:0;">New Contact Inquiry</h1>
             </td>
           </tr>
 
@@ -78,8 +78,8 @@ function buildEmailHtml(values: {
                   </td>
                   <td width="50%" style="padding-left:12px;vertical-align:top;">
                     <p style="margin:0 0 4px;font-family:${EMAIL_BOOK_HEADING_FONT};font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(13,23,39,0.44);">Email</p>
-                    <p style="margin:0;font-size:15px;color:#432dd7;font-weight:500;">
-                      <a href="mailto:${escapeHtml(values.email)}" style="color:#432dd7;text-decoration:none;">${escapeHtml(values.email)}</a>
+                    <p style="margin:0;font-size:15px;color:#b51f2e;font-weight:500;">
+                      <a href="mailto:${escapeHtml(values.email)}" style="color:#b51f2e;text-decoration:none;">${escapeHtml(values.email)}</a>
                     </p>
                   </td>
                 </tr>
@@ -129,9 +129,9 @@ function buildEmailHtml(values: {
           <!-- Footer -->
           <tr>
             <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
-              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
+              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.tech</p>
               <div style="display:flex;gap:16px;">
-                <a href="https://github.com/sonicverse-eu" style="color:#432dd7;font-size:12px;text-decoration:none;">GitHub</a>
+                <a href="https://github.com/sonicverse-eu" style="color:#b51f2e;font-size:12px;text-decoration:none;">GitHub</a>
               </div>
             </td>
           </tr>
@@ -167,9 +167,9 @@ function buildConfirmationEmailHtml(values: {
 
           <!-- Header -->
           <tr>
-            <td style="background:linear-gradient(135deg,#4d35ef,#432dd7);padding:32px 40px;">
+            <td style="background:linear-gradient(135deg,#090a0c,#15171c);border-bottom:3px solid #b51f2e;padding:32px 40px;">
               <p style="margin:0;font-family:${EMAIL_HEADING_FONT};font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.7);">Sonicverse</p>
-              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:400;color:#ffffff;letter-spacing:-0.03em;">We received your message</h1>
+              <h1 style="margin:8px 0 0;font-family:${EMAIL_HEADING_FONT};font-size:22px;font-weight:600;color:#ffffff;letter-spacing:0;">We received your message</h1>
             </td>
           </tr>
 
@@ -178,13 +178,13 @@ function buildConfirmationEmailHtml(values: {
             <td style="padding:36px 40px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Hi ${escapeHtml(values.name)},</p>
               <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Thank you for getting in touch. We have received your message and will review it before replying.</p>
-              <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
+              <p style="margin:0 0 24px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.tech</p>
 
               <!-- Call to Action -->
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 <tr>
                   <td align="center">
-                    <a href="https://sonicverse.eu" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#4d35ef,#432dd7);color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">Visit Our Website</a>
+                    <a href="https://sonicverse.tech" style="display:inline-block;padding:12px 24px;background:#b51f2e;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">Visit Our Website</a>
                   </td>
                 </tr>
               </table>
@@ -199,16 +199,16 @@ function buildConfirmationEmailHtml(values: {
 
               <!-- Contact Info -->
               <p style="margin:0 0 4px;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.82);">Need immediate assistance?</p>
-              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:${escapeHtml(values.replyToAddress)}" style="color:#432dd7;text-decoration:none;">${escapeHtml(values.replyToAddress)}</a></p>
+              <p style="margin:0;font-size:15px;line-height:1.75;color:rgba(13,23,39,0.78);">Reply to this email or contact us at <a href="mailto:${escapeHtml(values.replyToAddress)}" style="color:#b51f2e;text-decoration:none;">${escapeHtml(values.replyToAddress)}</a></p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
             <td style="padding:20px 40px 32px;border-top:1px solid rgba(15,23,42,0.06);">
-              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.eu</p>
+              <p style="margin:0 0 16px;font-size:12px;color:rgba(13,23,39,0.38);">Submitted ${escapeHtml(values.submittedAt)} · sonicverse.tech</p>
               <div style="display:flex;gap:16px;">
-                <a href="https://github.com/sonicverse-eu" style="color:#432dd7;font-size:12px;text-decoration:none;">GitHub</a>
+                <a href="https://github.com/sonicverse-eu" style="color:#b51f2e;font-size:12px;text-decoration:none;">GitHub</a>
               </div>
             </td>
           </tr>
@@ -265,9 +265,9 @@ export async function submitContactForm(
     return { status: 'error', message: 'Please review the highlighted fields.', errors, values }
   }
 
-  const senderAddress = process.env.EMAIL_SENDER ?? 'noreply@mail.sonicverse.eu'
-  const recipientAddress = process.env.EMAIL_RECIPIENT ?? 'hello@sonicverse.eu'
-  const confirmationReplyToAddress = 'hello@sonicverse.eu'
+  const senderAddress = process.env.EMAIL_SENDER ?? 'noreply@mail.sonicverse.tech'
+  const recipientAddress = process.env.EMAIL_RECIPIENT ?? 'hello@sonicverse.tech'
+  const confirmationReplyToAddress = 'hello@sonicverse.tech'
   const resendApiKey = process.env.RESEND_API_KEY
 
   const submittedAt = formatSubmittedAt()
@@ -302,7 +302,7 @@ export async function submitContactForm(
       from: senderAddress,
       to: [values.email],
       subject: confirmationSubject,
-      text: `Hi ${values.name},\n\nThank you for getting in touch. We have received your message and will review it before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.eu`,
+      text: `Hi ${values.name},\n\nThank you for getting in touch. We have received your message and will review it before replying.\n\nIf you need immediate assistance, reply to this email or contact us at ${confirmationReplyToAddress}.\n\nSubmitted ${submittedAt} · sonicverse.tech`,
       html: buildConfirmationEmailHtml({
         name: values.name,
         submittedAt,

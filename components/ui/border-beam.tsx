@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
+import { useStableReducedMotion } from '@/lib/use-stable-reduced-motion'
 import { cn } from '@/lib/utils'
 
 type BorderBeamProps = {
@@ -9,7 +10,7 @@ type BorderBeamProps = {
 }
 
 export function BorderBeam({ className }: BorderBeamProps) {
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useStableReducedMotion()
 
   if (reduceMotion) {
     return null
@@ -24,7 +25,7 @@ export function BorderBeam({ className }: BorderBeamProps) {
       )}
     >
       <motion.div
-        className="absolute top-0 left-[-35%] h-px w-1/2 bg-[linear-gradient(90deg,transparent,rgba(67,45,215,0.95),transparent)]"
+        className="absolute top-0 left-[-35%] h-px w-1/2 bg-[linear-gradient(90deg,transparent,var(--on-air),transparent)]"
         animate={{ x: ['0%', '220%'] }}
         transition={{ duration: 6, ease: 'linear', repeat: Number.POSITIVE_INFINITY }}
       />

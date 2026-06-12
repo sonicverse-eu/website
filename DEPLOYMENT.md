@@ -44,8 +44,8 @@ Configure environment variables in the Vercel Dashboard under Project Settings >
 
 Required variables:
 
-- `EMAIL_SENDER`: The email address that sends inquiries (e.g., `noreply@mail.sonicverse.eu`).
-- `EMAIL_RECIPIENT`: The email address that receives inquiries (e.g., `hello@sonicverse.eu`).
+- `EMAIL_SENDER`: The email address that sends inquiries (e.g., `noreply@mail.sonicverse.tech`).
+- `EMAIL_RECIPIENT`: The email address that receives inquiries (e.g., `hello@sonicverse.tech`).
 - `RESEND_API_KEY`: API key for the Resend email service.
 
 Optional variables:

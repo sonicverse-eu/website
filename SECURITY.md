@@ -5,7 +5,7 @@
 Use this intake order for all security reports:
 
 - GitHub Private Vulnerability Reporting for this repository
-- Report at [Sonicverse Security](https://sonicverse.eu/security#report-a-vulnerability)
+- Report at [Sonicverse Security](https://sonicverse.tech/security#report-a-vulnerability)
 - Do not use public GitHub issues for security-sensitive reports
 
 Public GitHub issues can expose users, deployments, or maintainers before a fix is available, so please use a private reporting channel.

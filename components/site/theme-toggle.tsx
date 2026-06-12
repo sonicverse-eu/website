@@ -1,10 +1,11 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { MoonStar, SunMedium } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useSyncExternalStore } from 'react'
 
+import { useStableReducedMotion } from '@/lib/use-stable-reduced-motion'
 import { cn } from '@/lib/utils'
 
 type ThemeToggleProps = {
@@ -13,7 +14,7 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme()
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useStableReducedMotion()
   const mounted = useSyncExternalStore(
     () => () => undefined,
     () => true,
@@ -35,21 +36,21 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       title={`Switch to ${nextTheme} mode`}
       onClick={() => setTheme(nextTheme)}
       className={cn(
-        'relative inline-flex h-10 w-[4.5rem] shrink-0 items-center rounded-full border border-border/70 bg-background/62 p-1 text-foreground/78 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md backdrop-saturate-[1.5] transition-[border-color,background-color,box-shadow,color] duration-300 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40 dark:shadow-[0_12px_32px_rgba(0,0,0,0.24)]',
+        'relative inline-flex h-9 w-[4.25rem] shrink-0 items-center rounded-md border border-border bg-background p-1 text-foreground/70 shadow-[0_1px_0_rgba(255,255,255,0.8)] transition-[border-color,background-color,box-shadow,color] duration-300 hover:border-primary/35 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/35 dark:bg-background/70 dark:shadow-[0_12px_28px_rgba(0,0,0,0.2)]',
         className,
       )}
       whileTap={reduceMotion ? undefined : { scale: 0.98 }}
     >
       <span
         aria-hidden="true"
-        className="absolute inset-[3px] rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.24),rgba(255,255,255,0.02))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.01))]"
+        className="absolute inset-[3px] rounded-sm bg-secondary/60 dark:bg-secondary/50"
       />
 
       <motion.span
         aria-hidden="true"
-        className="absolute left-1 top-1 z-10 flex size-8 items-center justify-center rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(237,242,251,0.92))] text-amber-500 shadow-[0_10px_24px_rgba(15,23,42,0.16)] dark:bg-[linear-gradient(180deg,rgba(22,31,52,0.98),rgba(10,17,29,0.96))] dark:text-indigo-100 dark:shadow-[0_12px_28px_rgba(0,0,0,0.34)]"
+        className="absolute top-1 left-1 z-10 flex size-7 items-center justify-center rounded-sm bg-background text-primary shadow-[0_8px_18px_rgba(15,18,22,0.12)] dark:bg-card dark:shadow-[0_12px_24px_rgba(0,0,0,0.3)]"
         animate={{
-          x: mounted ? (isDark ? 32 : 0) : 0,
+          x: mounted ? (isDark ? 31 : 0) : 0,
         }}
         transition={transition}
       >
@@ -102,9 +103,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         aria-hidden="true"
         className={cn(
           'pointer-events-none absolute top-1/2 flex size-4 -translate-y-1/2 items-center justify-center transition-[left,right,opacity,transform,color] duration-200',
-          isDark
-            ? 'left-[0.72rem] text-amber-500/75'
-            : 'right-[0.72rem] text-slate-500/75 dark:text-indigo-100/85',
+          isDark ? 'left-[0.64rem] text-foreground/50' : 'right-[0.64rem] text-foreground/50',
         )}
         animate={
           reduceMotion

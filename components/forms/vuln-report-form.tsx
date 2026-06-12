@@ -17,7 +17,7 @@ export function VulnReportForm() {
 
   return (
     <form key={formKey} action={action} className="space-y-5">
-      <div className="rounded-[1.6rem] border border-border/70 bg-background/56 px-5 py-4 text-sm leading-6 text-foreground/68 backdrop-blur-sm">
+      <div className="rounded-lg border border-border/70 bg-background/56 px-5 py-4 text-sm leading-6 text-foreground/68">
         Please report issues in good faith, avoid accessing other people’s data, and include enough
         detail for us to reproduce and verify the problem safely.
       </div>

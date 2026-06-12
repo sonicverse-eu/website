@@ -40,7 +40,7 @@ export function ContactForm() {
         />
         <FormField
           id="projectType"
-          label="Project type"
+          label="You are a…"
           input={
             <select
               id="projectType"
@@ -49,12 +49,14 @@ export function ContactForm() {
               disabled={pending}
               className="flex h-12 w-full rounded-2xl border border-border/80 bg-background/70 px-4 text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] outline-none transition focus-visible:border-primary/40 focus-visible:ring-3 focus-visible:ring-primary/10"
             >
-              <option value="">Select an area</option>
-              <option value="Product engineering">Product engineering</option>
-              <option value="Web platform">Web platform</option>
-              <option value="Design system">Design system</option>
-              <option value="Open-source tooling">Open-source tooling</option>
-              <option value="Technical architecture">Technical architecture</option>
+              <option value="">Select a role</option>
+              <option value="Independent / community station">
+                Independent / community station
+              </option>
+              <option value="Station manager">Station manager</option>
+              <option value="Technical team at a station">Technical team at a station</option>
+              <option value="Multi-station network">Multi-station network</option>
+              <option value="Just following along">Just following along</option>
             </select>
           }
         />
@@ -62,15 +64,15 @@ export function ContactForm() {
 
       <FormField
         id="brief"
-        label="Project brief"
+        label="Tell us about your station"
         error={currentState.errors.brief}
-        description="Outline your current setup, what needs to change, and what a successful outcome looks like."
+        description="Outline what you run today, where the legacy tools fall short, and what you’d want early access to do for you."
         input={
           <Textarea
             id="brief"
             name="brief"
             defaultValue={currentState.values.brief}
-            placeholder="We are rebuilding our platform and need a clear technical foundation, a more maintainable frontend, and support planning the next release."
+            placeholder="We run a community station on an ageing proprietary playout system. The contract is up for renewal and we want to move to something open we can self-host and extend."
             disabled={pending}
             aria-invalid={Boolean(currentState.errors.brief)}
           />
@@ -81,7 +83,7 @@ export function ContactForm() {
         pending={pending}
         status={currentState.status}
         message={currentState.message}
-        idleMessage="A concise brief is enough to start a useful conversation."
+        idleMessage="A few lines about your station is enough to start."
         submitLabel="Send message"
         pendingLabel="Sending..."
         highlightError={false}

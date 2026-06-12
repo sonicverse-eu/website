@@ -70,7 +70,7 @@ export default function ContactPage() {
                 {collaborationPrompts.map((prompt) => (
                   <div
                     key={prompt}
-                    className="rounded-[1.35rem] border border-border/60 bg-background/44 px-4 py-4 text-sm leading-7 text-foreground/66"
+                    className="rounded-md border border-border/70 bg-background/44 px-4 py-4 text-sm leading-7 text-foreground/66"
                   >
                     {prompt}
                   </div>
@@ -81,7 +81,7 @@ export default function ContactPage() {
             <Reveal delay={0.06} className="section-frame px-6 py-8 md:px-8">
               <Badge>{CONTACT_DIRECT_LABEL}</Badge>
               <div className="mt-5 space-y-3 text-sm leading-7 text-foreground/66">
-                <p>hello@sonicverse.eu</p>
+                <p>hello@sonicverse.tech</p>
                 <p>{CONTACT_DIRECT_DESCRIPTION}</p>
               </div>
             </Reveal>

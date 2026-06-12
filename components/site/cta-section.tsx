@@ -30,7 +30,7 @@ export function CTASection({
   return (
     <section className="py-18 sm:py-24">
       <Container>
-        <Reveal className="section-frame relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12">
+        <Reveal className="section-frame atlas-map relative overflow-hidden px-6 py-10 sm:px-10 sm:py-12">
           <BorderBeam />
           <AnimatedGridPattern
             numSquares={18}

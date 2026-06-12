@@ -1,7 +1,7 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
-import { Menu } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowRight, Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -17,6 +17,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Container } from '@/components/ui/container'
+import { useStableReducedMotion } from '@/lib/use-stable-reduced-motion'
 import { cn } from '@/lib/utils'
 import { navItems, siteName } from '@/lib/site-data'
 
@@ -25,7 +26,7 @@ import { ThemeToggle } from './theme-toggle'
 
 export function Header() {
   const pathname = usePathname()
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useStableReducedMotion()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -105,25 +106,25 @@ export function Header() {
       <div
         aria-hidden="true"
         className={cn(
-          'pointer-events-none fixed inset-x-0 top-0 z-[49] h-[5.5rem] border-b border-border/60',
+          'pointer-events-none fixed inset-x-0 top-0 z-[49] h-[5.25rem] border-b border-border/70',
           scrolled && !hidden ? 'opacity-100' : 'opacity-0',
         )}
         style={{
-          backdropFilter: 'blur(20px) saturate(1.8)',
-          WebkitBackdropFilter: 'blur(20px) saturate(1.8)',
+          backdropFilter: 'blur(16px) saturate(1.08)',
+          WebkitBackdropFilter: 'blur(16px) saturate(1.08)',
           background: 'linear-gradient(180deg, var(--header-bg-from), var(--header-bg-to))',
         }}
       />
 
       <motion.header
         className="pointer-events-none fixed inset-x-0 top-0 z-50"
-        initial={{ y: -32, scale: 0.97, opacity: 0 }}
+        initial={{ y: -24, opacity: 0 }}
         animate={
           reduceMotion
-            ? { y: 0, scale: 1, opacity: 1 }
+            ? { y: 0, opacity: 1 }
             : hidden
-              ? { y: '-120%', scale: 0.96, opacity: 0 }
-              : { y: 0, scale: 1, opacity: 1 }
+              ? { y: '-120%', opacity: 0 }
+              : { y: 0, opacity: 1 }
         }
         transition={
           reduceMotion
@@ -132,7 +133,6 @@ export function Header() {
               ? { duration: 0.22, ease: [0.4, 0, 1, 1] }
               : {
                   y: { type: 'spring', stiffness: 380, damping: 28, mass: 0.7 },
-                  scale: { type: 'spring', stiffness: 380, damping: 28, mass: 0.7 },
                   opacity: { duration: 0.18, ease: 'easeOut' },
                 }
         }
@@ -141,16 +141,16 @@ export function Header() {
       >
         <Container className="pt-6 pb-5">
           <div className="pointer-events-auto flex items-center justify-between px-1 sm:px-2">
-            <Link href="/" className="group flex items-center gap-3 rounded-full px-2 py-1">
-              <BrandMark className="h-9 w-auto text-primary transition-transform duration-300 group-hover:scale-[1.06]" />
+            <Link href="/" className="group flex items-center gap-3 rounded-md px-2 py-1">
+              <BrandMark className="h-9 w-auto transition-transform duration-300 group-hover:scale-[1.04]" />
               <div className="flex flex-col leading-none">
-                <span className="font-heading text-sm font-semibold tracking-[0.12em] uppercase">
+                <span className="font-heading text-sm font-semibold tracking-[0.08em] uppercase">
                   {siteName}
                 </span>
               </div>
             </Link>
 
-            <nav className="hidden items-center gap-1 rounded-full border border-border/50 bg-foreground/[0.04] p-1 lg:flex">
+            <nav className="hidden items-center gap-7 lg:flex">
               {navItems.map((item) => {
                 const active = isActivePath(item.href)
                 return (
@@ -158,10 +158,10 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'rounded-full px-4 py-2 text-sm transition',
+                      'relative py-2 text-sm font-medium transition after:absolute after:right-0 after:-bottom-0.5 after:left-0 after:h-px after:origin-left after:bg-primary after:transition-transform after:duration-200',
                       active
-                        ? 'bg-primary text-white shadow-[0_4px_14px_rgba(67,45,215,0.3)]'
-                        : 'text-foreground/68 hover:bg-foreground/[0.06] hover:text-foreground',
+                        ? 'text-foreground after:scale-x-100'
+                        : 'text-foreground/62 after:scale-x-0 hover:text-foreground hover:after:scale-x-100',
                     )}
                   >
                     {item.label}
@@ -173,7 +173,10 @@ export function Header() {
             <div className="hidden items-center gap-3 lg:flex">
               <ThemeToggle className="hidden lg:flex" />
               <Button asChild size="sm" className="h-10 px-4">
-                <Link href="https://docs.sonicverse.eu">Documentation</Link>
+                <Link href="https://docs.sonicverse.tech">
+                  Documentation
+                  <ArrowRight className="size-3.5" />
+                </Link>
               </Button>
             </div>
 
@@ -191,7 +194,7 @@ export function Header() {
                   <Button
                     variant="secondary"
                     size="sm"
-                    className="size-10 rounded-full p-0"
+                    className="size-10 p-0"
                     aria-label="Open menu"
                   >
                     <Menu className="size-5" />
@@ -201,7 +204,7 @@ export function Header() {
                   <SheetHeader>
                     <SheetTitle>Sonicverse</SheetTitle>
                     <SheetDescription>
-                      Open-source-native product engineering with a calm technical point of view.
+                      The open broadcast stack — built by broadcasters and developers, in the open.
                     </SheetDescription>
                   </SheetHeader>
                   <div className="flex flex-col gap-2">
@@ -212,7 +215,7 @@ export function Header() {
                           <Link
                             href={item.href}
                             className={cn(
-                              'rounded-2xl border px-4 py-3 text-sm transition',
+                              'rounded-md border px-4 py-3 text-sm transition',
                               active
                                 ? 'border-primary/18 bg-primary/10 text-primary'
                                 : 'border-border/60 bg-background/68 text-foreground/72',
@@ -228,7 +231,7 @@ export function Header() {
                     <ThemeToggle />
                     <Button asChild className="flex-1">
                       <SheetClose asChild>
-                        <Link href="https://docs.sonicverse.eu">Documentation</Link>
+                        <Link href="https://docs.sonicverse.tech">Documentation</Link>
                       </SheetClose>
                     </Button>
                   </div>

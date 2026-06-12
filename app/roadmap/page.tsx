@@ -48,7 +48,7 @@ export default async function RoadmapPage() {
         <Container className="space-y-6">
           {groups.map((group, groupIndex) => (
             <Reveal key={group.status} delay={groupIndex * 0.04}>
-              <div className="section-frame space-y-6 p-6 backdrop-blur-xl backdrop-saturate-[1.5] sm:p-8">
+              <div className="section-frame space-y-6 p-6 sm:p-8">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-2">
                     <StatusBadge status={group.status} />

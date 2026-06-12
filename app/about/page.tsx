@@ -12,7 +12,7 @@ import { operatingModel, principles } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
   'About',
-  'How Sonicverse thinks about modern software systems, open-source technology, and long-term technical quality.',
+  'Sonicverse is built by broadcasters and developers, building the open-source software radio has been missing.',
   '/about',
 )
 
@@ -22,20 +22,20 @@ export default function AboutPage() {
       <PageHero
         layout="single"
         eyebrow="About Sonicverse"
-        title="Technical ambition, with a calmer operating model."
-        description="Modern software systems and digital products built with structure, clarity, and long-term care."
-        highlights={['Direct collaboration', 'Transparent tradeoffs', 'Long-term structure']}
-        primaryAction={{ href: '/contact', label: 'Start a conversation' }}
-        secondaryAction={{ href: '/services', label: 'View services' }}
+        title="Built by broadcasters. Built in the open."
+        description="We started Sonicverse because we felt the gap firsthand — tools that didn’t talk to each other and vendor roadmaps that didn’t reflect how stations actually work."
+        highlights={['In the open', 'With broadcasters', 'Open standards']}
+        primaryAction={{ href: '/contact', label: 'Get early access' }}
+        secondaryAction={{ href: '/platform', label: 'Explore the stack' }}
       />
 
       <section className="section-space">
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Mission"
-              title="Build software that feels deliberate."
-              description="Products that feel composed. Architecture that stays understandable. Collaboration that keeps trust intact."
+              eyebrow="How we build"
+              title="The broadcast industry deserves software built with craft."
+              description="Built with the same ambition that goes into the content stations produce every day — open source at the core, designed for broadcasters, by people who know the industry from the inside."
             />
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
@@ -57,9 +57,9 @@ export default function AboutPage() {
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Values"
+              eyebrow="Principles"
               title="A small set of principles shapes the work."
-              description="Practical filters for product, engineering, and collaboration decisions."
+              description="Practical filters for every product, engineering, and roadmap decision."
             />
           </Reveal>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -70,7 +70,7 @@ export default function AboutPage() {
                     <Badge variant="muted">0{index + 1}</Badge>
                     <CardTitle>{principle}</CardTitle>
                     <CardDescription>
-                      A preference for systems that remain useful over time.
+                      A default we hold to as the stack takes shape.
                     </CardDescription>
                   </CardHeader>
                 </Card>
@@ -84,16 +84,16 @@ export default function AboutPage() {
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Open-source philosophy"
-              title="Open collaboration keeps systems sharper."
-              description="Reusable knowledge should travel further than a single private project."
+              eyebrow="Open-source first"
+              title="Open source isn’t a feature. It’s the model."
+              description="The infrastructure is already there — Linux runs broadcast servers, FFmpeg powers the audio pipeline. The question is whether the industry is structured to take advantage of it."
             />
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              'Architecture stays easier to inspect.',
-              'Contribution becomes more realistic.',
-              'Shared patterns become easier to maintain.',
+              'Fix bugs from the source, not a support ticket.',
+              'Extend tools to fit your exact workflow.',
+              'Own the roadmap — open projects don’t get sunset.',
             ].map((item, index) => (
               <Reveal key={item} delay={index * 0.05}>
                 <Card className="h-full">
@@ -108,9 +108,9 @@ export default function AboutPage() {
       </section>
 
       <CTASection
-        eyebrow="How we work"
-        title="When product judgment and engineering discipline need to move together, Sonicverse is built for that intersection."
-        description="Bring the system shape and the direction of travel."
+        eyebrow="Early access"
+        title="If you’re a broadcaster curious about what we’re building, we’d love to hear from you."
+        description="We’re just getting started, and there’s a lot ahead. Tell us how your station works."
       />
     </>
   )

@@ -19,7 +19,7 @@ If you are unsure whether an idea is a good fit, open an issue first so we can d
 
 - Use [GitHub Issues](https://github.com/sonicverse-eu/website/issues) for bug reports, feature proposals, and contributor questions that benefit from public discussion.
 - Use [Pull Requests](https://github.com/sonicverse-eu/website/pulls) when you already have a scoped change ready to review.
-- Email `hello@sonicverse.eu` for private, security-sensitive, or otherwise non-public concerns.
+- Email `hello@sonicverse.tech` for private, security-sensitive, or otherwise non-public concerns.
 
 ## Development Setup
 
@@ -121,7 +121,7 @@ The repository also runs an `OpenCommit` GitHub Actions workflow on pushes to no
 
 Until a repository-local code of conduct is added, contributors are expected to follow the spirit of the [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
 
-If you need to report unacceptable behavior or raise a concern privately, contact `hello@sonicverse.eu`.
+If you need to report unacceptable behavior or raise a concern privately, contact `hello@sonicverse.tech`.
 
 ## Additional Contribution Practices
 

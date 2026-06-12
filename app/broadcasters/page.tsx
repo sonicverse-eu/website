@@ -10,34 +10,30 @@ import { pageMetadata } from '@/lib/metadata'
 import { projectArchetypes } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  'Projects',
-  'Project archetypes and system types Sonicverse is designed to build without inventing fake case studies.',
-  '/projects',
+  'Broadcasters',
+  'Who the open broadcast stack is for — independent and community stations, station managers, and technical teams.',
+  '/broadcasters',
 )
 
-export default function ProjectsPage() {
+export default function BroadcastersPage() {
   return (
     <>
       <PageHero
         layout="single"
-        eyebrow="Projects"
-        title="Capability, shown through the systems we build."
-        description="Products, platforms, internal systems, and open-source infrastructure with visible design judgment."
-        highlights={[
-          'Operational platforms',
-          'Developer-facing products',
-          'Open-source ecosystems',
-        ]}
-        primaryAction={{ href: '/contact', label: 'Talk through your system' }}
+        eyebrow="Who it’s for"
+        title="Built for the people who run stations."
+        description="Independent and community stations underserved by legacy vendors — and the managers and technical teams who keep them on air."
+        highlights={['Independent stations', 'Station managers', 'Technical teams']}
+        primaryAction={{ href: '/contact', label: 'Get early access' }}
       />
 
       <section className="section-space">
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Selected archetypes"
-              title="Real categories of work, not fictional case studies."
-              description="Archetypes that show the kind of system thinking Sonicverse brings to a project."
+              eyebrow="Who it’s for"
+              title="Made for stations the legacy vendors forgot."
+              description="The stack is shaped around real operators — not a generic media buyer. These are the people it’s built with."
             />
           </Reveal>
           <div className="grid gap-6 md:grid-cols-2">
@@ -59,16 +55,16 @@ export default function ProjectsPage() {
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Project signals"
-              title="A few signs that the fit is right."
-              description="The work is strongest when technical structure matters as much as visible output."
+              eyebrow="The pain"
+              title="The friction that pushed us to build this."
+              description="If any of these sound like your station, the open stack is being built for you."
             />
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              'Multiple audiences and complex interaction surfaces',
-              'Technical credibility is part of the brand experience',
-              'Shared structure needs to get stronger before the platform can scale',
+              'Long contracts and pricing that scales with your growth',
+              'A roadmap dictated by someone else’s priorities',
+              'Tools that don’t talk to each other without costly middleware',
             ].map((item, index) => (
               <Reveal key={item} delay={index * 0.05}>
                 <Card className="h-full">
@@ -83,9 +79,9 @@ export default function ProjectsPage() {
       </section>
 
       <CTASection
-        eyebrow="Project fit"
-        title="If the system needs technical structure and product-level finish, that is the right kind of brief."
-        description="Sonicverse is best used where long-term clarity matters as much as short-term delivery."
+        eyebrow="Early access"
+        title="Run a station that deserves better software?"
+        description="Get early access and help shape the stack around how your station actually works."
       />
     </>
   )

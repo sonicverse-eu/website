@@ -10,30 +10,30 @@ import { pageMetadata } from '@/lib/metadata'
 import { serviceAreas, technicalStandards } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
-  'Services',
-  'Product engineering, software foundations, web platforms, design systems, and open-source tooling.',
-  '/services',
+  'Platform',
+  'The open broadcast stack — playout, scheduling, streaming, show prep, station management, and infrastructure tooling.',
+  '/platform',
 )
 
-export default function ServicesPage() {
+export default function PlatformPage() {
   return (
     <>
       <PageHero
         layout="single"
-        eyebrow="Services"
-        title="Services for product quality and system clarity."
-        description="Sonicverse helps teams ship systems that are easier to evolve, operate, and trust."
-        highlights={['Product engineering', 'Platform foundations', 'Technical architecture']}
-        primaryAction={{ href: '/contact', label: 'Discuss a project' }}
+        eyebrow="The stack"
+        title="One open stack for the whole broadcast workflow."
+        description="The modules that cover a station’s day — from the on-air engine to the tooling around it, built to interoperate on open standards."
+        highlights={['Playout & automation', 'Scheduling & traffic', 'Streaming & delivery']}
+        primaryAction={{ href: '/contact', label: 'Get early access' }}
       />
 
       <section className="section-space">
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Offerings"
-              title="A service set built for real product and platform work."
-              description="Each engagement starts with the same question: what structure will make this system stronger later, not just at launch."
+              eyebrow="Modules"
+              title="The pieces a broadcast day actually needs."
+              description="Each module is being built in the open, designed to stand alone or wire together through open APIs — no proprietary middleware required."
             />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-2">
@@ -48,7 +48,7 @@ export default function ServicesPage() {
                     {service.bullets.map((bullet) => (
                       <div
                         key={bullet}
-                        className="rounded-[1.25rem] border border-border/60 bg-background/56 px-4 py-3 text-sm text-foreground/66 backdrop-blur-sm backdrop-saturate-[1.3]"
+                        className="rounded-md border border-border/70 bg-background/56 px-4 py-3 text-sm text-foreground/66"
                       >
                         {bullet}
                       </div>
@@ -65,16 +65,16 @@ export default function ServicesPage() {
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Delivery"
-              title="A clear delivery cadence."
-              description="Frame the system. Settle the critical decisions. Build in focused increments."
+              eyebrow="Interoperability"
+              title="Designed to play together."
+              description="Open standards mean a scheduling system, a playout engine, and a streaming server can be wired together to serve your operation — not a vendor’s upsell strategy."
             />
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              'Frame the system and the highest-risk decisions.',
-              'Lock the architecture, interfaces, and delivery order.',
-              'Ship in focused increments with a cleaner codebase.',
+              'Open APIs and formats between every module.',
+              'Self-host the stack and own your data end to end.',
+              'Mix in the modules you need, leave the rest.',
             ].map((item, index) => (
               <Reveal key={item} delay={index * 0.05}>
                 <Card className="h-full">
@@ -88,8 +88,8 @@ export default function ServicesPage() {
           <Reveal>
             <SectionHeader
               eyebrow="Standards"
-              title="Technical standards that keep quality observable."
-              description="Defaults, not optional polish."
+              title="Broadcast-grade by default."
+              description="The defaults the stack is held to — not optional polish."
             />
           </Reveal>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -107,9 +107,9 @@ export default function ServicesPage() {
       </section>
 
       <CTASection
-        eyebrow="Delivery"
-        title="Need a product-minded engineering partner instead of a generic implementation vendor?"
-        description="Sonicverse is designed for the moments where technical structure matters as much as visible output."
+        eyebrow="Early access"
+        title="Want to run the open stack at your station?"
+        description="Get early access and help shape the modules around how your station actually works."
       />
     </>
   )

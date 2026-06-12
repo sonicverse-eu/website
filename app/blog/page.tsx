@@ -68,13 +68,13 @@ export default async function BlogPage() {
             <Reveal>
               <Link
                 href={featured.href}
-                className="section-frame block p-6 backdrop-blur-xl backdrop-saturate-[1.5] transition hover:border-primary/28 sm:p-8"
+                className="section-frame atlas-map block p-6 transition hover:border-primary/32 sm:p-8"
               >
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
                   <div className="space-y-5">
                     <Badge>Featured post</Badge>
                     <div className="space-y-4">
-                      <h2 className="text-[2.2rem] leading-[1.18] font-medium tracking-[-0.04em] text-foreground sm:text-[2.9rem] sm:leading-[1.12]">
+                      <h2 className="text-[2.2rem] leading-[1.18] font-semibold tracking-normal text-foreground sm:text-[2.9rem] sm:leading-[1.12]">
                         {featured.frontmatter.title}
                       </h2>
                       <p className="max-w-2xl text-[0.98rem] leading-8 text-foreground/72">
@@ -83,7 +83,7 @@ export default async function BlogPage() {
                     </div>
                     <TagList tags={featured.frontmatter.tags} />
                   </div>
-                  <div className="space-y-4 rounded-[1.7rem] border border-border/60 bg-background/52 p-5 backdrop-blur-sm backdrop-saturate-[1.4]">
+                  <div className="space-y-4 rounded-lg border border-border/70 bg-background/52 p-5">
                     <MetaInline>{formatContentDate(featured.frontmatter.publishedAt)}</MetaInline>
                     <Button size="lg" className="w-full">
                       Read featured note

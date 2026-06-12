@@ -59,7 +59,7 @@ export function MetaRail({ items, className }: { items: MetaItem[]; className?: 
   return (
     <div
       className={cn(
-        'rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]',
+        'rounded-lg border border-border/80 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)]',
         className,
       )}
     >
@@ -69,7 +69,7 @@ export function MetaRail({ items, className }: { items: MetaItem[]; className?: 
             {index > 0 ? <Separator /> : null}
             <div className="flex items-start gap-3">
               {item.icon ? (
-                <span className="mt-0.5 flex size-8 items-center justify-center rounded-full border border-border/70 bg-background/50 text-foreground/64">
+                <span className="mt-0.5 flex size-8 items-center justify-center rounded-md border border-border/70 bg-background/50 text-foreground/64">
                   {item.icon}
                 </span>
               ) : null}
@@ -216,7 +216,7 @@ export function ContentArticleShell({
         title={title}
         description={description}
         kicker={
-          <div className="rounded-[1.7rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6]">
+          <div className="rounded-lg border border-border/80 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] p-5 shadow-[var(--shadow-soft)]">
             <div className="space-y-3">
               <p className="text-[0.7rem] font-medium tracking-[0.24em] uppercase text-foreground/44">
                 Entry signal
@@ -230,7 +230,7 @@ export function ContentArticleShell({
       <section className="pb-24 sm:pb-28">
         <Container className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
           <Reveal>
-            <article className="rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-6 py-7 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.6] sm:px-8 sm:py-9">
+            <article className="rounded-lg border border-border/80 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-6 py-7 shadow-[var(--shadow-soft)] sm:px-8 sm:py-9">
               <div className="space-y-6">{children}</div>
             </article>
           </Reveal>
@@ -254,7 +254,7 @@ export function TimelineEntry({ entry }: { entry: ContentEntry<'changelog'> }) {
         </div>
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 hidden w-px bg-border/70 lg:block" />
-          <div className="absolute -left-[5px] top-7 hidden size-3 rounded-full border border-primary/30 bg-primary/90 lg:block" />
+          <div className="absolute -left-[5px] top-7 hidden size-3 border border-primary/40 bg-primary/90 lg:block" />
           <div className="lg:pl-8">
             <ContentLinkCard
               href={entry.href}
@@ -318,7 +318,7 @@ export function SignalsSection({
                   product signals instead of generic editorial blocks.
                 </p>
               </div>
-              <div className="rounded-[1.8rem] border border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-5 py-4 shadow-[var(--shadow-soft)] backdrop-blur-xl backdrop-saturate-[1.5]">
+              <div className="rounded-lg border border-border/80 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] px-5 py-4 shadow-[var(--shadow-soft)]">
                 <div className="flex items-start gap-3">
                   <Sparkles className="mt-1 size-4 text-primary" />
                   <p className="text-sm leading-7 text-foreground/68">
@@ -340,12 +340,12 @@ export function SignalsSection({
               icon={<Sparkles className="size-4" />}
             >
               {featuredBlog ? (
-                <div className="rounded-[1.5rem] border border-primary/18 bg-primary/[0.1] p-5 backdrop-blur-sm">
+                <div className="rounded-lg border border-primary/22 bg-primary/[0.1] p-5">
                   <p className="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-primary/88">
                     Featured
                   </p>
                   <Link href={featuredBlog.href} className="mt-3 block space-y-3">
-                    <h3 className="text-[1.35rem] leading-[1.16] font-medium tracking-[-0.05em] text-foreground">
+                    <h3 className="text-[1.35rem] leading-[1.16] font-semibold tracking-normal text-foreground">
                       {featuredBlog.frontmatter.title}
                     </h3>
                     <p className="text-sm leading-7 text-foreground/68">
@@ -434,7 +434,7 @@ function SignalColumn({
       <CardHeader className="space-y-4">
         <div className="flex items-center justify-between gap-4">
           <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground/72">
-            <span className="flex size-8 items-center justify-center rounded-full border border-border/70 bg-background/44 text-primary">
+            <span className="flex size-8 items-center justify-center rounded-md border border-border/70 bg-background/44 text-primary">
               {icon}
             </span>
             {title}
@@ -464,12 +464,10 @@ function SignalLink({
   return (
     <Link
       href={href}
-      className="flex items-start justify-between gap-4 rounded-[1.35rem] border border-border/60 bg-background/58 px-4 py-4 backdrop-blur-sm backdrop-saturate-[1.4] transition hover:border-primary/18 hover:bg-primary/[0.06]"
+      className="flex items-start justify-between gap-4 rounded-md border border-border/70 bg-background/58 px-4 py-4 transition hover:border-primary/24 hover:bg-primary/[0.06]"
     >
       <div className="space-y-1.5">
-        <p className="text-[1rem] leading-7 font-medium tracking-[-0.03em] text-foreground">
-          {title}
-        </p>
+        <p className="text-[1rem] leading-7 font-medium tracking-normal text-foreground">{title}</p>
         <p className="text-sm text-foreground/54">{meta}</p>
       </div>
       {trailing}

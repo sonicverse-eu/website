@@ -2,8 +2,8 @@
 # Copy this file to .dev.vars and configure for local development
 
 # Email configuration
-EMAIL_SENDER = "noreply@mail.sonicverse.eu"
-EMAIL_RECIPIENT = "hello@sonicverse.eu"
+EMAIL_SENDER = "noreply@mail.sonicverse.tech"
+EMAIL_RECIPIENT = "hello@sonicverse.tech"
 
 # Environment
 NODE_ENV = "development"

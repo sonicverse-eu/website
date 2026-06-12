@@ -2,7 +2,9 @@
 
 import type { ReactNode } from 'react'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+
+import { useStableReducedMotion } from '@/lib/use-stable-reduced-motion'
 
 type ContentHoverCardProps = {
   children: ReactNode
@@ -10,7 +12,7 @@ type ContentHoverCardProps = {
 }
 
 export function ContentHoverCard({ children, className }: ContentHoverCardProps) {
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useStableReducedMotion()
 
   return (
     <motion.div

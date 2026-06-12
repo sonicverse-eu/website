@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 
 import { Spotlight } from '@/components/magicui/spotlight'
 import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern'
-import { Badge } from '@/components/ui/badge'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container'
@@ -18,7 +17,7 @@ type HeroAction = {
 }
 
 type BaseHeroProps = {
-  eyebrow: string
+  eyebrow?: string
   title: string
   description: string
   highlights?: string[]
@@ -58,7 +57,7 @@ export function PageHero({
   return (
     <section
       className={cn(
-        'relative overflow-hidden pt-32 pb-[4.5rem] sm:pt-36 sm:pb-[5.5rem] lg:pt-40 lg:pb-24',
+        'relative overflow-hidden border-b border-border/70 bg-background pt-32 pb-[4.5rem] sm:pt-36 sm:pb-[5.5rem] lg:pt-40 lg:pb-24',
         compact && 'pb-16 sm:pb-20',
         className,
       )}
@@ -66,10 +65,10 @@ export function PageHero({
       <Spotlight />
       <AnimatedGridPattern
         numSquares={32}
-        maxOpacity={0.16}
+        maxOpacity={0.1}
         duration={5}
         repeatDelay={1}
-        className="hero-grid-mask absolute inset-0 text-foreground/10"
+        className="hero-grid-mask absolute inset-0 text-foreground/5 dark:text-foreground/8"
       />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-background" />
       <Container className="relative">
@@ -80,8 +79,13 @@ export function PageHero({
               : 'max-w-5xl',
           )}
         >
-          <Reveal className={cn('space-y-6', isSplit && 'lg:pb-3')}>
-            <Badge>{eyebrow}</Badge>
+          <Reveal variant="hero" className={cn('space-y-6', isSplit && 'lg:pb-3')}>
+            {eyebrow ? (
+              <div className="flex items-center gap-3">
+                <span className="h-px w-12 bg-primary/70" />
+                <p className="signal-label text-primary/88">{eyebrow}</p>
+              </div>
+            ) : null}
             <div className="space-y-4 sm:space-y-5">
               <h1 className={cn('hero-title', isSplit ? 'max-w-3xl' : 'max-w-5xl')}>{title}</h1>
               <p className={cn('copy-lg', isSplit ? 'max-w-2xl' : 'max-w-3xl')}>{description}</p>
@@ -96,7 +100,7 @@ export function PageHero({
                 {highlights.map((item) => (
                   <div
                     key={item}
-                    className="rounded-[1.3rem] border border-border/60 bg-background/38 px-4 py-3 text-sm text-foreground/66"
+                    className="rounded-md border border-border/80 bg-background/38 px-4 py-3 text-sm text-foreground/66"
                   >
                     {item}
                   </div>
@@ -120,7 +124,7 @@ export function PageHero({
           </Reveal>
           {isSplit ? (
             <Reveal delay={0.08} className="self-stretch">
-              <div className="hero-visual-shell relative h-full min-h-[320px] overflow-hidden rounded-[2.2rem] p-4 sm:min-h-[360px] sm:p-5 lg:min-h-[400px]">
+              <div className="hero-visual-shell relative h-full min-h-[320px] overflow-hidden rounded-md p-4 sm:min-h-[360px] sm:p-5 lg:min-h-[400px]">
                 <BorderBeam />
                 <div className="relative h-full">{visual}</div>
               </div>

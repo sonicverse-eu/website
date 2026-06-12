@@ -17,10 +17,10 @@ export function Callout({ title, tone = 'default', children }: CalloutProps) {
   return (
     <aside
       className={cn(
-        'rounded-[1.6rem] border px-5 py-5 shadow-[var(--shadow-soft)] sm:px-6',
+        'rounded-lg border px-5 py-5 shadow-[var(--shadow-soft)] sm:px-6',
         tone === 'info'
-          ? 'border-primary/18 bg-primary/[0.08] backdrop-blur-sm backdrop-saturate-[1.4]'
-          : 'border-border/70 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))] backdrop-blur-xl backdrop-saturate-[1.5]',
+          ? 'border-primary/22 bg-primary/[0.08]'
+          : 'border-border/80 bg-[linear-gradient(180deg,var(--surface-1),var(--surface-2))]',
       )}
     >
       {title ? (
@@ -71,7 +71,7 @@ function InlineCode({ className, ...props }: ComponentPropsWithoutRef<'code'>) {
   return (
     <code
       className={cn(
-        'rounded-full border border-border/70 bg-background/70 px-2 py-1 font-mono text-[0.85em] text-foreground backdrop-blur-sm',
+        'rounded-sm border border-border/80 bg-background/70 px-2 py-1 font-mono text-[0.85em] text-foreground',
         className,
       )}
       {...props}
@@ -83,7 +83,7 @@ function PreformattedBlock({ className, ...props }: ComponentPropsWithoutRef<'pr
   return (
     <pre
       className={cn(
-        'overflow-x-auto rounded-[1.7rem] border border-border/70 bg-[#0b1020] px-5 py-5 text-sm leading-7 text-white shadow-[var(--shadow-strong)]',
+        'overflow-x-auto rounded-lg border border-border/70 bg-[#090a0c] px-5 py-5 text-sm leading-7 text-white shadow-[var(--shadow-strong)]',
         className,
       )}
       {...props}
@@ -93,7 +93,7 @@ function PreformattedBlock({ className, ...props }: ComponentPropsWithoutRef<'pr
 
 function DataTable({ className, ...props }: ComponentPropsWithoutRef<'table'>) {
   return (
-    <div className="overflow-x-auto rounded-[1.5rem] border border-border/70 bg-background/58 backdrop-blur-sm backdrop-saturate-[1.3]">
+    <div className="overflow-x-auto rounded-lg border border-border/80 bg-background/58">
       <table className={cn('min-w-full border-collapse text-left text-sm', className)} {...props} />
     </div>
   )
@@ -103,7 +103,7 @@ export const mdxComponents = {
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        'text-[2.4rem] leading-[1.2] font-medium tracking-[-0.04em] text-foreground sm:text-[2.9rem] sm:leading-[1.14]',
+        'text-[2.4rem] leading-[1.2] font-semibold tracking-normal text-foreground sm:text-[2.9rem] sm:leading-[1.14]',
         className,
       )}
       {...props}
@@ -112,7 +112,7 @@ export const mdxComponents = {
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        'pt-7 text-[1.65rem] leading-[1.22] font-medium tracking-[-0.04em] text-foreground sm:text-[1.95rem] sm:leading-[1.15]',
+        'pt-7 text-[1.65rem] leading-[1.22] font-semibold tracking-normal text-foreground sm:text-[1.95rem] sm:leading-[1.15]',
         className,
       )}
       {...props}
@@ -121,7 +121,7 @@ export const mdxComponents = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        'pt-4 text-[1.22rem] leading-[1.22] font-medium tracking-[-0.035em] text-foreground sm:text-[1.35rem]',
+        'pt-4 text-[1.22rem] leading-[1.22] font-semibold tracking-normal text-foreground sm:text-[1.35rem]',
         className,
       )}
       {...props}
@@ -130,7 +130,7 @@ export const mdxComponents = {
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
-        'text-lg leading-[1.24] font-medium tracking-[-0.03em] text-foreground',
+        'text-lg leading-[1.24] font-semibold tracking-normal text-foreground',
         className,
       )}
       {...props}
@@ -156,7 +156,7 @@ export const mdxComponents = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        'rounded-[1.5rem] border-l-2 border-primary/50 bg-primary/[0.05] px-5 py-4 text-[0.98rem] leading-8 text-foreground/72 italic',
+        'rounded-lg border-l-2 border-primary/50 bg-primary/[0.05] px-5 py-4 text-[0.98rem] leading-8 text-foreground/72 italic',
         className,
       )}
       {...props}

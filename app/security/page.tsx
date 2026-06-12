@@ -18,7 +18,7 @@ const reportingGuidance = [
   {
     title: 'Report privately',
     description:
-      'Use the form below or email security@sonicverse.eu. Include which Sonicverse project, deployment, or repository is affected, and avoid public issue trackers for security-sensitive reports.',
+      'Use the form below or email security@sonicverse.tech. Include which Sonicverse project, deployment, or repository is affected, and avoid public issue trackers for security-sensitive reports.',
   },
   {
     title: 'Include the essentials',
@@ -76,7 +76,7 @@ export default function SecurityPage() {
             <div className="grid gap-4 md:grid-cols-[0.34fr_1fr] md:items-start md:gap-8">
               <div className="space-y-2">
                 <p className="eyebrow">Before you send</p>
-                <h2 className="text-[1.35rem] leading-[1.18] font-medium tracking-[-0.03em] text-foreground">
+                <h2 className="text-[1.35rem] leading-[1.18] font-semibold tracking-normal text-foreground">
                   A few practical guardrails.
                 </h2>
               </div>
@@ -84,10 +84,10 @@ export default function SecurityPage() {
                 <p>
                   Use the form on this page or email{' '}
                   <a
-                    href="mailto:security@sonicverse.eu?subject=Security%20Report"
+                    href="mailto:security@sonicverse.tech?subject=Security%20Report"
                     className="text-primary transition hover:text-primary/80"
                   >
-                    security@sonicverse.eu
+                    security@sonicverse.tech
                   </a>
                   .
                 </p>

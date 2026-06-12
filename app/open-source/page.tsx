@@ -12,7 +12,7 @@ import { openSourceProjects, repositorySignals } from '@/lib/site-data'
 
 export const metadata: Metadata = pageMetadata(
   'Open Source',
-  'Sonicverse treats open source as a core brand pillar and a practical way of building better systems.',
+  'The whole broadcast stack is open source — built on the FFmpeg and Linux foundation, with the roadmap owned by the community.',
   '/open-source',
 )
 
@@ -22,24 +22,24 @@ export default function OpenSourcePage() {
       <PageHero
         layout="single"
         eyebrow="Open Source"
-        title="Open source is a product quality decision."
-        description="Open collaboration makes systems more legible, reusable, and trustworthy."
+        title="Your stack, your roadmap."
+        description="Open source has quietly matured into a broadcast-ready force. The tools exist, the communities are active, and the upside is significant."
         highlights={[
-          'Readable foundations',
-          'Practical contribution paths',
-          'Tooling that compounds',
+          'Built on FFmpeg & Linux',
+          'Self-host and inspect everything',
+          'Community-owned roadmap',
         ]}
-        primaryAction={{ href: '/contact', label: 'Talk about a project' }}
-        secondaryAction={{ href: '/projects', label: 'See project archetypes' }}
+        primaryAction={{ href: '/contact', label: 'Get early access' }}
+        secondaryAction={{ href: '/broadcasters', label: 'See who it’s for' }}
       />
 
       <section className="section-space">
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Featured structures"
-              title="The kinds of public work Sonicverse invests in."
-              description="Useful building blocks, not volume for its own sake."
+              eyebrow="The stack"
+              title="The open pillars we’re building."
+              description="Sonicverse is early — we’re not going to pretend otherwise. But the foundation is intentional, and every piece is being built in the open."
             />
           </Reveal>
           <div className="grid gap-6 lg:grid-cols-3">
@@ -68,9 +68,9 @@ export default function OpenSourcePage() {
         <Container className="space-y-10">
           <Reveal>
             <SectionHeader
-              eyebrow="Contribution philosophy"
-              title="Open collaboration works when the path is clear."
-              description="Approachable issue framing, maintainable structure, and defaults that make contribution realistic."
+              eyebrow="Why it matters"
+              title="What open source gives a station."
+              description="Not because it’s free — though that helps — but because it puts you in control of your own stack, your own roadmap, and your own future."
             />
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
@@ -88,9 +88,9 @@ export default function OpenSourcePage() {
       </section>
 
       <CTASection
-        eyebrow="Open collaboration"
-        title="If your product needs a stronger public foundation, Sonicverse can help shape it."
-        description="From reusable primitives to deployment-aware architecture, the open-source posture is part of the system design."
+        eyebrow="Early access"
+        title="The stations that thrive next will have the most flexible infrastructure."
+        description="Open source is how you build that. Get early access and follow the work as it ships."
       />
     </>
   )

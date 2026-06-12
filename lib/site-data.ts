@@ -16,199 +16,215 @@ export const siteName = 'Sonicverse'
 
 export const navItems: NavItem[] = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
+  { href: '/platform', label: 'Platform' },
+  { href: '/open-source', label: 'Open Source' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ]
 
 export const footerNavGroups: FooterNavGroup[] = [
   {
-    title: 'Explore',
+    title: 'Product',
     links: [
       {
-        href: '/about',
-        label: 'About',
-        description: 'How Sonicverse works, what it values, and the shape of the collaboration.',
-      },
-      {
-        href: '/services',
-        label: 'Services',
-        description: 'Engineering, platform, and systems work for high-trust digital products.',
-      },
-      {
-        href: '/contact',
-        label: 'Contact',
-        description: 'Start a conversation with a brief, an idea, or a messy problem statement.',
-      },
-    ],
-  },
-  {
-    title: 'Work',
-    links: [
-      {
-        href: '/projects',
-        label: 'Projects',
-        description: 'Selected work spanning product systems, platforms, and implementation.',
+        href: '/platform',
+        label: 'Platform',
+        description:
+          'The open broadcast stack — playout, scheduling, streaming, and station tooling.',
       },
       {
         href: '/open-source',
         label: 'Open Source',
-        description: 'Public packages, starters, and building blocks meant to compound.',
+        description: 'Why the whole stack is open, and how to follow the work as it ships.',
       },
       {
         href: '/roadmap',
         label: 'Roadmap',
-        description:
-          'A transparent view of the open-source work planned for the next year and beyond.',
+        description: 'What we are building next across the broadcast workflow, in the open.',
+      },
+      {
+        href: '/changelog',
+        label: 'Changelog',
+        description: 'Release notes and build-in-public progress as the stack takes shape.',
+      },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      {
+        href: '/about',
+        label: 'About',
+        description: 'Broadcasters and developers building the software radio has been missing.',
+      },
+      {
+        href: '/broadcasters',
+        label: 'Broadcasters',
+        description: 'Who the stack is for — independent stations, managers, and technical teams.',
+      },
+      {
+        href: '/contact',
+        label: 'Contact',
+        description: 'Get early access or tell us how your station actually works.',
       },
     ],
   },
 ]
 
 export const principles = [
-  'Open source by default',
-  'Systems designed for change',
-  'Calm collaboration',
-  'Performance with intent',
+  'Open source at the core',
+  'Built by broadcasters',
+  'On-air reliability first',
+  'Your stack, your roadmap',
 ]
 
 export const capabilities = [
   {
-    title: 'Product engineering',
-    description: 'Modern product systems with clear architecture and long-term composure.',
+    title: 'Playout & automation',
+    description:
+      'A reliable on-air engine — automated playback, live assist, and failover that holds.',
   },
   {
-    title: 'Platform foundations',
-    description: 'Web platforms, shared tooling, and foundations that reduce drag for teams.',
+    title: 'Scheduling & delivery',
+    description:
+      'Music and traffic scheduling wired straight through to streaming and distribution.',
   },
   {
-    title: 'Open-source tooling',
-    description: 'Public packages and reusable building blocks that compound over time.',
+    title: 'Station tooling',
+    description: 'Show prep, station management, and the infrastructure glue around the workflow.',
   },
 ]
 
 export const serviceAreas = [
   {
-    title: 'Custom software development',
-    description: 'Purpose-built systems with sober choices and clear boundaries.',
-    bullets: ['App Router and modern web stacks', 'Type-safe APIs', 'Incremental delivery'],
+    title: 'Playout & automation',
+    description:
+      'The on-air engine: automated playback, live assist, and failover built for 24/7 uptime.',
+    bullets: ['Automated playout', 'Live assist', 'Failover & redundancy'],
   },
   {
-    title: 'Web platforms',
-    description: 'Marketing sites and application shells aligned with product goals.',
-    bullets: ['Design-aware implementation', 'Performance budgets', 'Accessibility by default'],
+    title: 'Scheduling & traffic',
+    description: 'Music and traffic scheduling that reflects how stations actually plan their day.',
+    bullets: ['Music scheduling', 'Traffic & logs', 'Clocks & rotations'],
   },
   {
-    title: 'Design systems',
-    description: 'Reusable UI systems with careful tokens and operational clarity.',
-    bullets: ['Token strategy', 'Composable primitives', 'Visual consistency'],
+    title: 'Streaming & delivery',
+    description: 'Stream origin and distribution on open standards, built on the FFmpeg lineage.',
+    bullets: ['Stream origin', 'Multi-bitrate', 'Open formats'],
   },
   {
-    title: 'Technical architecture',
-    description: 'Rendering, runtime, and delivery decisions that keep systems coherent.',
-    bullets: ['Cloudflare-ready deployments', 'Boundary setting', 'Runtime pragmatism'],
+    title: 'Show preparation',
+    description: 'The tools presenters and producers use to build a show before it goes to air.',
+    bullets: ['Run sheets', 'Audio & links', 'Handover notes'],
   },
   {
-    title: 'Performance optimization',
-    description: 'Measured improvements to loading, rendering, and interaction quality.',
-    bullets: ['Core Web Vitals', 'Network efficiency', 'Asset strategy'],
+    title: 'Station management',
+    description:
+      'The operational layer — libraries, users, and the moving parts behind the signal.',
+    bullets: ['Media library', 'Roles & access', 'Reporting'],
   },
   {
-    title: 'Developer experience',
-    description: 'Tooling and workflows that reduce rework and keep codebases easier to operate.',
-    bullets: ['Linting and standards', 'Build and preview flows', 'Sensible automation'],
+    title: 'Infrastructure tooling',
+    description:
+      'Deployment, monitoring, and the plumbing that keeps a station on air and observable.',
+    bullets: ['Self-host ready', 'Monitoring', 'Open APIs'],
   },
 ]
 
 export const operatingModel = [
   {
-    title: 'Direct collaboration',
-    description: 'The people shaping the system stay close to the decisions that matter.',
+    title: 'In the open',
+    description: 'We build in public — source, decisions, and roadmap visible as the work happens.',
   },
   {
-    title: 'Transparent tradeoffs',
-    description: 'Constraints are named early and tradeoffs stay visible.',
+    title: 'With broadcasters, not at them',
+    description: 'Shaped by people who run stations, against how a broadcast day actually works.',
   },
   {
-    title: 'Long-term structure',
-    description: 'Architecture and handoff quality are treated as part of the product.',
+    title: 'Open standards, no lock-in',
+    description: 'Open formats and APIs so the pieces interoperate and your data stays yours.',
   },
 ]
 
 export const technicalStandards = [
-  'Semantic HTML and accessible interaction patterns',
-  'Type safety and explicit contracts at boundaries',
-  'Measured performance, not ornamental complexity',
-  'Documentation and structure that help future contributors',
+  'On-air reliability treated as the baseline, not a feature',
+  'Open formats and APIs so tools interoperate by default',
+  'Built on the FFmpeg and Linux foundation that already runs broadcast',
+  'Observable systems you can self-host and inspect end to end',
 ]
 
 export const projectArchetypes = [
   {
-    title: 'Operational platforms',
+    title: 'Independent & community stations',
     description:
-      'Internal systems, dashboards, and shared platforms that support ongoing product or business operations.',
+      'Stations that need capable infrastructure without the long contracts and opaque pricing of legacy vendors.',
   },
   {
-    title: 'Developer-facing products',
+    title: 'Station managers',
     description:
-      'APIs, tooling surfaces, documentation systems, and product experiences built for technical audiences.',
+      'Operators who want licensing costs to become variable, and budget freed for people and content instead.',
   },
   {
-    title: 'Open-source ecosystems',
+    title: 'Technical teams at stations',
     description:
-      'Public packages, templates, starter kits, and integration layers designed to invite contribution.',
+      'Engineers who want source access — to fix bugs, extend workflows, and stop waiting on a vendor release cycle.',
   },
   {
-    title: 'High-trust web experiences',
+    title: 'Multi-station networks',
     description:
-      'Marketing and product surfaces where clarity, credibility, and technical taste matter as much as polish.',
+      'Groups that need interoperable, open tooling to run several stations without bespoke middleware for every integration.',
   },
 ]
 
 export const openSourceProjects = [
   {
-    name: 'System primitives',
-    summary: 'Reusable UI and layout patterns extracted from real delivery work.',
-    tags: ['UI foundations', 'Accessibility', 'Design tokens'],
+    name: 'Playout engine',
+    summary: 'The on-air core — automated playback and live assist, designed for 24/7 reliability.',
+    tags: ['In development', 'Playout', 'Reliability'],
   },
   {
-    name: 'Workflow utilities',
-    summary: 'Checks, generators, and environment helpers that make workflows easier to read.',
-    tags: ['DX', 'Automation', 'Release hygiene'],
+    name: 'Scheduling service',
+    summary: 'Music and traffic scheduling that maps to real station clocks and rotations.',
+    tags: ['In development', 'Scheduling', 'Open APIs'],
   },
   {
-    name: 'Cloud-native starters',
-    summary: 'Composable starters for teams shipping on modern edge runtimes.',
-    tags: ['Cloudflare', 'Deployment', 'Architecture'],
+    name: 'Streaming server',
+    summary: 'Open-standard stream origin and delivery, built on the FFmpeg lineage.',
+    tags: ['In development', 'Streaming', 'Open formats'],
   },
 ]
 
 export const repositorySignals = [
-  'Public decisions instead of hidden tribal knowledge',
-  'Issues and contribution paths that are approachable',
-  'Tooling that works for maintainers as well as adopters',
+  'Fix a bug from the source instead of waiting on a support ticket',
+  'Own the roadmap — open projects do not get acquired and sunset',
+  'Interoperate on open standards, not someone else’s upsell strategy',
 ]
 
 export const contactFaq = [
   {
-    question: 'What kinds of teams do you work with?',
+    question: 'Is this ready to run a station today?',
     answer:
-      'We work with teams that want product quality and engineering quality to move forward together.',
+      'Not yet. Sonicverse is early and we are building in the open. Early access means following the work closely and shaping it — not a finished product.',
   },
   {
-    question: 'Do you only work on open-source projects?',
+    question: 'Which stations is it for?',
     answer:
-      'No. We work on both proprietary and open-source projects. Open source informs our approach to clarity, maintainability, and collaboration.',
+      'Independent and community stations first — anyone underserved by legacy vendors. The stack is designed to scale to multi-station networks over time.',
   },
   {
-    question: 'What helps a first conversation go well?',
+    question: 'Can I self-host it?',
     answer:
-      'A short brief is enough: your current setup, the main challenge, and the outcome you want to achieve next.',
+      'Yes. The stack is open source and built to be self-hosted, with open APIs and formats so it interoperates with what you already run.',
+  },
+  {
+    question: 'How do I follow along or get early access?',
+    answer:
+      'Tell us how your station works and what you need. We will keep you in the loop as modules ship and open early access as they are ready.',
   },
 ]
 
 export const collaborationPrompts = [
-  'You are starting a new product and need a strong technical foundation.',
-  'An existing platform has become harder to maintain, extend, or scale.',
-  'Your team wants to turn internal patterns into stable, reusable systems.',
+  'You run an independent or community station and the legacy contracts no longer add up.',
+  'You are a developer at a station and want source access to fix and extend your own tools.',
+  'You are evaluating alternatives to a proprietary vendor before the next renewal.',
 ]
